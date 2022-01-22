@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Foody</string>
+    <string name="food_menu">Food</string>
+    <string name="cart_menu">Cart</string>
+    <string name="bill_menu">Bill</string>
+    <string name="account_menu">Accounts</string>
+    <string name="clear_cart">Clear</string>
+    <string name="txt_Cart_Frag">Total:</string>
+    <string name="txt2_Cart_Frag">Distance:</string>
+    <string name="txt3_Cart_Frag">Shipping Fee:</string>
+    <string name="txt4_Cart_Frag">Shipping to:</string>
+    <string name="btnPick_address_Cart_Frag">Pick Address</string>
+    <string name="btnOrder_Cart_Frag">Order</string>
+    <string name="txt_Bill_row">ID Bill:</string>
+    <string name="txt2_Bill_row">Time:</string>
+    <string name="txt3_Bill_row">Total:</string>
+</resources>
