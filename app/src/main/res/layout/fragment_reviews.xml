@@ -57,9 +57,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Food_Name"
+                android:text="Food Name"
                 android:textColor="#FFFFFF"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -103,6 +103,7 @@
             android:layout_weight="2"
             android:background="@drawable/custom_button_count_number"
             android:text="-"
+            android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -124,6 +125,7 @@
             android:layout_weight="2"
             android:background="@drawable/custom_button_count_number"
             android:text="+"
+            android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
 
