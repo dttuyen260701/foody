@@ -3,20 +3,20 @@ package com.example.foody.asyntask;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.example.foody.listeners.Insert_Check_listener;
+import com.example.foody.listeners.Check_task_listener;
 import com.example.foody.utils.JsonUtils;
 
 import org.json.JSONObject;
 
 import okhttp3.RequestBody;
 
-public class Task_InsertOrDel_Asynctask extends AsyncTask<Void, String, Boolean> {
+public class InsertOrDelOrUpdate_Asynctask extends AsyncTask<Void, String, Boolean> {
     private boolean insert_Sussec;
-    private Insert_Check_listener listener;
+    private Check_task_listener listener;
     private RequestBody requestBody;
     private String URL_API = "";
 
-    public Task_InsertOrDel_Asynctask(Insert_Check_listener listener, RequestBody requestBody, String uRL_API) {
+    public InsertOrDelOrUpdate_Asynctask(Check_task_listener listener, RequestBody requestBody, String uRL_API) {
         this.listener = listener;
         this.requestBody = requestBody;
         this.URL_API = uRL_API;

@@ -52,17 +52,22 @@ public class Methods {
                 break;
             case "method_insert_bill"://Gửi đối tượng bill
                 key_2 = "bill";
+                tempObj.addProperty("ID_Bill", String.valueOf(bundle.getInt("ID_Bill")));
                 tempObj.addProperty("ID_Cus", String.valueOf(bundle.getInt("ID_Cus")));
                 tempObj.addProperty("Total", String.valueOf(bundle.getFloat("Total")));
                 tempObj.addProperty("Time", bundle.getString("Time"));
                 tempObj.addProperty("Address", bundle.getString("Address"));
+                tempObj.addProperty("done", bundle.getBoolean("done"));
                 break;
+            case "method_update_bill":
             case "method_get_bill_detail_data"://gửi ID bill
                 postObj.addProperty("ID_Bill", String.valueOf(bundle.getInt("ID_Bill")));
                 break;
+            case "method_get_update_food_data":
             case "method_get_reviews_data":
                 postObj.addProperty("ID_Food", String.valueOf(bundle.getInt("ID_Food")));
                 break;
+            case "method_update_review":
             case "method_insert_bill_detail":// gửi bill detail
                 key_2 = "bill_detail";
                 tempObj.addProperty("ID_Bill", String.valueOf(bundle.getInt("ID_Bill")));

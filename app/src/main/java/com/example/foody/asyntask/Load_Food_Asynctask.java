@@ -50,9 +50,12 @@ public class Load_Food_Asynctask extends AsyncTask<Void, String, Boolean> {
 
             for(int i = 0; i < jsonArray.length(); ++i){
                 JSONObject object = jsonArray.getJSONObject(i);
+
+                float rate = (float) (Math.round(object.getDouble("Rate") * 10.0) / 10.0);
+
                 Foods foods = new Foods(object.getInt("ID_Food"), object.getString("Name_Food"), object.getString("Description_Food"),
                        (float) object.getDouble("Frice_Food") , object.getString("Link_Img_Food"),
-                        object.getInt("Time_Cooking"), (object.getInt("Status") == 1) ? true : false,
+                        object.getInt("Time_Cooking"), rate, (object.getInt("Status") == 1) ? true : false,
                         (object.getInt("Is_Available") == 1) ? true : false);
                 //còn bán mới get vào list
                 builder.url(foods.getLink_Image_Food());

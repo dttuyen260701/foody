@@ -103,8 +103,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
                     foods_list.get(index).getTime_Cooking() + " min");
             holder.txtPrice_Food_item.setText(
                     "$" +foods_list.get(index).getPrice_Food());
-            holder.txtRate_Food_item.setText(
-                    String.valueOf(4.5));
+            holder.txtRate_Food_item.setText("" + foods_list.get(index).getRate());
 
             holder.imgFavorite_Food_item.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -10,19 +10,21 @@ public class Foods {
     private String link_Image_Food;
     private Bitmap image_Food;
     private int time_Cooking;
+    private float rate;
     private boolean status;
     private boolean Available;
     private boolean Favorite;
 
     public Foods(){}
 
-    public Foods(int iD_Food, String name_Food, String description_Food, float price_Food, String link_Image_Food, int time_Cooking, boolean status, boolean is_Available) {
+    public Foods(int iD_Food, String name_Food, String description_Food, float price_Food, String link_Image_Food, int time_Cooking, float rate, boolean status, boolean is_Available) {
         this.iD_Food = iD_Food;
         this.name_Food = name_Food;
         this.description_Food = description_Food;
         this.price_Food = price_Food;
         this.link_Image_Food = link_Image_Food;
         this.time_Cooking = time_Cooking;
+        this.rate = rate;
         this.status = status;
         this.Available = is_Available;
         this.Favorite = false;
@@ -78,6 +80,14 @@ public class Foods {
 
     public int getTime_Cooking() {
         return time_Cooking;
+    }
+
+    public float getRate() {
+        return rate;
+    }
+
+    public void setRate(float rate) {
+        this.rate = rate;
     }
 
     public void setTime_Cooking(int time_Cooking) {

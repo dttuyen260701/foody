@@ -27,19 +27,27 @@ import com.example.foody.utils.Constant_Values;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import okhttp3.RequestBody;
 
 public class BillFragment extends Fragment {
     //xem có bill mới hay k
-    private static boolean check_NewBill = true;
+    private static boolean check_NewBill;
 
     private RecyclerView recycler_Bill;
     private ProgressBar progressBar_Bill_Frag;
     private static ArrayList<Bill> list_Bill;
+    private ArrayList<Bill_Details> list_Bill_detail;//for bill delivery
     private Methods methods;
     private BillAdapter adapter;
     private BottomNavigationView bottom_Navigation;
+
+    public BillFragment() {
+        if(list_Bill == null)
+            list_Bill = new ArrayList<>();
+        check_NewBill = true;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,26 +75,22 @@ public class BillFragment extends Fragment {
         recycler_Bill = (RecyclerView) view.findViewById(R.id.recycler_Bill);
         progressBar_Bill_Frag = (ProgressBar) view.findViewById(R.id.progressBar_Bill_Frag);
         bottom_Navigation = (BottomNavigationView) getActivity().findViewById(R.id.bottom_Navigation);
-        if(list_Bill == null)
-            list_Bill = new ArrayList<>();
         methods = new Methods(getContext());
+    }
+
+    public static void setDoneBillbyID(int ID_Bill){
+        if(list_Bill != null)
+            for(Bill i : list_Bill)
+                if(i.getiD_Bill() == ID_Bill)
+                    i.setDone(true);
     }
 
     public static void setCheck_NewBill(boolean check_NewBill) {
         BillFragment.check_NewBill = check_NewBill;
     }
 
-    public static int maxID(){
-        int max = 0;
-        if(list_Bill == null){
-        }
-        for(Bill i : list_Bill)
-            if(i.getiD_Bill() > max)
-                max = i.getiD_Bill();
-        return ++max;
-    }
-
     private void load_Bill_data(){
+        list_Bill.clear();
         Load_Bill_Listener listener = new Load_Bill_Listener() {
             @Override
             public void onPre() {
@@ -101,6 +105,7 @@ public class BillFragment extends Fragment {
                 if(isSucces){
                     progressBar_Bill_Frag.setVisibility(View.GONE);
                     list_Bill.addAll(list_Bill_result);
+                    Collections.reverse(list_Bill);
                     if(list_Bill.isEmpty())
                         recycler_Bill.setBackgroundResource(R.drawable.no_job_today);
                 } else{
@@ -123,6 +128,7 @@ public class BillFragment extends Fragment {
         transaction.commit();
     }
 
+    //có phải bill tạm thời kh
     private void load_Bill_Detail_data(int ID_Bill){
         Load_Bill_Detail_Listener listener = new Load_Bill_Detail_Listener() {
             @Override
@@ -137,7 +143,12 @@ public class BillFragment extends Fragment {
             public void onEnd(boolean isSucces, ArrayList<Bill_Details> bill_details_List) {
                 if(isSucces){
                     progressBar_Bill_Frag.setVisibility(View.GONE);
-                    CartFragment cartFragment = new CartFragment(bill_details_List, false, new Listener_for_BackFragment() {
+                    boolean is_done_bill = false;
+                    for(Bill bill : list_Bill)
+                        if(bill.getiD_Bill() == ID_Bill)
+                            is_done_bill = bill.isDone();
+                    CartFragment cartFragment = new CartFragment(bill_details_List, false, is_done_bill,
+                            new Listener_for_BackFragment() {
                         @Override
                         public void orderBill_Or_BackFragment() {
                             getFragmentManager().popBackStack();

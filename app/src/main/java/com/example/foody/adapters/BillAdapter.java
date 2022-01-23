@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,7 +54,12 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillViewHolder
     public void onBindViewHolder(@NonNull BillViewHolder holder, int position) {
         int index = position;
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        holder.txtIDBill_Bill_row.setText(list_bill.get(position).getiD_Bill() +"");
+
+        int src_delivery = (list_bill.get(position).isDone()) ? R.drawable.bill_row : R.drawable.food_delivery;
+        holder.img_Src_bill_row.setImageResource(src_delivery);
+
+        String isDone = (list_bill.get(position).isDone()) ? "Received" : "Delivering";
+        holder.txtIDBill_Bill_row.setText(isDone +"");
         holder.txtTime_Bill_row.setText(dateFormat.format(list_bill.get(position).getTime()));
         holder.txtTotal_Bill_row.setText("$" + list_bill.get(position).getTotal());
         holder.layout_bill_row.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +78,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillViewHolder
     class BillViewHolder extends RecyclerView.ViewHolder{
         TextView txtIDBill_Bill_row, txtTime_Bill_row, txtTotal_Bill_row;
         ConstraintLayout layout_bill_row;
+        ImageView img_Src_bill_row;
 
         public BillViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -79,6 +86,7 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.BillViewHolder
             txtTime_Bill_row = (TextView) itemView.findViewById(R.id.txtTime_Bill_row);
             txtTotal_Bill_row = (TextView) itemView.findViewById(R.id.txtTotal_Bill_row);
             layout_bill_row = (ConstraintLayout) itemView.findViewById(R.id.layout_bill_row);
+            img_Src_bill_row = (ImageView) itemView.findViewById(R.id.img_Src_bill_row);
         }
     }
 }

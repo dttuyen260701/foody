@@ -30,11 +30,12 @@
         app:layout_constraintTop_toBottomOf="@+id/layout_border_Bill_Row">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/img_Src_bill_row"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@color/teal_700"
             android:padding="1dp"
+            android:scaleType="fitCenter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="w,1:1"
             app:layout_constraintEnd_toStartOf="@+id/layout_Bill_row"
@@ -54,7 +55,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintStart_toEndOf="@+id/img_Src_bill_row"
             app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
@@ -83,7 +84,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="3"
                     android:gravity="center"
-                    android:text="2"
+                    android:text="Done"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold" />

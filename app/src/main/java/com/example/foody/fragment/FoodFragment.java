@@ -19,9 +19,9 @@ import com.example.foody.adapters.FoodAdapter;
 import com.example.foody.asyntask.Load_Favorite_Asynctask;
 import com.example.foody.asyntask.Load_Food_Asynctask;
 import com.example.foody.asyntask.Load_Reviews_Asynctask;
-import com.example.foody.asyntask.Task_InsertOrDel_Asynctask;
+import com.example.foody.asyntask.InsertOrDelOrUpdate_Asynctask;
 import com.example.foody.listeners.Favorite_for_FoodAdapter;
-import com.example.foody.listeners.Insert_Check_listener;
+import com.example.foody.listeners.Check_task_listener;
 import com.example.foody.listeners.Listener_for_BackFragment;
 import com.example.foody.listeners.Listener_for_IncAndRedu;
 import com.example.foody.listeners.Load_Data_Listener;
@@ -65,7 +65,7 @@ public class FoodFragment extends Fragment {
             public void insert_or_del_Fav(Favorite favo, boolean insert_or_del,
                                           FoodAdapter.FoodViewHolder holder, int src,
                                           ArrayList<Foods> arrayList, int index, boolean value) {
-                Insert_Check_listener listener = new Insert_Check_listener() {
+                Check_task_listener listener = new Check_task_listener() {
                     @Override
                     public void onPre() {
                         Boolean check_INTERNET = methods.isNetworkConnected();
@@ -91,7 +91,7 @@ public class FoodFragment extends Fragment {
                 bundle.putInt("ID_Cus", favo.getiD_Cus());
                 String method_name = (insert_or_del) ? "method_insert_favorite" : "method_del_favorite";
                 RequestBody requestBody = methods.getRequestBody(method_name, bundle);
-                Task_InsertOrDel_Asynctask asynctask = new Task_InsertOrDel_Asynctask(listener, requestBody,
+                InsertOrDelOrUpdate_Asynctask asynctask = new InsertOrDelOrUpdate_Asynctask(listener, requestBody,
                         Constant_Values.URL_FAVORITE_API);
                 asynctask.execute();
             }

@@ -10,15 +10,18 @@ public class Bill {
     private float total;
     private Date time;
     private String address;
+    //true la da hoan thanh, false là chưa nhận
+    private boolean done;
 
     public Bill(){}
 
-    public Bill(int iD_Bill, int iD_Cus, float total, Date time, String address) {
+    public Bill(int iD_Bill, int iD_Cus, float total, Date time, String address, boolean done) {
         this.iD_Bill = iD_Bill;
         this.iD_Cus = iD_Cus;
         this.total = total;
         this.time = time;
         this.address = address;
+        this.done = done;
     }
 
     public int getiD_Bill() {
@@ -61,15 +64,23 @@ public class Bill {
         this.address = address;
     }
 
+    public boolean isDone() {
+        return done;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
+    }
+
     @Override
     public String toString() {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         return "Bill{" +
                 "iD_Bill=" + iD_Bill +
                 ", iD_Cus=" + iD_Cus +
                 ", total=" + total +
-                ", time=" + dateFormat.format(time) +
+                ", time=" + time +
                 ", address='" + address + '\'' +
+                ", done=" + done +
                 '}';
     }
 }

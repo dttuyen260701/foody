@@ -9,9 +9,12 @@
     <string name="txt2_Cart_Frag">Distance:</string>
     <string name="txt3_Cart_Frag">Shipping Fee:</string>
     <string name="txt4_Cart_Frag">Shipping to:</string>
-    <string name="btnPick_address_Cart_Frag">Pick Address</string>
-    <string name="btnOrder_Cart_Frag">Order</string>
+    <string name="btnPick_address_Cart_Frag">PICK ADDRESS</string>
+    <string name="btnOrder_Cart_Frag">ORDER</string>
     <string name="txt_Bill_row">ID Bill:</string>
     <string name="txt2_Bill_row">Time:</string>
     <string name="txt3_Bill_row">Total:</string>
+    <string name="your_reviews_frag">Your Feeling</string>
+    <string name="skip_feeling">Skip</string>
+    <string name="slogan_Feeling_Frag">We are very happy to receive your comment</string>
 </resources>

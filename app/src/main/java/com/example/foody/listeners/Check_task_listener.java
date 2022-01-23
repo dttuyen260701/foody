@@ -1,6 +1,6 @@
 package com.example.foody.listeners;
 
-public interface Insert_Check_listener {
+public interface Check_task_listener {
     void onPre();
     void onEnd(boolean isSucces, boolean insert_Success);
 }

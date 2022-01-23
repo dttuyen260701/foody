@@ -79,7 +79,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void setUp(){
         fragment_Food = new FoodFragment();
-        fragment_Cart = new CartFragment(new ArrayList<>(), true, new Listener_for_BackFragment() {
+        fragment_Cart = new CartFragment(new ArrayList<>(), true, false,
+                new Listener_for_BackFragment() {
             @Override
             public void orderBill_Or_BackFragment() {
 
@@ -159,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onEnd(boolean isSussed, Customer customer) {
                 if(customer.getiD_Cus() == -1){
-                    Insert_Check_listener listener = new Insert_Check_listener() {
+                    Check_task_listener listener = new Check_task_listener() {
                         @Override
                         public void onPre() {
                             if (!methods.isNetworkConnected()) {
@@ -182,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
                     bundle.putString("Name_Cus", cus.getName_Cus());
                     bundle.putString("Phone", cus.getPhone());
                     RequestBody requestBody = methods.getRequestBody("method_insert_customer", bundle);
-                    Task_InsertOrDel_Asynctask asyntask = new Task_InsertOrDel_Asynctask(listener, requestBody,
+                    InsertOrDelOrUpdate_Asynctask asyntask = new InsertOrDelOrUpdate_Asynctask(listener, requestBody,
                             Constant_Values.URL_CUSTOMER_API);
                     asyntask.execute();
                 }
@@ -197,38 +198,8 @@ public class MainActivity extends AppCompatActivity {
         asyntask.execute();
     }
 
-    private void insert_Bill(Bill bill){
-        Insert_Check_listener listener = new Insert_Check_listener() {
-            @Override
-            public void onPre() {
-                if (!methods.isNetworkConnected()) {
-                    Toast.makeText(MainActivity.this, "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onEnd(boolean isSucces, boolean insert_Success) {
-                if(isSucces){
-                    String kq = (insert_Success) ? "Thành công" : "Thất bại";
-                } else
-                    Toast.makeText(MainActivity.this, "Lỗi Server", Toast.LENGTH_SHORT).show();
-            }
-        };
-
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        Bundle bundle = new Bundle();
-        bundle.putInt("ID_Cus", bill.getiD_Cus());
-        bundle.putFloat("Total", bill.getTotal());
-        bundle.putString("Time", dateFormat.format(bill.getTime()));
-        bundle.putString("Address", bill.getAddress());
-        RequestBody requestBody = methods.getRequestBody("method_insert_bill", bundle);
-        Task_InsertOrDel_Asynctask asynctask = new Task_InsertOrDel_Asynctask(listener, requestBody,
-                Constant_Values.URL_BILL_API);
-        asynctask.execute();
-    }
-
     private void insert_Bill_Detail(Bill_Details bill_details){
-        Insert_Check_listener listener = new Insert_Check_listener() {
+        Check_task_listener listener = new Check_task_listener() {
             @Override
             public void onPre() {
                 if (!methods.isNetworkConnected()) {
@@ -254,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
         bundle.putFloat("Rate", bill_details.getRate());
         bundle.putString("Reviews", bill_details.getReviews());
         RequestBody requestBody = methods.getRequestBody("method_insert_bill_detail", bundle);
-        Task_InsertOrDel_Asynctask asynctask = new Task_InsertOrDel_Asynctask(listener, requestBody,
+        InsertOrDelOrUpdate_Asynctask asynctask = new InsertOrDelOrUpdate_Asynctask(listener, requestBody,
                 Constant_Values.URL_BILL_DETAIL_API);
         asynctask.execute();
     }
