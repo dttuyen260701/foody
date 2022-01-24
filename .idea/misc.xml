@@ -12,6 +12,7 @@
         <entry key="..\:/Android/Foody/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Android/Foody/app/src/main/res/layout/bill_detail_row.xml" value="0.33" />
         <entry key="..\:/Android/Foody/app/src/main/res/layout/bill_row.xml" value="0.35688405797101447" />
+        <entry key="..\:/Android/Foody/app/src/main/res/layout/feeling_row.xml" value="0.36820652173913043" />
         <entry key="..\:/Android/Foody/app/src/main/res/layout/first_food_row.xml" value="0.371875" />
         <entry key="..\:/Android/Foody/app/src/main/res/layout/first_review_row.xml" value="0.33" />
         <entry key="..\:/Android/Foody/app/src/main/res/layout/fisrt_food_row.xml" value="0.371875" />
@@ -19,6 +20,8 @@
         <entry key="..\:/Android/Foody/app/src/main/res/layout/fragment_accounts.xml" value="0.371875" />
         <entry key="..\:/Android/Foody/app/src/main/res/layout/fragment_bill.xml" value="0.371875" />
         <entry key="..\:/Android/Foody/app/src/main/res/layout/fragment_cart.xml" value="0.371875" />
+        <entry key="..\:/Android/Foody/app/src/main/res/layout/fragment_feedback.xml" value="0.36820652173913043" />
+        <entry key="..\:/Android/Foody/app/src/main/res/layout/fragment_feeling.xml" value="0.36820652173913043" />
         <entry key="..\:/Android/Foody/app/src/main/res/layout/fragment_food.xml" value="0.371875" />
         <entry key="..\:/Android/Foody/app/src/main/res/layout/fragment_reivew_after_received.xml" value="0.371875" />
         <entry key="..\:/Android/Foody/app/src/main/res/layout/fragment_reviews.xml" value="0.25" />

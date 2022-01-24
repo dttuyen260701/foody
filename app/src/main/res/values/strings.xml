@@ -14,7 +14,7 @@
     <string name="txt_Bill_row">ID Bill:</string>
     <string name="txt2_Bill_row">Time:</string>
     <string name="txt3_Bill_row">Total:</string>
-    <string name="your_reviews_frag">Your Feeling</string>
-    <string name="skip_feeling">Skip</string>
-    <string name="slogan_Feeling_Frag">We are very happy to receive your comment</string>
+    <string name="your_reviews_frag">Your Feedback</string>
+    <string name="skip_feedback">Skip</string>
+    <string name="slogan_Feedback_Frag">We are very happy to receive your feedback</string>
 </resources>

@@ -10,17 +10,19 @@ public class Bill {
     private float total;
     private Date time;
     private String address;
+    private float distance;
     //true la da hoan thanh, false là chưa nhận
     private boolean done;
 
     public Bill(){}
 
-    public Bill(int iD_Bill, int iD_Cus, float total, Date time, String address, boolean done) {
+    public Bill(int iD_Bill, int iD_Cus, float total, Date time, String address, float distance, boolean done) {
         this.iD_Bill = iD_Bill;
         this.iD_Cus = iD_Cus;
         this.total = total;
         this.time = time;
         this.address = address;
+        this.distance = distance;
         this.done = done;
     }
 
@@ -64,6 +66,14 @@ public class Bill {
         this.address = address;
     }
 
+    public float getDistance() {
+        return distance;
+    }
+
+    public void setDistance(float distance) {
+        this.distance = distance;
+    }
+
     public boolean isDone() {
         return done;
     }
@@ -80,6 +90,7 @@ public class Bill {
                 ", total=" + total +
                 ", time=" + time +
                 ", address='" + address + '\'' +
+                ", distance=" + distance +
                 ", done=" + done +
                 '}';
     }

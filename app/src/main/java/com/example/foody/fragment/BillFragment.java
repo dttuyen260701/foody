@@ -121,6 +121,15 @@ public class BillFragment extends Fragment {
         asynctask.execute();
     }
 
+    private Bill getBillbyID(int ID_Bill){
+        Bill bill = new Bill();{
+            for (Bill i : list_Bill)
+                if(i.getiD_Bill() == ID_Bill)
+                    return i;
+        }
+        return bill;
+    }
+
     private void back_to_BillFragmet(CartFragment cartFragment){
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_layout, cartFragment);
@@ -147,7 +156,8 @@ public class BillFragment extends Fragment {
                     for(Bill bill : list_Bill)
                         if(bill.getiD_Bill() == ID_Bill)
                             is_done_bill = bill.isDone();
-                    CartFragment cartFragment = new CartFragment(bill_details_List, false, is_done_bill,
+                    CartFragment cartFragment = new CartFragment(getBillbyID(ID_Bill), bill_details_List,
+                            false, is_done_bill,
                             new Listener_for_BackFragment() {
                         @Override
                         public void orderBill_Or_BackFragment() {

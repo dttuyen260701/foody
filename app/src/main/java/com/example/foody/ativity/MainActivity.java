@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setUp(){
         fragment_Food = new FoodFragment();
-        fragment_Cart = new CartFragment(new ArrayList<>(), true, false,
+        fragment_Cart = new CartFragment(new Bill() ,new ArrayList<>(), true, false,
                 new Listener_for_BackFragment() {
             @Override
             public void orderBill_Or_BackFragment() {
