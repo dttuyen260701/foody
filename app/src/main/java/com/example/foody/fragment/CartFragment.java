@@ -3,6 +3,7 @@ package com.example.foody.fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -219,19 +220,17 @@ public class CartFragment extends Fragment {
                 Toast.makeText(getActivity(), btn_PICK_ADDRESS, Toast.LENGTH_SHORT).show();
                 break;
             case btn_RECEIVED:
-                int ID_Bill = -1;//,mặc định là -1
-                if(!list_Bill_details_temp.isEmpty())
-                    ID_Bill = list_Bill_details_temp.get(0).getiD_Bill();
-                update_Bill_to_done(ID_Bill);
+                update_Bill_to_done(bill_holder.getiD_Bill());
                 break;
             case btn_TOO_LONG:
                 Toast.makeText(getActivity(), btn_TOO_LONG, Toast.LENGTH_SHORT).show();
                 break;
             case btn_RE_ORDER:
+                list_Bill_details.clear();
                 list_Bill_details.addAll(list_Bill_details_temp);
                 break;
             case btn_FEEDBACK:
-                Toast.makeText(getActivity(), btn_FEEDBACK, Toast.LENGTH_SHORT).show();
+                call_Feedback_Frag(false);
                 break;
             default:
                 break;
@@ -239,7 +238,23 @@ public class CartFragment extends Fragment {
     }
 
     private void call_Feedback_Frag(boolean is_first_time){
+        FeedbackFragment feedbackFragment = new FeedbackFragment(getActivity(), is_first_time, list_Bill_details_temp,
+                new Listener_for_BackFragment() {
+                    @Override
+                    public void orderBill_Or_BackFragment() {
+                        getFragmentManager().popBackStack();
+                    }
+                });
+        back_to_BillFragmet(feedbackFragment);
+    }
 
+
+
+    private void back_to_BillFragmet(FeedbackFragment feedbackFragment){
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.fragment_layout, feedbackFragment);
+        transaction.addToBackStack("Bill_Details");
+        transaction.commit();
     }
 
     public static int getID_Bill_New() {
@@ -323,36 +338,6 @@ public class CartFragment extends Fragment {
         asynctask.execute();
     }
 
-    private void update_Bill_to_done(int ID_Bill){
-        Check_task_listener listener_for_Update = new Check_task_listener() {
-            @Override
-            public void onPre() {
-                if (!methods.isNetworkConnected()) {
-                    Toast.makeText(getActivity(), "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onEnd(boolean isSucces, boolean insert_Success) {
-                if(isSucces){
-                    btnOrder_Cart_Frag.setText(btn_FEEDBACK);
-                    btnPick_address_Cart_Frag.setText(btn_RE_ORDER);
-                    //BillFragment.setCheck_NewBill(true);
-                    BillFragment.setDoneBillbyID(ID_Bill);
-                } else
-                    Toast.makeText(getActivity(), "Lỗi Server", Toast.LENGTH_SHORT).show();
-            }
-        };
-
-        Bundle bundle = new Bundle();
-        bundle.putInt("ID_Bill", ID_Bill);
-        RequestBody requestBody = methods.getRequestBody("method_update_bill", bundle);
-        InsertOrDelOrUpdate_Asynctask asynctask = new InsertOrDelOrUpdate_Asynctask(listener_for_Update,
-                requestBody, Constant_Values.URL_BILL_API);
-        asynctask.execute();
-    }
-
-
     private void insert_Bill_Detail(Bill_Details bill_details, int position) {
         Check_task_listener listener = new Check_task_listener() {
             @Override
@@ -377,7 +362,6 @@ public class CartFragment extends Fragment {
             }
         };
 
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Bundle bundle = new Bundle();
         bundle.putInt("ID_Bill", bill_details.getiD_Bill());
         bundle.putInt("ID_Food", bill_details.getiD_Food());
@@ -388,6 +372,36 @@ public class CartFragment extends Fragment {
         RequestBody requestBody = methods.getRequestBody("method_insert_bill_detail", bundle);
         InsertOrDelOrUpdate_Asynctask asynctask = new InsertOrDelOrUpdate_Asynctask(listener, requestBody,
                 Constant_Values.URL_BILL_DETAIL_API);
+        asynctask.execute();
+    }
+
+    private void update_Bill_to_done(int ID_Bill){
+        Check_task_listener listener_for_Update = new Check_task_listener() {
+            @Override
+            public void onPre() {
+                if (!methods.isNetworkConnected()) {
+                    Toast.makeText(getActivity(), "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onEnd(boolean isSucces, boolean insert_Success) {
+                if(isSucces){
+                    btnOrder_Cart_Frag.setText(btn_FEEDBACK);
+                    btnPick_address_Cart_Frag.setText(btn_RE_ORDER);
+                    //BillFragment.setCheck_NewBill(true);
+                    BillFragment.setDoneBillbyID(ID_Bill);
+                    call_Feedback_Frag(true);
+                } else
+                    Toast.makeText(getActivity(), "Lỗi Server", Toast.LENGTH_SHORT).show();
+            }
+        };
+
+        Bundle bundle = new Bundle();
+        bundle.putInt("ID_Bill", ID_Bill);
+        RequestBody requestBody = methods.getRequestBody("method_update_bill", bundle);
+        InsertOrDelOrUpdate_Asynctask asynctask = new InsertOrDelOrUpdate_Asynctask(listener_for_Update,
+                requestBody, Constant_Values.URL_BILL_API);
         asynctask.execute();
     }
 }

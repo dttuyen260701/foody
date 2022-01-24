@@ -197,36 +197,4 @@ public class MainActivity extends AppCompatActivity {
         Load_Customer_Asynctask asyntask = new Load_Customer_Asynctask(listener_check, requestBody);
         asyntask.execute();
     }
-
-    private void insert_Bill_Detail(Bill_Details bill_details){
-        Check_task_listener listener = new Check_task_listener() {
-            @Override
-            public void onPre() {
-                if (!methods.isNetworkConnected()) {
-                    Toast.makeText(MainActivity.this, "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onEnd(boolean isSucces, boolean insert_Success) {
-                if(isSucces){
-                    String kq = (insert_Success) ? "Thành công" : "Thất bại";
-                } else
-                    Toast.makeText(MainActivity.this, "Lỗi Server", Toast.LENGTH_SHORT).show();
-            }
-        };
-
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        Bundle bundle = new Bundle();
-        bundle.putInt("ID_Bill", bill_details.getiD_Bill());
-        bundle.putInt("ID_Food", bill_details.getiD_Food());
-        bundle.putInt("Count", bill_details.getCount());
-        bundle.putFloat("Price_Total", bill_details.getPrice_Total());
-        bundle.putFloat("Rate", bill_details.getRate());
-        bundle.putString("Reviews", bill_details.getReviews());
-        RequestBody requestBody = methods.getRequestBody("method_insert_bill_detail", bundle);
-        InsertOrDelOrUpdate_Asynctask asynctask = new InsertOrDelOrUpdate_Asynctask(listener, requestBody,
-                Constant_Values.URL_BILL_DETAIL_API);
-        asynctask.execute();
-    }
 }
