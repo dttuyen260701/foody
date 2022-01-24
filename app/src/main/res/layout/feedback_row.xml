@@ -20,11 +20,12 @@
     <LinearLayout
         android:id="@+id/layout_feedback_row2"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="0dp"
         android:orientation="vertical"
         android:padding="1dp"
         android:weightSum="13"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="h,5:2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout_border_feedback_row">
@@ -65,9 +66,9 @@
             android:layout_weight="3"
             android:contentDescription="rating"
             android:max="5"
-            android:progressTint="#AE9D01"
+            android:progressTint="#BFAD05"
             android:rating="3.5"
-            android:secondaryProgressTint="#FFEB3B"
+            android:secondaryProgressTint="#685D03"
             android:stepSize="0.5" />
 
         <EditText

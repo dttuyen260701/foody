@@ -1,22 +1,34 @@
 package com.example.foody.models;
 
+import java.util.Date;
+
 public class Reviews {
-    private int iD_Food;
+    private String name_Cus;
+    private Date time;
     private float rate;
     private String reviews;
 
-    public Reviews(int iD_Food, float rate, String reviews) {
-        this.iD_Food = iD_Food;
+    public Reviews(String name_Cus, Date time, float rate, String reviews) {
+        this.name_Cus = name_Cus;
+        this.time = time;
         this.rate = rate;
         this.reviews = reviews;
     }
 
-    public int getiD_Food() {
-        return iD_Food;
+    public String getName_Cus() {
+        return name_Cus;
     }
 
-    public void setiD_Food(int iD_Food) {
-        this.iD_Food = iD_Food;
+    public void setName_Cus(String name_Cus) {
+        this.name_Cus = name_Cus;
+    }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
     }
 
     public float getRate() {
@@ -38,7 +50,8 @@ public class Reviews {
     @Override
     public String toString() {
         return "Reviews{" +
-                "iD_Food=" + iD_Food +
+                "name_Cus='" + name_Cus + '\'' +
+                ", time=" + time +
                 ", rate=" + rate +
                 ", reviews='" + reviews + '\'' +
                 '}';

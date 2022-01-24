@@ -21,6 +21,7 @@ import com.example.foody.fragment.FoodFragment;
 import com.example.foody.models.Bill_Details;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.FeedBackViewHolder> {
     private ArrayList<Bill_Details> list_bill_detail;
@@ -48,10 +49,6 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.FeedBa
                 FoodFragment.getByID(list_bill_detail.get(index).getiD_Food()).getName_Food());
         holder.ratingBar_feedback_row.setRating(list_bill_detail.get(index).getRate());
 
-        String review_text = (list_bill_detail.get(index).getReviews().length() > 0)
-                ? list_bill_detail.get(index).getReviews() : " ";
-        holder.txtfeedback_row.setText(review_text);
-
         holder.ratingBar_feedback_row.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
@@ -77,6 +74,9 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.FeedBa
         });
 
         if(list_bill_detail.get(index).getRate() >= 1.0f){
+            String review_text = (list_bill_detail.get(index).getReviews().length() > 0)
+                    ? list_bill_detail.get(index).getReviews() : " ";
+            holder.txtfeedback_row.setText(review_text);
             //không cho người dùng đánh giá lại
             holder.ratingBar_feedback_row.setIsIndicator(true);
             holder.txtfeedback_row.setEnabled(false);

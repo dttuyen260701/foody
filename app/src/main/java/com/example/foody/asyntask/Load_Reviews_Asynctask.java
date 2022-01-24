@@ -11,6 +11,8 @@ import com.example.foody.utils.Constant_Values;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import okhttp3.RequestBody;
@@ -38,10 +40,10 @@ public class Load_Reviews_Asynctask extends AsyncTask<Void, String, Boolean> {
             String result = JsonUtils.okhttpPost(Constant_Values.URL_BILL_DETAIL_API, requestBody);
 
             JSONArray jsonArray = new JSONArray(result);
-
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             for(int i = 0; i < jsonArray.length(); ++i){
                 JSONObject object = jsonArray.getJSONObject(i);
-                Reviews reviews = new Reviews(object.getInt("ID_Food"),
+                Reviews reviews= new Reviews(object.getString("Name_Cus"), dateFormat.parse(object.getString("Time")),
                         (float) object.getDouble("Rate"), object.getString("Reviews"));
                 list_reviews.add(reviews);
             }

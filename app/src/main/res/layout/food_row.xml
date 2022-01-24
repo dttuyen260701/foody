@@ -49,7 +49,7 @@
                 android:weightSum="6">
 
                 <TextView
-                    android:id="@+id/txtName_Food_item"
+                    android:id="@+id/txtName_Review_First_item"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="5"
@@ -62,7 +62,7 @@
                     android:textStyle="bold" />
 
                 <ImageView
-                    android:id="@+id/imgFavorite_Food_item"
+                    android:id="@+id/imgFavorite_Review_First_item"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -98,7 +98,7 @@
                     app:srcCompat="@drawable/baking" />
 
                 <TextView
-                    android:id="@+id/txtTime_Cook_Food_item"
+                    android:id="@+id/txtTime_Cook_Review_First_item"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -116,7 +116,7 @@
                 android:weightSum="7">
 
                 <TextView
-                    android:id="@+id/txtPrice_Food_item"
+                    android:id="@+id/txtPrice_Review_First_item"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="2"

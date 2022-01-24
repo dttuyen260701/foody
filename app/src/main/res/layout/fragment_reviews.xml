@@ -76,7 +76,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appbar_Reviews_list"
-        app:layout_constraintVertical_weight="11" />
+        app:layout_constraintVertical_weight="13" />
+
+    <ProgressBar
+        android:id="@+id/progressBar_review_Frag"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/recycler_Reviews"
+        app:layout_constraintVertical_bias="0.4" />
 
     <LinearLayout
         android:id="@+id/layout_CountButton_ReviewFrag"
@@ -88,7 +100,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/recycler_Reviews"
-        app:layout_constraintVertical_bias="0.9">
+        app:layout_constraintVertical_bias="0.95">
 
         <TextView
             android:id="@+id/txtHoldView_ReviewFrag"

@@ -17,6 +17,8 @@ public class Constant_Values {
 
     public static Float Shipping_Fee_Per_1Km = 0.2f;
 
+    public static String PHONENUMBER = "0775705210";
+
     public static int getIdCus() {
         return ID_CUS;
     }

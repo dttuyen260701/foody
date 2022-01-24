@@ -198,6 +198,7 @@ public class CartFragment extends Fragment {
     private void on_click(String name){
         switch (name){
             case btn_ORDER:
+                if(Constant_Values.getIdCus() != -1) {
 //                boolean check_address = true;//kiểm tra có address chưa
 //                if(address_cus.equals(txtADDRESS_PICK)){
 //                    check_address = false;
@@ -216,6 +217,10 @@ public class CartFragment extends Fragment {
 //                }
 //                if(check_address)
                     break;
+                } else {
+                    Toast.makeText(getActivity(), "Please login to order food.", Toast.LENGTH_SHORT).show();
+                    break;
+                }
             case btn_PICK_ADDRESS:
                 Toast.makeText(getActivity(), btn_PICK_ADDRESS, Toast.LENGTH_SHORT).show();
                 break;
@@ -223,7 +228,8 @@ public class CartFragment extends Fragment {
                 update_Bill_to_done(bill_holder.getiD_Bill());
                 break;
             case btn_TOO_LONG:
-                Toast.makeText(getActivity(), btn_TOO_LONG, Toast.LENGTH_SHORT).show();
+                DialogTooLongFragment dialogTooLongFragment = new DialogTooLongFragment();
+                dialogTooLongFragment.show(getFragmentManager(), "dialog_too_long");
                 break;
             case btn_RE_ORDER:
                 list_Bill_details.clear();

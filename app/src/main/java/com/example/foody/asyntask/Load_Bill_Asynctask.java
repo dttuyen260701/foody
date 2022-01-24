@@ -42,10 +42,9 @@ public class Load_Bill_Asynctask extends AsyncTask<Void, String, Boolean> {
             String result = JsonUtils.okhttpPost(Constant_Values.URL_BILL_API, requestBody);
 
             JSONArray jsonArray = new JSONArray(result);
-
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             for(int i = 0; i < jsonArray.length(); ++i){
                 JSONObject object = jsonArray.getJSONObject(i);
-                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
                 Bill bill = new Bill(object.getInt("ID_Bill"), object.getInt("ID_Cus"),
                         (float) object.getDouble("Total"), dateFormat.parse(object.getString("Time")),

@@ -9,9 +9,12 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar_Feedback_list"
         android:layout_width="match_parent"
-        android:layout_height="47dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/txtSlogan_feedback_Frag"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_weight="1">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -100,6 +103,8 @@
         android:orientation="horizontal"
         android:weightSum="7"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recycler_Feedback"
         app:layout_constraintVertical_weight="1">
 

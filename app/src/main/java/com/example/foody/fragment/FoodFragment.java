@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ import com.example.foody.utils.Methods;
 import com.example.foody.utils.Constant_Values;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import okhttp3.RequestBody;
 
@@ -48,38 +50,30 @@ public class FoodFragment extends Fragment {
     private FoodAdapter adapter;
     private boolean check_In_Dev_Fav = false;
 
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_food, container, false);
-        SetUp(view);
-        if(list_Foods.isEmpty())
-            load_Food_Data();
-
-        adapter = new FoodAdapter(list_Foods, view.getContext(), new Favorite_for_FoodAdapter() {
-            //true: insert
-            //false: del
-            @Override
-            public void insert_or_del_Fav(Favorite favo, boolean insert_or_del,
-                                          FoodAdapter.FoodViewHolder holder, int src,
-                                          ArrayList<Foods> arrayList, int index, boolean value) {
+    private Favorite_for_FoodAdapter listener_favorite = new Favorite_for_FoodAdapter() {
+        //true: insert
+        //false: del
+        @Override
+        public void insert_or_del_Fav(Favorite favo, boolean insert_or_del,
+                                      ImageView imgLike, int src, int ID_Food, boolean value) {
+            if(Constant_Values.getIdCus() != -1){
                 Check_task_listener listener = new Check_task_listener() {
                     @Override
                     public void onPre() {
-                        Boolean check_INTERNET = methods.isNetworkConnected();
-                        while (!check_INTERNET) {
-                            Toast.makeText(getActivity(), "Vui lòng kết nối internet", Toast.LENGTH_SHORT);
-                            check_INTERNET = methods.isNetworkConnected();
+                        if (!methods.isNetworkConnected()) {
+                            Toast.makeText(getActivity(), "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onEnd(boolean isSucces, boolean insert_Success) {
                         if (isSucces) {
-                            holder.getImgFavorite_Food_item().setImageResource(src);
-                            arrayList.get(index).set_Favorite(value);
+                            imgLike.setImageResource(src);
+                            for(int i = 0; i < list_Foods.size(); ++i){
+                                if(list_Foods.get(i).getiD_Food() == ID_Food){
+                                    list_Foods.get(i).set_Favorite(value);
+                                }
+                            }
                         } else {
                             Toast.makeText(getActivity(), "Lỗi Server", Toast.LENGTH_SHORT).show();
                         }
@@ -94,8 +88,23 @@ public class FoodFragment extends Fragment {
                 InsertOrDelOrUpdate_Asynctask asynctask = new InsertOrDelOrUpdate_Asynctask(listener, requestBody,
                         Constant_Values.URL_FAVORITE_API);
                 asynctask.execute();
-            }
-        }, new RecyclerView_Item_Listener() {
+            } else
+                Toast.makeText(getActivity(), "Please login to add favorite list.", Toast.LENGTH_SHORT).show();
+        }
+    };
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_food, container, false);
+        SetUp(view);
+        if(list_Foods.isEmpty())
+            load_Food_Data();
+
+        adapter = new FoodAdapter(list_Foods, view.getContext(), listener_favorite
+            , new RecyclerView_Item_Listener() {
             @Override
             public void onClick(int ID_Food) {
                 load_Review_data(getByID(ID_Food));
@@ -238,6 +247,7 @@ public class FoodFragment extends Fragment {
             public void onEnd(boolean isSussec, ArrayList<Reviews> list_result) {
                 progressBar_load.setVisibility(View.GONE);
                 if(isSussec){
+                    Collections.reverse(list_result);//đảo ngược chuỗi
                     ReviewsFragment reviewsFragment = new ReviewsFragment(foods, list_result, new Listener_for_BackFragment() {
                         @Override
                         public void orderBill_Or_BackFragment() {
@@ -253,7 +263,7 @@ public class FoodFragment extends Fragment {
                         public void onInc_Click(int ID_Food) {
                             Inc_Click(ID_Food);
                         }
-                    });
+                    }, listener_favorite);
                     back_to_FoodFragment(reviewsFragment);
                 } else
                     Toast.makeText(getActivity(), "Lỗi Server", Toast.LENGTH_SHORT).show();
@@ -261,8 +271,8 @@ public class FoodFragment extends Fragment {
         };
 
         Bundle bundle = new Bundle();
-        bundle.putInt("ID_Bill", foods.getiD_Food());
-        RequestBody requestBody = methods.getRequestBody("method_get_bill_detail_data", bundle);
+        bundle.putInt("ID_Food", foods.getiD_Food());
+        RequestBody requestBody = methods.getRequestBody("method_get_reviews_data", bundle);
         Load_Reviews_Asynctask asynctask = new Load_Reviews_Asynctask(listener_load_review, requestBody);
         asynctask.execute();
     }

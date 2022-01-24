@@ -93,7 +93,8 @@ public class FeedbackFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 for(int i = 0; i < list_bill_details_feedback.size(); ++i) {
-                    if(list_bill_details_feedback.get(i).getRate() > 0){
+                    if(list_bill_details_feedback.get(i).getRate() > 0 ||
+                        i == list_bill_details_feedback.size() - 1){
                         update_RateAndReview(list_bill_details_feedback.get(i), i);
                     }
                 }
@@ -139,6 +140,7 @@ public class FeedbackFragment extends Fragment {
                     update_Rate_Food(bill_details.getiD_Food());
                     if(position == list_bill_details_feedback.size() - 1){
                         progressBar_feedback_frag.setVisibility(View.GONE);
+                        Toast.makeText(getActivity(), "Thanks for you feedback!", Toast.LENGTH_SHORT).show();
                         listener_for_backFragment.orderBill_Or_BackFragment();
                     }
                 } else
