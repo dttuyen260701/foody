@@ -54,14 +54,14 @@
         android:iconifiedByDefault="false"
         app:defaultQueryHint="Search Food"
         app:iconifiedByDefault="false"
-        app:layout_constraintBottom_toTopOf="@+id/recycler_Food"
+        app:layout_constraintBottom_toTopOf="@+id/swipRefesh_Food_Frag"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appbar_Food_list"
         app:layout_constraintVertical_weight="1" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_Food"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipRefesh_Food_Frag"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -69,7 +69,19 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/search_FoodView"
-        app:layout_constraintVertical_weight="12" />
+        app:layout_constraintVertical_weight="12" >
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_Food"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent"
+            app:layout_constraintVertical_weight="12" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <ProgressBar
         android:id="@+id/progressBar_Food_Frag"
@@ -79,9 +91,9 @@
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/recycler_Food"
+        app:layout_constraintTop_toTopOf="@+id/swipRefesh_Food_Frag"
         app:layout_constraintVertical_bias="0.7" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

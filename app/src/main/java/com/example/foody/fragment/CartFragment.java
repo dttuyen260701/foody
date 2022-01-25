@@ -199,24 +199,24 @@ public class CartFragment extends Fragment {
         switch (name){
             case btn_ORDER:
                 if(Constant_Values.getIdCus() != -1) {
-//                boolean check_address = true;//kiểm tra có address chưa
-//                if(address_cus.equals(txtADDRESS_PICK)){
-//                    check_address = false;
-//                } else {
-                    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                    Date date =new Date();
-                    try {
-                        date = formatter.parse(formatter.format(new Date().getTime()));
-                    } catch (ParseException e) {
-                        e.printStackTrace();
+                    boolean check_address = true;//kiểm tra có address chưa
+                    if(address_cus.equals(txtADDRESS_PICK)){
+                        check_address = false;
+                    } else {
+                        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                        Date date =new Date();
+                        try {
+                            date = formatter.parse(formatter.format(new Date().getTime()));
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        Bill bill_delivery = new Bill(getID_Bill_New(), Constant_Values.getIdCus(), total,
+                                date, address_cus, distance, false);
+                        insert_Bill(bill_delivery);
+                        next_ID();
                     }
-                    Bill bill_delivery = new Bill(getID_Bill_New(), Constant_Values.getIdCus(), total,
-                            date, address_cus, distance, false);
-                    insert_Bill(bill_delivery);
-                    next_ID();
-//                }
-//                if(check_address)
-                    break;
+                    if(check_address)
+                        break;
                 } else {
                     Toast.makeText(getActivity(), "Please login to order food.", Toast.LENGTH_SHORT).show();
                     break;

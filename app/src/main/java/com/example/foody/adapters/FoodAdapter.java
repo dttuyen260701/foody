@@ -47,6 +47,15 @@ public class FoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         for_Search = false;
     }
 
+    public void setFoods_list(ArrayList<Foods> foods_list) {
+        this.foods_list = foods_list;
+        notifyDataSetChanged();
+    }
+
+    public ArrayList<Foods> getFoods_list() {
+        return foods_list;
+    }
+
     public static boolean isFor_Search() {
         return for_Search;
     }

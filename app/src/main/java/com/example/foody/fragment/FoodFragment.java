@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,12 +44,15 @@ public class FoodFragment extends Fragment {
     private RecyclerView recycler_Food;
     private SearchView search_FoodView;
     private ProgressBar progressBar_load;
+    private SwipeRefreshLayout swipRefesh_Food_Frag;
     private Methods methods;
     private static ArrayList<Foods> list_Foods_All;
     private static ArrayList<Foods> list_Foods;//hiển thị
     private static ArrayList<Favorite> list_Favorite;
     private FoodAdapter adapter;
     private boolean check_In_Dev_Fav = false;
+
+    private String search_query = "";
 
     private Favorite_for_FoodAdapter listener_favorite = new Favorite_for_FoodAdapter() {
         //true: insert
@@ -134,6 +138,20 @@ public class FoodFragment extends Fragment {
 
     private void SetUp(View view){
         recycler_Food = (RecyclerView) view.findViewById(R.id.recycler_Food);
+        swipRefesh_Food_Frag = (SwipeRefreshLayout) view.findViewById(R.id.swipRefesh_Food_Frag);
+        swipRefesh_Food_Frag.setColorSchemeColors(getResources().getColor(R.color.app_themes));
+        swipRefesh_Food_Frag.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                list_Foods.clear();
+                adapter.notifyDataSetChanged();
+                //khóa double load
+                swipRefesh_Food_Frag.setEnabled(false);
+                load_Food_Data();
+                swipRefesh_Food_Frag.setRefreshing(false);
+            }
+        });
+
         search_FoodView = (SearchView) view.findViewById(R.id.search_FoodView);
         progressBar_load = (ProgressBar) view.findViewById(R.id.progressBar_Food_Frag);
         methods = new Methods(view.getContext());
@@ -146,9 +164,13 @@ public class FoodFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                swipRefesh_Food_Frag.setEnabled(false);
                 search(newText);
-                if(newText.length() == 0)
+                if(newText.length() == 0){
+                    adapter.setFoods_list(list_Foods);
+                    swipRefesh_Food_Frag.setEnabled(true);
                     adapter.setFor_Search(false);
+                }
                 return false;
             }
         });
@@ -177,8 +199,9 @@ public class FoodFragment extends Fragment {
         if(list_search.isEmpty()) {
             if (text.length() > 0)
                 Toast.makeText(getActivity(), "No Foods Founds", Toast.LENGTH_SHORT).show();
-        } else
+        } else {
             adapter.getSearchItem(list_search);
+        }
     }
 
     private void load_Favorite_data(){
@@ -222,6 +245,8 @@ public class FoodFragment extends Fragment {
                             if (i.getiD_Food() == k.getiD_Food())
                                 i.set_Favorite(true);
                     }
+                    swipRefesh_Food_Frag.setEnabled(true);
+                    adapter.notifyDataSetChanged();
                 }
                 else
                     Toast.makeText(getActivity(), "Lỗi Server", Toast.LENGTH_SHORT).show();
