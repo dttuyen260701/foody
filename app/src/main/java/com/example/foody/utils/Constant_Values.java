@@ -11,13 +11,17 @@ public class Constant_Values {
     public static String URL_FAVORITE_API = URL_SERVER + "api_favorite.php";
     public static String URL_BILL_API = URL_SERVER + "api_bill.php";
     public static String URL_BILL_DETAIL_API = URL_SERVER + "api_bill_detail.php";
+    public static String URL_RESTAURANT_API = URL_SERVER + "api_restaurant.php";
 
-    public static String URL_IMG_SLIDE1 = "https://d1ralsognjng37.cloudfront.net/e61274a4-2f83-4e03-adb0-2253db148f5d.jpeg";
-    public static String URL_IMG_SLIDE2 = "https://c.ndtvimg.com/2020-08/2dv9fku_kfc-covid_625x300_25_August_20.jpg";
+    public static String URL_TERM_OF_SERVICE = "";
+    public static String URL_FORGET_PASS = "";
+
+    public static String URL_IMG_SLIDE1 = "";
+    public static String URL_IMG_SLIDE2 = "";
 
     public static Float Shipping_Fee_Per_1Km = 0.2f;
 
-    public static String PHONENUMBER = "0775705210";
+    public static String PHONENUMBER = "";
 
     public static int getIdCus() {
         return ID_CUS;

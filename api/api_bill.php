@@ -31,7 +31,7 @@
                 $bill['Total'] = $row['Total'];
                 $bill['Time'] = $row['Time'];
                 $bill['Address'] = $row['Address'];
-                $bill['Distance'] = $row['Distance'];
+                $bill['Shipping_fee'] = $row['Shipping_fee'];
                 $bill['done'] = $row['done'];
 
                 array_push($bill_array, $bill);
@@ -43,7 +43,7 @@
             $data1 = ($_POST['bill']);
             $bill = json_decode($data1, true);
 
-            $query = "INSERT INTO `bill` (`ID_Bill`, `ID_Cus`, `Total`, `Time`, `Address`, `Distance`, `done`) VALUES ('".$bill['ID_Bill']."', '".$bill['ID_Cus']."', '".(($bill['Total'] != NULL) ? $bill['Total'] : 0)."', '".$bill['Time']."', '".$bill['Address']."', '".$bill['Distance']."', '".$bill['done']."')";
+            $query = "INSERT INTO `bill` (`ID_Bill`, `ID_Cus`, `Total`, `Time`, `Address`, `Shipping_fee`, `done`) VALUES ('".$bill['ID_Bill']."', '".$bill['ID_Cus']."', '".(($bill['Total'] != NULL) ? $bill['Total'] : 0)."', '".$bill['Time']."', '".$bill['Address']."', '".$bill['Shipping_fee']."', '".$bill['done']."')";
 
             $query_rs = mysqli_query($connect, $query);
             

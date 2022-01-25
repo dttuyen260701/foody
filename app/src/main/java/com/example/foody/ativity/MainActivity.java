@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.*;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -17,8 +20,6 @@ import com.example.foody.models.*;
 import com.example.foody.utils.*;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 import okhttp3.RequestBody;
@@ -32,6 +33,13 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Bill> list_Bill;
     private BottomNavigationView bottom_Navigation;
     private Fragment fragment_Food, fragment_Cart, fragment_Bill, fragment_Accounts;
+    boolean doubleBackToExitPressedOnce = false;
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        return;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 //    }
 
     private void AnhXa(){
-        main_layout = (ConstraintLayout) findViewById(R.id.layout_main);
+        main_layout = (ConstraintLayout) findViewById(R.id.layout_account2);
         bottom_Navigation = (BottomNavigationView) findViewById(R.id.bottom_Navigation);
         bottom_Navigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
     }
@@ -188,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
                     asyntask.execute();
                 }
                 else
-                    ;
+                    Toast.makeText(MainActivity.this, "Lỗi Server", Toast.LENGTH_SHORT).show();
             }
         };
         Bundle bundle = new Bundle();

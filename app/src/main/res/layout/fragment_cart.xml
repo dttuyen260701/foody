@@ -113,6 +113,7 @@
             android:gravity="center"
             android:text="Pick your address"
             android:textColor="@color/black"
+            android:textSize="15sp"
             android:textStyle="bold|italic" />
     </LinearLayout>
 
@@ -129,7 +130,7 @@
         app:layout_constraintVertical_weight="1">
 
         <TextView
-            android:id="@+id/txt2_Cart_Frag"
+            android:id="@+id/txtDistanceText_Cart_Frag"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

@@ -48,7 +48,7 @@ public class Load_Bill_Asynctask extends AsyncTask<Void, String, Boolean> {
 
                 Bill bill = new Bill(object.getInt("ID_Bill"), object.getInt("ID_Cus"),
                         (float) object.getDouble("Total"), dateFormat.parse(object.getString("Time")),
-                        object.getString("Address"), (float) object.getDouble("Distance"),
+                        object.getString("Address"), (float) object.getDouble("Shipping_fee"),
                         (object.getInt("done") == 1) ? true : false);
                 billArrayList.add(bill);
             }

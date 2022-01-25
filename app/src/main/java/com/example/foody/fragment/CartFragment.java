@@ -20,7 +20,6 @@ import com.example.foody.R;
 import com.example.foody.adapters.BillDetailAdapter;
 import com.example.foody.asyntask.Get_Next_IDBill_Asyntask;
 import com.example.foody.asyntask.InsertOrDelOrUpdate_Asynctask;
-import com.example.foody.ativity.MainActivity;
 import com.example.foody.listeners.CartAdapter_Listenner;
 import com.example.foody.listeners.Get_Next_IDBill_Listener;
 import com.example.foody.listeners.Check_task_listener;
@@ -53,14 +52,15 @@ public class CartFragment extends Fragment {
     private static ArrayList<Bill_Details> list_Bill_details;
     private static int ID_Bill_New = -1;
     // sẽ lấy bằng vị trí 2 điểm
-    private float total = 0f, distance = 1f, shipping_fee = 0f;
+    private float total = 0f, distance = 0f, shipping_fee = 0f;
     private Bill bill_holder;
-    private String address_cus = txtADDRESS_PICK;
+    private static String address_cus = txtADDRESS_PICK;
 
     private RecyclerView recycler_Cart;
     private TextView txt_Total_Cart_Frag, txtClear_Cart_Frag,
             txtAddress_Cart_Frag, txtDistance_Cart_Frag,
-            txtShippingfee_Cart_Frag, txt_Tittle_Cart_Fragment;
+            txtShippingfee_Cart_Frag, txt_Tittle_Cart_Fragment,
+            txtDistanceText_Cart_Frag;
     private ImageView img_Back_Cart_Frag;
     private Button btnPick_address_Cart_Frag, btnOrder_Cart_Frag;
     private static Methods methods;
@@ -104,7 +104,8 @@ public class CartFragment extends Fragment {
                 new CartAdapter_Listenner() {
                     @Override
                     public void TinhTong(float Tong, boolean check) {
-                        total = Tong + distance * Constant_Values.Shipping_Fee_Per_1Km;
+                        total = (for_BillorCart) ? Tong + distance * Constant_Values.Shipping_Fee_Per_1Km
+                                    : Tong + bill_holder.getShipping_fee();
                         total = (float) ((float) Math.round(total*100)/100);
                         txt_Total_Cart_Frag.setText("$"+ total );
                         if(check)
@@ -132,12 +133,20 @@ public class CartFragment extends Fragment {
 
         txtAddress_Cart_Frag = (TextView) view.findViewById(R.id.txtAddress_Cart_Frag);
         txtDistance_Cart_Frag = (TextView) view.findViewById(R.id.txtDistance_Cart_Frag);
+        txtDistanceText_Cart_Frag = (TextView) view.findViewById(R.id.txtDistanceText_Cart_Frag);
 
         progressBar_Cart_frag = (ProgressBar) view.findViewById(R.id.progressBar_Cart_frag);
 
         img_Back_Cart_Frag = (ImageView) view.findViewById(R.id.img_Back_Cart_Frag);
         if(for_BillorCart) {
             txt_Tittle_Cart_Fragment.setText("Cart");
+
+            shipping_fee = Constant_Values.Shipping_Fee_Per_1Km*distance;
+
+            txtAddress_Cart_Frag.setText(address_cus);
+
+            txtDistance_Cart_Frag.setText(distance + " Km");
+
             img_Back_Cart_Frag.setVisibility(View.GONE);
             txtClear_Cart_Frag.setVisibility(View.VISIBLE);
 
@@ -146,7 +155,10 @@ public class CartFragment extends Fragment {
         } else {
             txt_Tittle_Cart_Fragment.setText("Bill Detail");
 
-            distance = bill_holder.getDistance();
+            shipping_fee = bill_holder.getShipping_fee();
+            txtDistance_Cart_Frag.setText("");
+            txtDistanceText_Cart_Frag.setText("");
+            txtAddress_Cart_Frag.setText(bill_holder.getAddress());
 
             img_Back_Cart_Frag.setVisibility(View.VISIBLE);
             img_Back_Cart_Frag.setOnClickListener(new View.OnClickListener() {
@@ -165,11 +177,7 @@ public class CartFragment extends Fragment {
             }
         }
 
-        txtAddress_Cart_Frag.setText(address_cus);
-        txtDistance_Cart_Frag.setText(distance + " Km");
-
-        shipping_fee = Constant_Values.Shipping_Fee_Per_1Km*distance;
-        shipping_fee = (float) ((float) Math.round(shipping_fee*100)/100);
+        shipping_fee = ((float) Math.round(shipping_fee*100)/100);
         txtShippingfee_Cart_Frag.setText(shipping_fee + "$");
 
         txtClear_Cart_Frag.setOnClickListener(new View.OnClickListener() {
@@ -211,7 +219,7 @@ public class CartFragment extends Fragment {
                             e.printStackTrace();
                         }
                         Bill bill_delivery = new Bill(getID_Bill_New(), Constant_Values.getIdCus(), total,
-                                date, address_cus, distance, false);
+                                date, address_cus, shipping_fee, false);
                         insert_Bill(bill_delivery);
                         next_ID();
                     }
@@ -222,7 +230,16 @@ public class CartFragment extends Fragment {
                     break;
                 }
             case btn_PICK_ADDRESS:
-                Toast.makeText(getActivity(), btn_PICK_ADDRESS, Toast.LENGTH_SHORT).show();
+                address_cus = "12 Thang 9 Street";
+                txtAddress_Cart_Frag.setText(address_cus);
+                distance = 5;
+                shipping_fee = distance*Constant_Values.Shipping_Fee_Per_1Km;
+                shipping_fee = ((float) Math.round(shipping_fee*100)/100);
+                total = total +shipping_fee;
+                total = ((float) Math.round(total*100)/100);
+                txtDistance_Cart_Frag.setText(distance + " Km");
+                txtShippingfee_Cart_Frag.setText(shipping_fee + "$");
+                txt_Total_Cart_Frag.setText(total + "$");
                 break;
             case btn_RECEIVED:
                 update_Bill_to_done(bill_holder.getiD_Bill());
@@ -251,12 +268,10 @@ public class CartFragment extends Fragment {
                         getFragmentManager().popBackStack();
                     }
                 });
-        back_to_BillFragmet(feedbackFragment);
+        back_to_BillFragment(feedbackFragment);
     }
 
-
-
-    private void back_to_BillFragmet(FeedbackFragment feedbackFragment){
+    private void back_to_BillFragment(FeedbackFragment feedbackFragment){
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.fragment_layout, feedbackFragment);
         transaction.addToBackStack("Bill_Details");
@@ -336,7 +351,7 @@ public class CartFragment extends Fragment {
         bundle.putFloat("Total", bill.getTotal());
         bundle.putString("Time", dateFormat.format(bill.getTime()));
         bundle.putString("Address", bill.getAddress());
-        bundle.putFloat("Distance", bill.getDistance());
+        bundle.putFloat("Shipping_fee", bill.getShipping_fee());
         bundle.putBoolean("done", bill.isDone());
         RequestBody requestBody = methods.getRequestBody("method_insert_bill", bundle);
         InsertOrDelOrUpdate_Asynctask asynctask = new InsertOrDelOrUpdate_Asynctask(listener_insert, requestBody,

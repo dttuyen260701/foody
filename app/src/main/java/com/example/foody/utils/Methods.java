@@ -30,6 +30,9 @@ public class Methods {
         JsonObject tempObj = new JsonObject();//doi tuong JSon temp luu giu lieu
         String key_2 = "";
         switch (method_name){
+            case "method_get_restaurant_data":
+                postObj.addProperty("ID_Res", String.valueOf(bundle.getInt("ID_Res")));
+                break;
             case "method_get_customer_data":
                 postObj.addProperty("Gmail", bundle.getString("Gmail"));
                 break;
@@ -57,7 +60,7 @@ public class Methods {
                 tempObj.addProperty("Total", String.valueOf(bundle.getFloat("Total")));
                 tempObj.addProperty("Time", bundle.getString("Time"));
                 tempObj.addProperty("Address", bundle.getString("Address"));
-                tempObj.addProperty("Distance", String.valueOf(bundle.getFloat("Distance")));
+                tempObj.addProperty("Shipping_fee", String.valueOf(bundle.getFloat("Shipping_fee")));
                 tempObj.addProperty("done", bundle.getBoolean("done"));
                 break;
             case "method_update_bill":
