@@ -7,6 +7,7 @@ public class Bill_Details {
     private float price_Total;
     private float rate;
     private String reviews;
+    private boolean insert;
 
     public Bill_Details(){
         this.iD_Bill = -1;
@@ -15,15 +16,17 @@ public class Bill_Details {
         this.price_Total = -1;
         this.rate = -1;
         this.reviews = "";
+        this.insert = false;
     }
 
-    public Bill_Details(int iD_Bill, int iD_Food, int count, float price_Total, float rate, String reviews) {
+    public Bill_Details(int iD_Bill, int iD_Food, int count, float price_Total, float rate, String reviews, boolean iSinsert) {
         this.iD_Bill = iD_Bill;
         this.iD_Food = iD_Food;
         this.count = count;
         this.price_Total = price_Total;
         this.rate = rate;
         this.reviews = reviews;
+        this.insert = iSinsert;
     }
 
     public int getiD_Bill() {
@@ -72,6 +75,14 @@ public class Bill_Details {
 
     public void setReviews(String reviews) {
         this.reviews = reviews;
+    }
+
+    public boolean isInsert() {
+        return insert;
+    }
+
+    public void setInsert(boolean insert) {
+        this.insert = insert;
     }
 
     @Override

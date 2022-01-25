@@ -40,16 +40,16 @@ public class FeedbackFragment extends Fragment {
     private ProgressBar progressBar_feedback_frag;
     private FeedbackAdapter adapter;
     private static Methods methods;
-    private Context context;//truyền để khởi tạo method vì ở trước là 1 fragment
 
     //kiểm tra xem gọi lần đầu, nếu k phải ẩn skip hiện arrow
-    private boolean fist_time;
+    private boolean fist_time, check_change;
 
     public FeedbackFragment(Context context, boolean fist_time, ArrayList<Bill_Details> list_feedback,
                             Listener_for_BackFragment listener_for_backFragment) {
         this.fist_time = fist_time;
         this.list_bill_details_feedback = list_feedback;
         this.listener_for_backFragment = listener_for_backFragment;
+        this.check_change = false;
         if(this.methods == null)
             this.methods = new Methods(context);
     }
@@ -93,7 +93,7 @@ public class FeedbackFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 for(int i = 0; i < list_bill_details_feedback.size(); ++i) {
-                    if(list_bill_details_feedback.get(i).getRate() > 0 ||
+                    if(!list_bill_details_feedback.get(i).isInsert() ||
                         i == list_bill_details_feedback.size() - 1){
                         update_RateAndReview(list_bill_details_feedback.get(i), i);
                     }
@@ -118,7 +118,7 @@ public class FeedbackFragment extends Fragment {
     //check đã rate và rivew đủ
     private boolean check_Full_Rate(){
         for(Bill_Details i : list_bill_details_feedback){
-            if(i.getRate() == 0f && i.getReviews().equals(""))
+            if(!i.isInsert())
                 return false;
         }
         return true;
@@ -137,11 +137,18 @@ public class FeedbackFragment extends Fragment {
             @Override
             public void onEnd(boolean isSucces, boolean insert_Success) {
                 if(isSucces){
+                    if(!bill_details.isInsert() && bill_details.getRate() > 0){
+                        check_change = true;
+                    }
                     update_Rate_Food(bill_details.getiD_Food());
                     if(position == list_bill_details_feedback.size() - 1){
                         progressBar_feedback_frag.setVisibility(View.GONE);
-                        Toast.makeText(getActivity(), "Thanks for you feedback!", Toast.LENGTH_SHORT).show();
+                        if(check_change)
+                            Toast.makeText(getActivity(), "Thanks for you feedback!", Toast.LENGTH_SHORT).show();
                         listener_for_backFragment.orderBill_Or_BackFragment();
+                    }
+                    if(!bill_details.isInsert() && bill_details.getRate() > 0){
+                        bill_details.setInsert(true);
                     }
                 } else
                     Toast.makeText(getActivity(), "Lỗi Server", Toast.LENGTH_SHORT).show();

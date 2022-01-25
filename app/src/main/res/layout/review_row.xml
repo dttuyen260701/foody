@@ -53,8 +53,10 @@
             android:paddingStart="3dp"
             android:progressTint="#AE9D01"
             android:rating="2.1"
-            android:secondaryProgressTint="#121001"
-            android:stepSize="0.1" />
+            android:stepSize="0.1"
+            android:secondaryProgressTint="@android:color/transparent" />
+<!--        android:secondaryProgressTint="@android:color/transparent"-->
+<!--        dùng để ẩn shadow-->
 
         <TextView
             android:id="@+id/txtTime_Riview_row"

@@ -1,7 +1,6 @@
 package com.example.foody.adapters;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -11,7 +10,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,7 +19,6 @@ import com.example.foody.fragment.FoodFragment;
 import com.example.foody.models.Bill_Details;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.FeedBackViewHolder> {
     private ArrayList<Bill_Details> list_bill_detail;
@@ -73,7 +70,7 @@ public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.FeedBa
             }
         });
 
-        if(list_bill_detail.get(index).getRate() >= 1.0f){
+        if(list_bill_detail.get(index).isInsert()){
             String review_text = (list_bill_detail.get(index).getReviews().length() > 0)
                     ? list_bill_detail.get(index).getReviews() : " ";
             holder.txtfeedback_row.setText(review_text);

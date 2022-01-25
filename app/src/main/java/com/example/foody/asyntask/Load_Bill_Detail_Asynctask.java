@@ -42,9 +42,10 @@ public class Load_Bill_Detail_Asynctask extends AsyncTask<Void, String, Boolean>
 
             for(int i = 0; i < jsonArray.length(); ++i){
                 JSONObject object = jsonArray.getJSONObject(i);
+                boolean check_review = (object.getDouble("Rate") > 0) ? true : false;
                 Bill_Details bill_details = new Bill_Details(object.getInt("ID_Bill"), object.getInt("ID_Food"),
                         object.getInt("Count"), (float) object.getDouble("Price_Total"),
-                        (float) object.getDouble("Rate"), object.getString("Reviews"));
+                        (float) object.getDouble("Rate"), object.getString("Reviews"), check_review);
                 arrayList_result.add(bill_details);
             }
             return true;

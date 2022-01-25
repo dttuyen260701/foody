@@ -70,6 +70,7 @@
             android:rating="3.5"
             android:secondaryProgressTint="#685D03"
             android:stepSize="0.5" />
+<!--        android:isIndicator để người dùng rating mặc định là false-->
 
         <EditText
             android:id="@+id/txtfeedback_row"
@@ -86,7 +87,6 @@
             android:padding="3dp"
             android:textSize="14sp"
             tools:ignore="SpeakableTextPresentCheck" />
-        <!--        android:isIndicator để người dùng rating mặc định là false-->
 
     </LinearLayout>
 

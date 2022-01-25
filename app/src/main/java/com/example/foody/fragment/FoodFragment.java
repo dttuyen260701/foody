@@ -291,7 +291,7 @@ public class FoodFragment extends Fragment {
         if(count_old == -1){
             Bill_Details bill_details_new = new Bill_Details(CartFragment.getID_Bill_New(),
                     ID_Food, 1, getByID(ID_Food).getPrice_Food(),
-                    0.0f, "");
+                    0.0f, "", false);
             CartFragment.add_to_Cart(bill_details_new);
         } else {
             CartFragment.search_BillDetail_ByIDFood(ID_Food).setCount(count_old + 1);
