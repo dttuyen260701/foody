@@ -15,7 +15,13 @@ public class Customer {
         this.phone = phone;
     }
 
-    public Customer() {}
+    public Customer() {
+        this.iD_Cus = -1;
+        this.gmail = "";
+        this.password = "";
+        this.name_Cus = "";
+        this.phone = "";
+    }
 
     public int getiD_Cus() {
         return iD_Cus;

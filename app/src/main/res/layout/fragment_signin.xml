@@ -8,7 +8,7 @@
     android:background="@drawable/welcome_bg">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar_Login_list"
+        android:id="@+id/appbar_ChangePass_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/layout_login_Frag2"
@@ -23,7 +23,7 @@
             android:layout_height="match_parent">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar_Login_Frag"
+                android:id="@+id/toolbar_ChangePass_Frag"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#8F0909"
@@ -44,11 +44,11 @@
                 app:srcCompat="@drawable/left_arrow" />
 
             <TextView
-                android:id="@+id/txt_Tittle_Login_Fragment"
+                android:id="@+id/txtTitle_Login_Frag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Login"
+                android:text="Sign In"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -66,16 +66,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appbar_Login_list"
+        app:layout_constraintTop_toBottomOf="@+id/appbar_ChangePass_list"
         app:layout_constraintVertical_weight="13">
 
         <EditText
             android:id="@+id/txtEmail_login"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
             android:layout_marginTop="48dp"
-            android:layout_marginEnd="25dp"
             android:backgroundTint="#050303"
             android:ems="10"
             android:hint="Email"
@@ -83,8 +81,8 @@
             android:textColor="#0E0B0B"
             android:textColorHint="#686565"
             android:textSize="20sp"
+            app:layout_constraintDimensionRatio="w,7:1"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtDN_login"
             tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
@@ -93,9 +91,7 @@
             android:id="@+id/txtPass_login"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="25dp"
             android:backgroundTint="#000000"
             android:ems="10"
             android:hint="Password"
@@ -103,6 +99,7 @@
             android:textColor="#120F0F"
             android:textColorHint="#686565"
             android:textSize="20sp"
+            app:layout_constraintDimensionRatio="w,7:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
@@ -116,7 +113,7 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="80dp"
             android:gravity="center"
-            android:text="Login"
+            android:text="Sign In"
             android:textColor="#102DCF"
             android:textSize="35sp"
             android:textStyle="bold"
@@ -144,17 +141,17 @@
             android:id="@+id/btnLogin_login"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
             android:layout_marginTop="30dp"
-            android:layout_marginEnd="20dp"
-            android:backgroundTint="@color/button_cart_frag"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/custom_button_cart_frag"
             android:padding="15sp"
-            android:text="Login"
+            android:text="Sign In"
             android:textColor="@color/white"
             android:textSize="20sp"
+            app:layout_constraintDimensionRatio="w,3:1"
             app:layout_constraintEnd_toStartOf="@+id/btnRegister_login"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtforgetpass_login" />
 
@@ -162,14 +159,14 @@
             android:id="@+id/btnRegister_login"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="30dp"
-            android:layout_marginEnd="30dp"
-            android:backgroundTint="@color/button_cart_frag"
+            android:background="@drawable/custom_button_cart_frag"
             android:padding="15sp"
-            android:text="Register"
+            android:text="Sign Up"
             android:textColor="@color/white"
             android:textSize="20sp"
+            app:layout_constraintDimensionRatio="w,3:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/btnLogin_login"
@@ -177,15 +174,17 @@
 
         <TextView
             android:id="@+id/txtforgetpass_login"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:layout_marginEnd="25dp"
+            android:gravity="center|end"
             android:linksClickable="true"
             android:text="@string/linkforgetpass"
             android:textColor="#EF0606"
             android:textSize="16sp"
+            app:layout_constraintDimensionRatio="w,15:1"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtPass_login" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

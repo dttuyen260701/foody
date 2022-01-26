@@ -33,16 +33,20 @@ public class Methods {
             case "method_get_restaurant_data":
                 postObj.addProperty("ID_Res", String.valueOf(bundle.getInt("ID_Res")));
                 break;
+            case "method_check_mail_exist":
             case "method_get_customer_data":
                 postObj.addProperty("Gmail", bundle.getString("Gmail"));
                 break;
+            case "method_update_customer":
             case "method_insert_customer"://gửi thêm Obj Cus
                 key_2 = "customer";// gửi Object tên customer
+                tempObj.addProperty("ID_Cus", String.valueOf(bundle.get("ID_Cus")));
                 tempObj.addProperty("Gmail", bundle.getString("Gmail"));
                 tempObj.addProperty("Password", bundle.getString("Password"));
                 tempObj.addProperty("Name_Cus", bundle.getString("Name_Cus"));
                 tempObj.addProperty("Phone", bundle.getString("Phone"));
                 break;
+            case "method_get_customer_data_byID":
             case "method_get_favorite_data"://Gui them ID
             case "method_get_bill_data":
                 postObj.addProperty("ID_Cus", String.valueOf(bundle.getInt("ID_Cus")));

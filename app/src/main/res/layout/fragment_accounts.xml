@@ -8,10 +8,10 @@
     android:background="@color/border_color">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar_Accounts_Frag"
+        android:id="@+id/appbar_Accounts_logined_Frag"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/layout_account2"
+        app:layout_constraintBottom_toTopOf="@+id/layout_account_logined2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,7 +24,7 @@
             android:layout_height="match_parent">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar_Accounts_Fragment"
+                android:id="@+id/toolbar_Accounts_logined_Fragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/app_themes"
@@ -34,7 +34,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/txt_Tittle_Account_Fragment"
+                android:id="@+id/txt_Tittle_Account_logined_Fragment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/account_menu"
@@ -49,14 +49,14 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_account2"
+        android:id="@+id/layout_account_logined2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appbar_Accounts_Frag"
+        app:layout_constraintTop_toBottomOf="@+id/appbar_Accounts_logined_Frag"
         app:layout_constraintVertical_weight="13">
 
         <TextView
@@ -70,7 +70,7 @@
             android:textAllCaps="true"
             android:textColor="@color/black"
             android:textSize="11sp"
-            app:layout_constraintBottom_toTopOf="@+id/btn_SignIn_Account_Frag"
+            app:layout_constraintBottom_toTopOf="@+id/btn_Setting_Account_Logined_Frag"
             app:layout_constraintDimensionRatio="h,14:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -79,7 +79,7 @@
             app:layout_constraintVertical_chainStyle="packed" />
 
         <Button
-            android:id="@+id/btn_SignIn_Account_Frag"
+            android:id="@+id/btn_Setting_Account_Logined_Frag"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@drawable/custom_button_account_frag"
@@ -87,7 +87,7 @@
             android:paddingStart="7dp"
             android:text="Sign In"
             android:textAllCaps="false"
-            app:layout_constraintBottom_toTopOf="@+id/btn_SignUp_Account_Frag"
+            app:layout_constraintBottom_toTopOf="@+id/btn_changePass_Account_Login_Frag"
             app:layout_constraintDimensionRatio="h,12:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -95,7 +95,7 @@
             tools:ignore="TouchTargetSizeCheck" />
 
         <Button
-            android:id="@+id/btn_SignUp_Account_Frag"
+            android:id="@+id/btn_changePass_Account_Login_Frag"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@drawable/custom_button_account_frag"
@@ -103,15 +103,15 @@
             android:paddingStart="7dp"
             android:text="Sign Up"
             android:textAllCaps="false"
-            app:layout_constraintBottom_toTopOf="@+id/btn_Contact_Account_Frag"
+            app:layout_constraintBottom_toTopOf="@+id/btn_Contact_Account_Login_Frag"
             app:layout_constraintDimensionRatio="h,12:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_SignIn_Account_Frag"
+            app:layout_constraintTop_toBottomOf="@+id/btn_Setting_Account_Logined_Frag"
             tools:ignore="TouchTargetSizeCheck" />
 
         <Button
-            android:id="@+id/btn_Contact_Account_Frag"
+            android:id="@+id/btn_Contact_Account_Login_Frag"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@drawable/custom_button_account_frag"
@@ -119,15 +119,16 @@
             android:paddingStart="7dp"
             android:text="Contact us"
             android:textAllCaps="false"
-            app:layout_constraintBottom_toTopOf="@+id/btn_TermofU_Account_Frag"
+            app:layout_constraintBottom_toTopOf="@+id/btn_TermofU_Account_Login_Frag"
             app:layout_constraintDimensionRatio="h,12:1"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_SignUp_Account_Frag"
+            app:layout_constraintTop_toBottomOf="@+id/btn_changePass_Account_Login_Frag"
             tools:ignore="TouchTargetSizeCheck" />
 
         <Button
-            android:id="@+id/btn_TermofU_Account_Frag"
+            android:id="@+id/btn_TermofU_Account_Login_Frag"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@drawable/custom_button_account_frag"
@@ -139,7 +140,7 @@
             app:layout_constraintDimensionRatio="h,12:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_Contact_Account_Frag"
+            app:layout_constraintTop_toBottomOf="@+id/btn_Contact_Account_Login_Frag"
             tools:ignore="TouchTargetSizeCheck" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

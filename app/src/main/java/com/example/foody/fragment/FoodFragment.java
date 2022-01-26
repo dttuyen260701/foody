@@ -40,6 +40,8 @@ import java.util.Collections;
 import okhttp3.RequestBody;
 
 public class FoodFragment extends Fragment {
+    //xem có ng mới đăng nhập hay k
+    private static boolean check_NewCus = true;
 
     private RecyclerView recycler_Food;
     private SearchView search_FoodView;
@@ -97,15 +99,16 @@ public class FoodFragment extends Fragment {
         }
     };
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_food, container, false);
         SetUp(view);
-        if(list_Foods.isEmpty())
+        if(list_Foods.isEmpty() || check_NewCus){
             load_Food_Data();
+            check_NewCus = false;
+        }
 
         adapter = new FoodAdapter(list_Foods, view.getContext(), listener_favorite
             , new RecyclerView_Item_Listener() {
@@ -134,6 +137,10 @@ public class FoodFragment extends Fragment {
             if(i.getiD_Food() == IDFood)
                 return i;
         return new Foods();
+    }
+
+    public static void setCheck_NewCus(boolean check_NewCus) {
+        FoodFragment.check_NewCus = check_NewCus;
     }
 
     private void SetUp(View view){

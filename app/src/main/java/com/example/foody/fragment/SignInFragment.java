@@ -1,5 +1,7 @@
 package com.example.foody.fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +17,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.foody.R;
 import com.example.foody.asyntask.Load_Customer_Asynctask;
-import com.example.foody.ativity.MainActivity;
 import com.example.foody.listeners.Listener_for_BackFragment;
 import com.example.foody.listeners.Load_Customer_Listener;
 import com.example.foody.models.Customer;
@@ -24,21 +25,28 @@ import com.example.foody.utils.Methods;
 
 import okhttp3.RequestBody;
 
-public class LoginFragment extends Fragment {
+public class SignInFragment extends Fragment {
     private Listener_for_BackFragment listener_backFrag;
     private ImageView img_Back_Login_Frag;
     private EditText txtEmail_login, txtPass_login;
     private TextView txtforgetpass_login;
     private Button btnLogin_login, btnRegister_login;
+    private Listener_for_BackFragment listener_login_succes;
+    private String mail, pass;
 
-    public LoginFragment(Listener_for_BackFragment listener_backFrag) {
+    public SignInFragment(Listener_for_BackFragment listener_backFrag,
+                          Listener_for_BackFragment listener_login_succes,
+                          String mail, String pass) {
         this.listener_backFrag = listener_backFrag;
+        this.listener_login_succes = listener_login_succes;
+        this.mail = mail;
+        this.pass = pass;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_login, container, false);
+        View view = inflater.inflate(R.layout.fragment_signin, container, false);
         SetUp(view);
         // Inflate the layout for this fragment
         return view;
@@ -51,6 +59,9 @@ public class LoginFragment extends Fragment {
         txtforgetpass_login = (TextView) view.findViewById(R.id.txtforgetpass_login);
         btnLogin_login = (Button) view.findViewById(R.id.btnLogin_login);
         btnRegister_login = (Button) view.findViewById(R.id.btnRegister_login);
+
+        txtEmail_login.setText(mail);
+        txtPass_login.setText(pass);
 
         img_Back_Login_Frag.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +79,7 @@ public class LoginFragment extends Fragment {
                         getFragmentManager().popBackStack();
                     }
                 }, false);
-                back_to_AccountsFragment(forget_pass);
+                back_to_LoginFragment(forget_pass);
             }
         });
 
@@ -85,11 +96,19 @@ public class LoginFragment extends Fragment {
                 }
             }
         });
+
+        btnRegister_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SignUpFragment signUpFragment = new SignUpFragment(listener_backFrag);
+                back_to_LoginFragment(signUpFragment);
+            }
+        });
     }
 
-    private void back_to_AccountsFragment(Fragment fragment){
+    private void back_to_LoginFragment(Fragment fragment){
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.fragment_layout, fragment);
+        transaction.replace(R.id.fragment_layout, fragment);
         transaction.addToBackStack("Login");
         transaction.commit();
     }
@@ -108,16 +127,24 @@ public class LoginFragment extends Fragment {
             @Override
             public void onEnd(boolean isSussed, Customer customer) {
                 if(isSussed){
+                    int ID_Save = -1;
                     if(gmail.equals(customer.getGmail())
                             && password.equals(customer.getPassword())){
                         Constant_Values.setIdCus(customer.getiD_Cus());
-                        listener_backFrag.orderBill_Or_BackFragment();
-                        Toast.makeText(getActivity(), "Login Succes.", Toast.LENGTH_SHORT).show();
-                    } else
-                        Toast.makeText(getContext(), "Wrong mail or password!" , Toast.LENGTH_SHORT).show();
+                        Constant_Values.setCustomer(customer);
+                        ID_Save = customer.getiD_Cus();
+                        listener_login_succes.orderBill_Or_BackFragment();
+                        Toast.makeText(getActivity(), "Login Success", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(), "Wrong mail or password!", Toast.LENGTH_SHORT).show();
+                    }
+                    Constant_Values.save_ID_Cus = getContext().getSharedPreferences("save_ID_Cus", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = Constant_Values.save_ID_Cus.edit();
+                    editor.putInt("ID_Cus", ID_Save);
+                    editor.commit();
                 }
                 else
-                    Toast.makeText(getContext(), "Lỗi Server", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Lỗi Server", Toast.LENGTH_SHORT).show();
             }
         };
 

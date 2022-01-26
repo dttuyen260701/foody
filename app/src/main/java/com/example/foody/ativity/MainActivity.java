@@ -5,10 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.*;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -31,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Foods> list_Foods;
     private ArrayList<Favorite> list_Favorite;
     private ArrayList<Bill> list_Bill;
-    private BottomNavigationView bottom_Navigation;
+    private static BottomNavigationView bottom_Navigation;
     private Fragment fragment_Food, fragment_Cart, fragment_Bill, fragment_Accounts;
     boolean doubleBackToExitPressedOnce = false;
 
@@ -52,35 +49,10 @@ public class MainActivity extends AppCompatActivity {
         list_Bill = new ArrayList<>();
         AnhXa();
         setUp();
-//        Customer cus = new Customer(0, "test13@gmail.com", "123", "Thêm", "0123456789");
-//        insert_Cus(cus);
-//        Favorite fav = new Favorite(2, 3);
-//        insert_or_del_Fav(fav, false);
-//        login_Cus("tuan@gmail.com", "123");
-//        load_Bill();
-//        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-//        Date date = new Date(System.currentTimeMillis());
-//        try {
-//            Bill bill = new Bill(0, 1, 12.0f, dateFormat.parse(dateFormat.format(date)), "Da Nang");
-//            insert_Bill(bill);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        Bill_Details bill_details = new Bill_Details(3, 2, 2, 15.0f, 3.5f, "Review");
-//        insert_Bill_Detail(bill_details);
     }
 
-//    //Test View
-//    private void Test(){
-//        list_Bill_Detail = new ArrayList<>();
-//        list_Bill_Detail.add(new Bill_Details(4, 1, 1, 0f, 0f, "Good"));
-//        list_Bill_Detail.add(new Bill_Details(4, 2, 2, 0f, 0f, "Good"));
-//        list_Bill_Detail.add(new Bill_Details(4, 3, 2, 0f, 0f, "Good"));
-//        list_Bill_Detail.add(new Bill_Details(4, 4, 1, 0f, 0f, "Good"));
-//    }
-
     private void AnhXa(){
-        main_layout = (ConstraintLayout) findViewById(R.id.layout_account2);
+        main_layout = (ConstraintLayout) findViewById(R.id.layout_account_logined2);
         bottom_Navigation = (BottomNavigationView) findViewById(R.id.bottom_Navigation);
         bottom_Navigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
     }
@@ -124,85 +96,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void chang_Menu(Fragment fragment){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        //transaction.add(R.id.fragment_layout, fragment, tag);
         transaction.replace(R.id.fragment_layout, fragment);
         transaction.commit();
     }
 
-    //Check Login
-    private void login_Cus(String gmail, String password){
-        Load_Customer_Listener listener1 = new Load_Customer_Listener() {
-            @Override
-            public void onPre() {
-                if (!methods.isNetworkConnected()) {
-                    Toast.makeText(MainActivity.this, "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onEnd(boolean isSussed, Customer customer) {
-                if(isSussed){
-                    StringBuilder builder = new StringBuilder();
-                    builder.append(customer.toString());
-                    Constant_Values.setIdCus(customer.getiD_Cus());
-                }
-                else
-                    Toast.makeText(MainActivity.this, "Lỗi Server", Toast.LENGTH_SHORT).show();
-            }
-        };
-
-        Bundle bundle = new Bundle();
-        bundle.putString("Gmail", gmail);
-        RequestBody requestBody = methods.getRequestBody("method_get_customer_data", bundle);
-        Load_Customer_Asynctask asyntask = new Load_Customer_Asynctask(listener1, requestBody);
-        asyntask.execute();
-    }
-
-    private void insert_Cus(Customer cus){
-        Load_Customer_Listener listener_check = new Load_Customer_Listener() {
-            @Override
-            public void onPre() {
-
-            }
-
-            @Override
-            public void onEnd(boolean isSussed, Customer customer) {
-                if(customer.getiD_Cus() == -1){
-                    Check_task_listener listener = new Check_task_listener() {
-                        @Override
-                        public void onPre() {
-                            if (!methods.isNetworkConnected()) {
-                                Toast.makeText(MainActivity.this, "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        @Override
-                        public void onEnd(boolean isSucces, boolean insert_Success) {
-                            if(isSucces){
-                                String kq = (insert_Success) ? "Thành công" : "Thất bại";
-                            }
-                            else
-                                Toast.makeText(MainActivity.this, "Lỗi Server", Toast.LENGTH_SHORT).show();
-                        }
-                    };
-                    Bundle bundle = new Bundle();
-                    bundle.putString("Gmail", cus.getGmail());
-                    bundle.putString("Password", cus.getPassword());
-                    bundle.putString("Name_Cus", cus.getName_Cus());
-                    bundle.putString("Phone", cus.getPhone());
-                    RequestBody requestBody = methods.getRequestBody("method_insert_customer", bundle);
-                    InsertOrDelOrUpdate_Asynctask asyntask = new InsertOrDelOrUpdate_Asynctask(listener, requestBody,
-                            Constant_Values.URL_CUSTOMER_API);
-                    asyntask.execute();
-                }
-                else
-                    Toast.makeText(MainActivity.this, "Lỗi Server", Toast.LENGTH_SHORT).show();
-            }
-        };
-        Bundle bundle = new Bundle();
-        bundle.putString("Gmail", cus.getGmail());
-        RequestBody requestBody = methods.getRequestBody("method_get_customer_data", bundle);
-        Load_Customer_Asynctask asyntask = new Load_Customer_Asynctask(listener_check, requestBody);
-        asyntask.execute();
+    public static void selecFoodMenu(){
+        bottom_Navigation.setSelectedItemId(R.id.bottom_food);
     }
 }

@@ -273,7 +273,7 @@ public class CartFragment extends Fragment {
 
     private void back_to_BillFragment(FeedbackFragment feedbackFragment){
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.fragment_layout, feedbackFragment);
+        transaction.replace(R.id.fragment_layout, feedbackFragment);
         transaction.addToBackStack("Bill_Details");
         transaction.commit();
     }
