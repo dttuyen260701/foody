@@ -52,7 +52,7 @@ public class CartFragment extends Fragment {
     private static ArrayList<Bill_Details> list_Bill_details;
     private static int ID_Bill_New = -1;
     // sẽ lấy bằng vị trí 2 điểm
-    private float total = 0f, distance = 0f, shipping_fee = 0f;
+    private float total = 0f, distance = 0f, shipping_fee = 0f, total_in_address = 0f;
     private Bill bill_holder;
     private static String address_cus = txtADDRESS_PICK;
 
@@ -104,10 +104,11 @@ public class CartFragment extends Fragment {
                 new CartAdapter_Listenner() {
                     @Override
                     public void TinhTong(float Tong, boolean check) {
-                        total = (for_BillorCart) ? Tong + distance * Constant_Values.Shipping_Fee_Per_1Km
+                        total = Tong;
+                        total_in_address = (for_BillorCart) ? Tong + distance * Constant_Values.Shipping_Fee_Per_1Km
                                     : Tong + bill_holder.getShipping_fee();
-                        total = (float) ((float) Math.round(total*100)/100);
-                        txt_Total_Cart_Frag.setText("$"+ total );
+                        total_in_address = (float) ((float) Math.round(total_in_address*100)/100);
+                        txt_Total_Cart_Frag.setText("$"+ total_in_address );
                         if(check)
                             Empty_Cart_View();
                     }
@@ -178,7 +179,7 @@ public class CartFragment extends Fragment {
         }
 
         shipping_fee = ((float) Math.round(shipping_fee*100)/100);
-        txtShippingfee_Cart_Frag.setText(shipping_fee + "$");
+        txtShippingfee_Cart_Frag.setText("$" + shipping_fee);
 
         txtClear_Cart_Frag.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -218,7 +219,7 @@ public class CartFragment extends Fragment {
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
-                        Bill bill_delivery = new Bill(getID_Bill_New(), Constant_Values.getIdCus(), total,
+                        Bill bill_delivery = new Bill(getID_Bill_New(), Constant_Values.getIdCus(), total_in_address,
                                 date, address_cus, shipping_fee, false);
                         insert_Bill(bill_delivery);
                         next_ID();
@@ -235,11 +236,11 @@ public class CartFragment extends Fragment {
                 distance = 5;
                 shipping_fee = distance*Constant_Values.Shipping_Fee_Per_1Km;
                 shipping_fee = ((float) Math.round(shipping_fee*100)/100);
-                total = total +shipping_fee;
-                total = ((float) Math.round(total*100)/100);
+                total_in_address = total + shipping_fee;
+                total_in_address = ((float) Math.round(total_in_address*100)/100);
                 txtDistance_Cart_Frag.setText(distance + " Km");
-                txtShippingfee_Cart_Frag.setText(shipping_fee + "$");
-                txt_Total_Cart_Frag.setText(total + "$");
+                txtShippingfee_Cart_Frag.setText("$" + shipping_fee );
+                txt_Total_Cart_Frag.setText("$" + total_in_address);
                 break;
             case btn_RECEIVED:
                 update_Bill_to_done(bill_holder.getiD_Bill());
