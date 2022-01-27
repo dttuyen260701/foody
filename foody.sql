@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1:3307
--- Thời gian đã tạo: Th1 26, 2022 lúc 07:55 PM
+-- Thời gian đã tạo: Th1 27, 2022 lúc 12:41 PM
 -- Phiên bản máy phục vụ: 10.4.21-MariaDB
 -- Phiên bản PHP: 8.0.10
 
@@ -55,7 +55,19 @@ INSERT INTO `bill` (`ID_Bill`, `ID_Cus`, `Total`, `Time`, `Address`, `Shipping_f
 (11, 3, 11.6, '2022-01-26 01:12:00', '12 Thang 9 Street', 1.5, 1),
 (12, 1, 13, '2022-01-26 13:47:00', '12 Thang 9 Street', 1.5, 1),
 (13, 1, 17.6, '2022-01-26 22:26:00', '12 Thang 9 Street', 1.5, 1),
-(14, 4, 14.85, '2022-01-27 00:51:00', '12 Thang 9 Street', 1.5, 1);
+(14, 4, 14.85, '2022-01-27 00:51:00', '12 Thang 9 Street', 1.5, 1),
+(15, 9, 8.5, '2022-01-27 17:34:00', '12 Thang 9 Street', 1.5, 1),
+(16, 9, 8.5, '2022-01-27 17:35:00', '12 Thang 9 Street', 1.5, 1),
+(17, 9, 12.25, '2022-01-27 17:37:00', '12 Thang 9 Street', 1.5, 1),
+(18, 9, 15.25, '2022-01-27 18:15:00', '12 Thang 9 Street', 1.5, 1),
+(19, 9, 28.85, '2022-01-27 18:16:00', '12 Thang 9 Street', 1.5, 1),
+(20, 9, 33.85, '2022-01-27 18:17:00', '12 Thang 9 Street', 1.5, 1),
+(21, 9, 33.85, '2022-01-27 18:23:00', '12 Thang 9 Street', 1.5, 1),
+(22, 9, 15.25, '2022-01-27 18:24:00', '12 Thang 9 Street', 1.5, 1),
+(23, 9, 23.6, '2022-01-27 18:25:00', '12 Thang 9 Street', 1.5, 1),
+(24, 9, 20.6, '2022-01-27 18:26:00', '12 Thang 9 Street', 0, 1),
+(25, 9, 3, '2022-01-27 18:26:00', '12 Thang 9 Street', 0, 1),
+(26, 9, 6, '2022-01-27 18:27:00', '12 Thang 9 Street', 1.5, 1);
 
 -- --------------------------------------------------------
 
@@ -111,10 +123,49 @@ INSERT INTO `bill_detail` (`ID_Bill`, `ID_Food`, `Count`, `Price_Total`, `Rate`,
 (13, 3, 2, 3.5, 5, ''),
 (13, 4, 2, 3.6, 5, ''),
 (13, 7, 1, 5, 5, ''),
-(13, 8, 1, 4, 0, ''),
+(13, 8, 1, 4, 5, ''),
 (14, 2, 3, 4.5, 5, ''),
 (14, 3, 3, 5.25, 5, ''),
-(14, 4, 2, 3.6, 5, '');
+(14, 4, 2, 3.6, 5, ''),
+(15, 1, 1, 2.5, 5, ''),
+(15, 2, 3, 4.5, 5, ' '),
+(16, 3, 4, 7, 4.5, ''),
+(17, 1, 3, 7.5, 5, 'Alo'),
+(17, 2, 1, 1.5, 5, 'Goood'),
+(17, 3, 1, 1.75, 5, ' '),
+(18, 1, 3, 7.5, 5, 'Alo'),
+(18, 2, 3, 4.5, 5, 'Goood'),
+(18, 3, 1, 1.75, 5, ' '),
+(19, 1, 1, 2.5, 5, ''),
+(19, 2, 3, 4.5, 5, ' '),
+(19, 3, 1, 1.75, 5, ''),
+(19, 4, 2, 3.6, 4.5, ''),
+(19, 7, 3, 15, 5, ''),
+(20, 1, 3, 7.5, 5, ' '),
+(20, 2, 3, 4.5, 5, ' '),
+(20, 3, 1, 1.75, 5, ' '),
+(20, 4, 2, 3.6, 4.5, ' '),
+(20, 7, 3, 15, 5, ''),
+(21, 1, 3, 7.5, 4.5, ''),
+(21, 2, 3, 4.5, 4, ''),
+(21, 3, 1, 1.75, 5, ''),
+(21, 4, 2, 3.6, 5, ''),
+(21, 7, 3, 15, 5, ''),
+(22, 1, 1, 2.5, 5, ''),
+(22, 2, 1, 1.5, 5, ''),
+(22, 3, 1, 1.75, 5, ''),
+(22, 8, 2, 8, 5, ''),
+(23, 2, 3, 4.5, 4.5, 'Gd'),
+(23, 4, 2, 3.6, 4, 'it can be better'),
+(23, 7, 2, 10, 5, ''),
+(23, 8, 1, 4, 5, ''),
+(24, 2, 3, 4.5, 5, ''),
+(24, 3, 2, 3.5, 5, ''),
+(24, 4, 2, 3.6, 5, ''),
+(24, 7, 1, 5, 5, ''),
+(24, 8, 1, 4, 5, ''),
+(25, 2, 2, 3, 5, ''),
+(26, 2, 3, 4.5, 5, '');
 
 -- --------------------------------------------------------
 
@@ -142,7 +193,8 @@ INSERT INTO `customer` (`ID_Cus`, `Gmail`, `Password`, `Name_Cus`, `Phone`) VALU
 (5, 'test13@gmail.com', '1234', 'Thêm', '0123456789'),
 (6, 'matthaus078@gmail.com', '1234', 'Test', '0775705211'),
 (7, 'them@gmail.com', '123', '', '120235655'),
-(8, 'themm@gmail.com', '123', '', '0120120210');
+(8, 'themm@gmail.com', '123', '', '0120120210'),
+(9, 'admin@gmail.com', '1234', 'Chua Te Review ', '0123456789');
 
 -- --------------------------------------------------------
 
@@ -162,14 +214,18 @@ CREATE TABLE `favorite` (
 INSERT INTO `favorite` (`ID_Food`, `ID_Cus`) VALUES
 (1, 2),
 (1, 3),
+(1, 9),
 (2, 2),
+(2, 9),
 (3, 1),
 (3, 3),
+(3, 9),
 (4, 1),
 (4, 2),
 (4, 3),
 (7, 1),
-(8, 3);
+(8, 3),
+(8, 9);
 
 -- --------------------------------------------------------
 
@@ -194,11 +250,11 @@ CREATE TABLE `foods` (
 --
 
 INSERT INTO `foods` (`ID_Food`, `Name_Food`, `Description_Food`, `Frice_Food`, `Link_Img_Food`, `Time_Cooking`, `Rate`, `Status`, `Is_Available`) VALUES
-(1, 'LEMONGRASS CHICKEN (2 PCS)', '2 Pcs Lemongrass Chicken', 2.5, 'https://kfcvietnam.com.vn/uploads/combo/93555ac3f1cadf4112a5e272903a6320.jpg', 5, 4.625, 1, 1),
-(2, 'TENDERODS CHICKEN SKEWER (2 PIECES)', '2 pcs Tenderods Chicken Skewer', 1.5, 'https://kfcvietnam.com.vn/uploads/combo/36227503c3ec95248380c7edb19e4494.jpg', 7, 4.57143, 1, 1),
-(3, 'PACHITO', '1 Pachito', 1.75, 'https://kfcvietnam.com.vn/uploads/combo/f6d771285267f9460d27074f54f0bc9f.png', 10, 4.75, 1, 1),
-(4, 'Fried Chicken (1 Pc)', '1 Pc of Hot & Spicy Chicken / 1 Pc of Non Spicy Crispy Chicken / 1 Pc of Original Recipe Chicken', 1.8, 'https://kfcvietnam.com.vn/uploads/combo/7166d1bee7b66d1e90e7899cda0b03be.jpg', 10, 4.75, 1, 1),
-(7, 'COMBO FRIED CHICKEN A', '2 Pcs of Hot & Spicy Chicken / 2 Pcs of Non Spicy Crispy Chicken / 2 Pcs of Original Recipe Chicken\n1 Pepsi Can', 5, 'https://kfcvietnam.com.vn/uploads/combo/b09860e31866521c22705711916cc402.jpg', 9, 4.9, 1, 1),
+(1, 'LEMONGRASS CHICKEN (2 PCS)', '2 Pcs Lemongrass Chicken', 2.5, 'https://kfcvietnam.com.vn/uploads/combo/93555ac3f1cadf4112a5e272903a6320.jpg', 5, 4.81818, 1, 1),
+(2, 'TENDERODS CHICKEN SKEWER (2 PIECES)', '2 pcs Tenderods Chicken Skewer', 1.5, 'https://kfcvietnam.com.vn/uploads/combo/36227503c3ec95248380c7edb19e4494.jpg', 7, 4.75, 1, 1),
+(3, 'PACHITO', '1 Pachito', 1.75, 'https://kfcvietnam.com.vn/uploads/combo/f6d771285267f9460d27074f54f0bc9f.png', 10, 4.83333, 1, 1),
+(4, 'Fried Chicken (1 Pc)', '1 Pc of Hot & Spicy Chicken / 1 Pc of Non Spicy Crispy Chicken / 1 Pc of Original Recipe Chicken', 1.8, 'https://kfcvietnam.com.vn/uploads/combo/7166d1bee7b66d1e90e7899cda0b03be.jpg', 10, 4.69231, 1, 1),
+(7, 'COMBO FRIED CHICKEN A', '2 Pcs of Hot & Spicy Chicken / 2 Pcs of Non Spicy Crispy Chicken / 2 Pcs of Original Recipe Chicken\n1 Pepsi Can', 5, 'https://kfcvietnam.com.vn/uploads/combo/b09860e31866521c22705711916cc402.jpg', 9, 4.95, 1, 1),
 (8, 'COMBO FRIED CHICKEN B', '1 Hot Wings 3 Pcs-1 French Fries (L)-1 Pepsi Can', 4, 'https://kfcvietnam.com.vn/uploads/combo/7d36d8d380315c169ba830b0b5b4c26d.jpg', 6, 5, 1, 1);
 
 -- --------------------------------------------------------
@@ -209,6 +265,7 @@ INSERT INTO `foods` (`ID_Food`, `Name_Food`, `Description_Food`, `Frice_Food`, `
 
 CREATE TABLE `restaurant` (
   `ID_Res` int(11) NOT NULL,
+  `Address_Res` varchar(100) NOT NULL DEFAULT ' ',
   `Shipping_Fee_1km` float NOT NULL DEFAULT 0.2,
   `Link_Slide_1` text NOT NULL,
   `Link_Slide_2` text NOT NULL,
@@ -221,8 +278,8 @@ CREATE TABLE `restaurant` (
 -- Đang đổ dữ liệu cho bảng `restaurant`
 --
 
-INSERT INTO `restaurant` (`ID_Res`, `Shipping_Fee_1km`, `Link_Slide_1`, `Link_Slide_2`, `Phone_number`, `Link_Term`, `Link_Forger_Pass`) VALUES
-(1, 0.3, 'https://d1ralsognjng37.cloudfront.net/e61274a4-2f83-4e03-adb0-2253db148f5d.jpeg', 'https://c.ndtvimg.com/2020-08/2dv9fku_kfc-covid_625x300_25_August_20.jpg', '0775705211', 'https://www.facebook.com/', 'https://www.youtube.com/');
+INSERT INTO `restaurant` (`ID_Res`, `Address_Res`, `Shipping_Fee_1km`, `Link_Slide_1`, `Link_Slide_2`, `Phone_number`, `Link_Term`, `Link_Forger_Pass`) VALUES
+(1, '56 Nguyen Luong Bang Street', 0.3, 'https://d1ralsognjng37.cloudfront.net/e61274a4-2f83-4e03-adb0-2253db148f5d.jpeg', 'https://c.ndtvimg.com/2020-08/2dv9fku_kfc-covid_625x300_25_August_20.jpg', '0775705211', 'https://www.facebook.com/', 'https://www.youtube.com/');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -275,7 +332,7 @@ ALTER TABLE `restaurant`
 -- AUTO_INCREMENT cho bảng `bill`
 --
 ALTER TABLE `bill`
-  MODIFY `ID_Bill` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `ID_Bill` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT cho bảng `customer`
