@@ -143,6 +143,7 @@ public class FoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
 
         private void load_Img(){
+            list_image.clear();
             Methods methods = new Methods(context);
             Load_Img_Listener listener = new Load_Img_Listener() {
                 @Override

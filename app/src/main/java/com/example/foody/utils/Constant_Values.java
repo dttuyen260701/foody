@@ -28,8 +28,8 @@ public class Constant_Values {
 
     public static SharedPreferences save_ID_Cus;
 
-    private static String URL_SERVER = "http://192.168.1.6/foody/" ;
-    //private static String URL_SERVER = "https://tuyen2607.000webhostapp.com/";//link SERVER
+    //private static String URL_SERVER = "http://192.168.1.6/foody/" ;
+    private static String URL_SERVER = "https://tuyen2607.000webhostapp.com/";//link SERVER
 
     public static String URL_FOOD_API = URL_SERVER + "api_food.php";
     public static String URL_CUSTOMER_API = URL_SERVER + "api_customer.php";

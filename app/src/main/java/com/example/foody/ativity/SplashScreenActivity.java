@@ -34,9 +34,6 @@ public class SplashScreenActivity extends AppCompatActivity {
 
             @Override
             public void run() {
-                Intent i = new Intent(SplashScreenActivity.this, MainActivity.class);
-                startActivity(i);
-
                 Bundle bundle = new Bundle();
                 bundle.putInt("ID_Res", 1);
                 RequestBody requestBody = methods.getRequestBody("method_get_restaurant_data", bundle);
@@ -50,8 +47,11 @@ public class SplashScreenActivity extends AppCompatActivity {
 
                     @Override
                     public void onEnd(boolean isSucces, boolean insert_Success) {
-                        if(isSucces)
+                        if(isSucces){
+                            Intent i = new Intent(SplashScreenActivity.this, MainActivity.class);
+                            startActivity(i);
                             finish();
+                        }
                         else
                             Toast.makeText(SplashScreenActivity.this,
                                     "Lỗi Server", Toast.LENGTH_SHORT).show();
@@ -59,7 +59,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                 });
                 asynctask.execute();
             }
-        }, 1000);
+        }, 2000);
     }
 
     private void load_Customer_by_ID(int ID_Cus){
