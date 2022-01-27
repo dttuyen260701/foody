@@ -20,6 +20,7 @@
 
             while($row = mysqli_fetch_assoc($query_rs)){
                 $restaurant['ID_Res'] = $row['ID_Res'];
+                $restaurant['Address_Res'] = $row['Address_Res'];
                 $restaurant['Shipping_Fee_1km'] = $row['Shipping_Fee_1km'];
                 $restaurant['Link_Slide_1'] = $row['Link_Slide_1'];
                 $restaurant['Link_Slide_2'] = $row['Link_Slide_2'];

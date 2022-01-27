@@ -33,29 +33,29 @@ public class WebviewFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+        if(webView_Frag != null){
+            webView_Frag.clearHistory();
+            // NOTE: clears RAM cache, if you pass true, it will also clear the disk cache.
+            // Probably not a great idea to pass true if you have other WebViews still alive.
+            webView_Frag.clearCache(true);
 
-        webView_Frag.clearHistory();
-        // NOTE: clears RAM cache, if you pass true, it will also clear the disk cache.
-        // Probably not a great idea to pass true if you have other WebViews still alive.
-        webView_Frag.clearCache(true);
+            // Loading a blank page is optional, but will ensure that the WebView isn't doing anything when you destroy it.
+            webView_Frag.loadUrl("about:blank");
 
-        // Loading a blank page is optional, but will ensure that the WebView isn't doing anything when you destroy it.
-        webView_Frag.loadUrl("about:blank");
+            webView_Frag.onPause();
+            webView_Frag.removeAllViews();
+            webView_Frag.destroyDrawingCache();
+            // NOTE: This pauses JavaScript execution for ALL WebViews,
+            // do not use if you have other WebViews still alive.
+            // If you create another WebView after calling this,
+            // make sure to call mWebView.resumeTimers().
+            webView_Frag.pauseTimers();
+            // NOTE: This can occasionally cause a segfault below API 17 (4.2)
+            webView_Frag.destroy();
 
-        webView_Frag.onPause();
-        webView_Frag.removeAllViews();
-        webView_Frag.destroyDrawingCache();
-        // NOTE: This pauses JavaScript execution for ALL WebViews,
-        // do not use if you have other WebViews still alive.
-        // If you create another WebView after calling this,
-        // make sure to call mWebView.resumeTimers().
-        webView_Frag.pauseTimers();
-        // NOTE: This can occasionally cause a segfault below API 17 (4.2)
-        webView_Frag.destroy();
-
-        // Null out the reference so that you don't end up re-using it.
-        webView_Frag = null;
-
+            // Null out the reference so that you don't end up re-using it.
+            webView_Frag = null;
+        }
     }
 
     @Override

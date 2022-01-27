@@ -56,6 +56,13 @@ public class ChangePassFragment extends Fragment {
 
         btnChange_change_Pass = (Button) view.findViewById(R.id.btnChange_change_Pass);
 
+        img_back_ChangPass_Frag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener_Back.orderBill_Or_BackFragment();
+            }
+        });
+
         txtNewPass_Change2.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

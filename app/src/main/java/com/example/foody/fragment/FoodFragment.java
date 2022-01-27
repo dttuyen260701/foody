@@ -1,5 +1,6 @@
 package com.example.foody.fragment;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.SearchView;
@@ -51,6 +52,7 @@ public class FoodFragment extends Fragment {
     private static ArrayList<Foods> list_Foods_All;
     private static ArrayList<Foods> list_Foods;//hiển thị
     private static ArrayList<Favorite> list_Favorite;
+    private static ArrayList<Bitmap> list_img_slide;
     private FoodAdapter adapter;
     private boolean check_In_Dev_Fav = false;
 
@@ -95,7 +97,7 @@ public class FoodFragment extends Fragment {
                         Constant_Values.URL_FAVORITE_API);
                 asynctask.execute();
             } else
-                Toast.makeText(getActivity(), "Please login to add favorite list.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Please login to add favorite list", Toast.LENGTH_SHORT).show();
         }
     };
 
@@ -110,7 +112,7 @@ public class FoodFragment extends Fragment {
             check_NewCus = false;
         }
 
-        adapter = new FoodAdapter(list_Foods, view.getContext(), listener_favorite
+        adapter = new FoodAdapter(list_img_slide, list_Foods, view.getContext(), listener_favorite
             , new RecyclerView_Item_Listener() {
             @Override
             public void onClick(int ID_Food) {
@@ -181,7 +183,8 @@ public class FoodFragment extends Fragment {
                 return false;
             }
         });
-
+        if(list_img_slide == null)
+            list_img_slide = new ArrayList<>();
         if(list_Foods == null)
             list_Foods = new ArrayList<>();
         if(list_Favorite == null)

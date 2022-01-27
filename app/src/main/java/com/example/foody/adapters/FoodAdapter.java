@@ -1,29 +1,38 @@
 package com.example.foody.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.foody.R;
+import com.example.foody.asyntask.Load_Image_Asynctask;
 import com.example.foody.fragment.CartFragment;
 import com.example.foody.listeners.Favorite_for_FoodAdapter;
 import com.example.foody.listeners.Listener_for_IncAndRedu;
+import com.example.foody.listeners.Load_Img_Listener;
 import com.example.foody.listeners.RecyclerView_Item_Listener;
 import com.example.foody.models.Bill_Details;
 import com.example.foody.models.Favorite;
 import com.example.foody.models.Foods;
 import com.example.foody.utils.Constant_Values;
+import com.example.foody.utils.Methods;
 
 import java.util.ArrayList;
+
+import me.relex.circleindicator.CircleIndicator3;
+import okhttp3.RequestBody;
 
 public class FoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -33,12 +42,14 @@ public class FoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static boolean for_Search;
     private RecyclerView_Item_Listener listener_item_Click;
     private Listener_for_IncAndRedu listener_for_incAndRedu;
+    private ArrayList<Bitmap> list_image;
 
-    public static final int TYPE1= 0;
-    public static final int TYPE2= 1;
+    public final int TYPE1= 0;
+    public final int TYPE2= 1;
 
-    public FoodAdapter(ArrayList<Foods> foods_list, Context context, Favorite_for_FoodAdapter listener,
+    public FoodAdapter(ArrayList<Bitmap> list_image ,ArrayList<Foods> foods_list, Context context, Favorite_for_FoodAdapter listener,
                        RecyclerView_Item_Listener listener_item_Click, Listener_for_IncAndRedu listener_for_incAndRedu) {
+        this.list_image = list_image;
         this.foods_list = foods_list;
         this.context = context;
         this.listener = listener;
@@ -81,7 +92,7 @@ public class FoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         switch (viewType){
             case TYPE1:
                 itemView = layoutInflater.inflate(R.layout.first_food_row, parent, false);
-                return new FoodViewHolder(itemView);
+                return new First_Row_FoodViewHolder(itemView, list_image);
             default:
                 itemView = layoutInflater.inflate(R.layout.food_row, parent, false);
                 return new FoodViewHolder(itemView);
@@ -108,6 +119,61 @@ public class FoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         notifyDataSetChanged();
     }
 
+    public class First_Row_FoodViewHolder extends RecyclerView.ViewHolder{
+        ProgressBar progressBar_first_food_row;
+        ViewPager2 slide_show_First_food_row;
+        CircleIndicator3 indicator_First_food_row;
+        SlideViewPage2Adapter adapter_slide;
+        ArrayList<Bitmap> list_image;
+
+        public First_Row_FoodViewHolder(@NonNull View itemView, ArrayList<Bitmap> list_image) {
+            super(itemView);
+            progressBar_first_food_row = (ProgressBar)
+                    itemView.findViewById(R.id.progressBar_first_food_row);
+            slide_show_First_food_row = (ViewPager2)
+                    itemView.findViewById(R.id.slide_show_First_food_row);
+            indicator_First_food_row = (CircleIndicator3)
+                    itemView.findViewById(R.id.indicator_First_food_row);
+            this.list_image = list_image;
+            if(this.list_image.isEmpty())
+                load_Img();
+            adapter_slide = new SlideViewPage2Adapter(this.list_image);
+            slide_show_First_food_row.setAdapter(adapter_slide);
+            indicator_First_food_row.setViewPager(slide_show_First_food_row);
+        }
+
+        private void load_Img(){
+            Methods methods = new Methods(context);
+            Load_Img_Listener listener = new Load_Img_Listener() {
+                @Override
+                public void onPre() {
+                    if (!methods.isNetworkConnected()) {
+                        Toast.makeText(context, "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
+                    }
+                    progressBar_first_food_row.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onEnd(boolean isSuccess, ArrayList<Bitmap> list_result) {
+                    progressBar_first_food_row.setVisibility(View.GONE);
+                    if(isSuccess){
+                        list_image.addAll(list_result);
+                        adapter_slide.notifyDataSetChanged();
+                        indicator_First_food_row.setViewPager(slide_show_First_food_row);
+                    }
+                    else
+                        Toast.makeText(context, "Lỗi Server", Toast.LENGTH_SHORT).show();
+                }
+            };
+
+            ArrayList<String> list_link_Img = new ArrayList<>();
+            list_link_Img.add(Constant_Values.URL_IMG_SLIDE1);
+            list_link_Img.add(Constant_Values.URL_IMG_SLIDE2);
+            Load_Image_Asynctask asynctask = new Load_Image_Asynctask(list_link_Img, listener);
+            asynctask.execute();
+        }
+    }
+
     public class FoodViewHolder extends RecyclerView.ViewHolder{
         ImageView imgFood_item;
         ImageView imgFavorite_Food_item;
@@ -116,10 +182,6 @@ public class FoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 txtTime_Cook_Food_item, txt_count_FoodRow;
         Button btnRedu_FoodRow, btnInc_FoodRow;
         ConstraintLayout layout_Food_Row;
-
-        public ImageView getImgFavorite_Food_item() {
-            return imgFavorite_Food_item;
-        }
 
         public FoodViewHolder(@NonNull View itemView) {
             super(itemView);

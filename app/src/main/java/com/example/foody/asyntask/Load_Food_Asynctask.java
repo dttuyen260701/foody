@@ -57,7 +57,6 @@ public class Load_Food_Asynctask extends AsyncTask<Void, String, Boolean> {
                        (float) object.getDouble("Frice_Food") , object.getString("Link_Img_Food"),
                         object.getInt("Time_Cooking"), rate, (object.getInt("Status") == 1) ? true : false,
                         (object.getInt("Is_Available") == 1) ? true : false);
-                //còn bán mới get vào list
                 builder.url(foods.getLink_Image_Food());
                 Request request = builder.build();
                 response = okHttpClient.newCall(request).execute();

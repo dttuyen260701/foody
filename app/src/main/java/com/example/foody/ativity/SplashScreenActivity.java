@@ -50,8 +50,11 @@ public class SplashScreenActivity extends AppCompatActivity {
 
                     @Override
                     public void onEnd(boolean isSucces, boolean insert_Success) {
-                        // close this activity
-                        finish();
+                        if(isSucces)
+                            finish();
+                        else
+                            Toast.makeText(SplashScreenActivity.this,
+                                    "Lỗi Server", Toast.LENGTH_SHORT).show();
                     }
                 });
                 asynctask.execute();

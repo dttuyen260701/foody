@@ -45,6 +45,7 @@ public class Constant_Values {
     public static String URL_IMG_SLIDE2 = "";
 
     public static Float Shipping_Fee_Per_1Km = 0.2f;
+    public static String Addres_Res = "";
 
     public static String PHONENUMBER = "";
 }

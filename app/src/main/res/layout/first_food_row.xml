@@ -5,8 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/imgFood_item"
+    <ProgressBar
+        android:id="@+id/progressBar_first_food_row"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/slide_show_First_food_row"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -14,6 +24,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/user_pin" />
+        app:layout_constraintTop_toTopOf="parent">
+
+    </androidx.viewpager2.widget.ViewPager2>
+
+    <me.relex.circleindicator.CircleIndicator3
+        android:id="@+id/indicator_First_food_row"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
+        app:ci_drawable="@drawable/bg_indicator_3"
+        app:layout_constraintBottom_toBottomOf="@+id/slide_show_First_food_row"
+        app:layout_constraintDimensionRatio="h,6:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

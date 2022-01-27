@@ -41,6 +41,7 @@ public class Get_Restaurant_Inf_Asynctask extends AsyncTask<Void, String, Boolea
             JSONArray jsonArray = new JSONArray(result);
             for(int i = 0; i < jsonArray.length(); ++i){
                 JSONObject object = jsonArray.getJSONObject(i);
+                Constant_Values.Addres_Res = object.getString("Address_Res");
                 Constant_Values.Shipping_Fee_Per_1Km = (float) object.getDouble("Shipping_Fee_1km");
                 Constant_Values.URL_IMG_SLIDE1 = object.getString("Link_Slide_1");
                 Constant_Values.URL_IMG_SLIDE2 = object.getString("Link_Slide_2");

@@ -226,7 +226,7 @@ public class CartFragment extends Fragment {
                     if(check_address)
                         break;
                 } else {
-                    Toast.makeText(getActivity(), "Please login to order food.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Please login to order food", Toast.LENGTH_SHORT).show();
                     break;
                 }
             case btn_PICK_ADDRESS:
@@ -250,7 +250,12 @@ public class CartFragment extends Fragment {
                 break;
             case btn_RE_ORDER:
                 list_Bill_details.clear();
-                list_Bill_details.addAll(list_Bill_details_temp);
+                for(Bill_Details i : list_Bill_details_temp){
+                    i.setiD_Bill(ID_Bill_New);
+                    i.setRate(0f);
+                    i.setReviews("");
+                    list_Bill_details.add(i);
+                }
                 break;
             case btn_FEEDBACK:
                 call_Feedback_Frag(false);
@@ -273,7 +278,8 @@ public class CartFragment extends Fragment {
 
     private void back_to_BillFragment(FeedbackFragment feedbackFragment){
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_layout, feedbackFragment);
+        //add để trạng thái trước được lưu
+        transaction.add(R.id.fragment_layout, feedbackFragment);
         transaction.addToBackStack("Bill_Details");
         transaction.commit();
     }
