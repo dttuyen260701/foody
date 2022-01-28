@@ -100,6 +100,19 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
+    //Không cho người dùng chuyển tab khi đang thực hiện load
+    public static void Navi_disable(){
+        for(int i = 0; i < bottom_Navigation.getMenu().size(); ++i){
+            bottom_Navigation.getMenu().getItem(i).setEnabled(false);
+        }
+    }
+    //sau khi load xong thực hiện bình thường
+    public static void Navi_enable(){
+        for(int i = 0; i < bottom_Navigation.getMenu().size(); ++i){
+            bottom_Navigation.getMenu().getItem(i).setEnabled(true);
+        }
+    }
+
     public static void selecFoodMenu(){
         bottom_Navigation.setSelectedItemId(R.id.bottom_food);
     }

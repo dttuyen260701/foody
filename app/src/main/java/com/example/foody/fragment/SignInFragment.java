@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.foody.R;
 import com.example.foody.asyntask.Load_Customer_Asynctask;
+import com.example.foody.ativity.MainActivity;
 import com.example.foody.listeners.Listener_for_BackFragment;
 import com.example.foody.listeners.Load_Customer_Listener;
 import com.example.foody.models.Customer;
@@ -122,10 +123,12 @@ public class SignInFragment extends Fragment {
                 if (!methods.isNetworkConnected()) {
                     Toast.makeText(getActivity(), "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
                 }
+                MainActivity.Navi_disable();
             }
 
             @Override
             public void onEnd(boolean isSussed, Customer customer) {
+                MainActivity.Navi_enable();
                 if(isSussed){
                     int ID_Save = -1;
                     if(gmail.equals(customer.getGmail())

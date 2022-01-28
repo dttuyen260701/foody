@@ -22,6 +22,13 @@ import okhttp3.RequestBody;
 
 public class SplashScreenActivity extends AppCompatActivity {
     private Methods methods;
+    private static boolean check = false;
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        check = true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +41,8 @@ public class SplashScreenActivity extends AppCompatActivity {
 
             @Override
             public void run() {
+                Intent i = new Intent(SplashScreenActivity.this, MainActivity.class);
+
                 Bundle bundle = new Bundle();
                 bundle.putInt("ID_Res", 1);
                 RequestBody requestBody = methods.getRequestBody("method_get_restaurant_data", bundle);
@@ -48,7 +57,6 @@ public class SplashScreenActivity extends AppCompatActivity {
                     @Override
                     public void onEnd(boolean isSucces, boolean insert_Success) {
                         if(isSucces){
-                            Intent i = new Intent(SplashScreenActivity.this, MainActivity.class);
                             startActivity(i);
                             finish();
                         }
@@ -57,7 +65,12 @@ public class SplashScreenActivity extends AppCompatActivity {
                                     "Lỗi Server", Toast.LENGTH_SHORT).show();
                     }
                 });
-                asynctask.execute();
+                if(check){
+                    startActivity(i);
+                    finish();
+                } else {
+                    asynctask.execute();
+                }
             }
         }, 2000);
     }

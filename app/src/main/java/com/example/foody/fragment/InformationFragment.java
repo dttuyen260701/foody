@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.foody.R;
 import com.example.foody.asyntask.InsertOrDelOrUpdate_Asynctask;
+import com.example.foody.ativity.MainActivity;
 import com.example.foody.listeners.Check_task_listener;
 import com.example.foody.listeners.Listener_for_BackFragment;
 import com.example.foody.listeners.Listener_for_ChangePass;
@@ -113,10 +114,12 @@ public class InformationFragment extends Fragment {
                 if (!methods.isNetworkConnected()) {
                     Toast.makeText(getActivity(), "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
                 }
+                MainActivity.Navi_disable();
             }
 
             @Override
             public void onEnd(boolean isSucces, boolean insert_Success) {
+                MainActivity.Navi_enable();
                 if(isSucces){
                     Toast.makeText(getActivity(), "Update Success", Toast.LENGTH_SHORT).show();
                     Constant_Values.setCustomer(cus);

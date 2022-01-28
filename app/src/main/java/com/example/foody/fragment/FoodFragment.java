@@ -23,6 +23,7 @@ import com.example.foody.asyntask.Load_Favorite_Asynctask;
 import com.example.foody.asyntask.Load_Food_Asynctask;
 import com.example.foody.asyntask.Load_Reviews_Asynctask;
 import com.example.foody.asyntask.InsertOrDelOrUpdate_Asynctask;
+import com.example.foody.ativity.MainActivity;
 import com.example.foody.listeners.Favorite_for_FoodAdapter;
 import com.example.foody.listeners.Check_task_listener;
 import com.example.foody.listeners.Listener_for_BackFragment;
@@ -275,11 +276,13 @@ public class FoodFragment extends Fragment {
                 if (!methods.isNetworkConnected()) {
                     Toast.makeText(getActivity(), "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
                 }
+                MainActivity.Navi_disable();
                 progressBar_load.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onEnd(boolean isSussec, ArrayList<Reviews> list_result) {
+                MainActivity.Navi_enable();
                 progressBar_load.setVisibility(View.GONE);
                 if(isSussec){
                     Collections.reverse(list_result);//đảo ngược chuỗi

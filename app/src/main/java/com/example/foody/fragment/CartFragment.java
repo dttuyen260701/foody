@@ -20,6 +20,7 @@ import com.example.foody.R;
 import com.example.foody.adapters.BillDetailAdapter;
 import com.example.foody.asyntask.Get_Next_IDBill_Asyntask;
 import com.example.foody.asyntask.InsertOrDelOrUpdate_Asynctask;
+import com.example.foody.ativity.MainActivity;
 import com.example.foody.listeners.CartAdapter_Listenner;
 import com.example.foody.listeners.Get_Next_IDBill_Listener;
 import com.example.foody.listeners.Check_task_listener;
@@ -351,10 +352,12 @@ public class CartFragment extends Fragment {
                 if (!methods.isNetworkConnected()) {
                     Toast.makeText(getActivity(), "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
                 }
+                MainActivity.Navi_disable();
             }
 
             @Override
             public void onEnd(boolean isSucces, boolean insert_Success) {
+                MainActivity.Navi_enable();
                 if(isSucces){
                     for(int i = 0; i < list_Bill_details.size(); ++i){
                         insert_Bill_Detail(list_Bill_details.get(i), i);
@@ -386,11 +389,13 @@ public class CartFragment extends Fragment {
                 if (!methods.isNetworkConnected()) {
                     Toast.makeText(getActivity(), "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
                 }
+                MainActivity.Navi_disable();
                 progressBar_Cart_frag.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onEnd(boolean isSucces, boolean insert_Success) {
+                MainActivity.Navi_enable();
                 if (isSucces) {
                     if(position == list_Bill_details.size()-1){
                         BillFragment.setCheck_NewBill(true);//load lại bill
@@ -423,10 +428,12 @@ public class CartFragment extends Fragment {
                 if (!methods.isNetworkConnected()) {
                     Toast.makeText(getActivity(), "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
                 }
+                MainActivity.Navi_disable();
             }
 
             @Override
             public void onEnd(boolean isSucces, boolean insert_Success) {
+                MainActivity.Navi_enable();
                 if(isSucces){
                     btnOrder_Cart_Frag.setText(btn_FEEDBACK);
                     btnPick_address_Cart_Frag.setText(btn_RE_ORDER);

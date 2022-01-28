@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.foody.R;
 import com.example.foody.adapters.FeedbackAdapter;
 import com.example.foody.asyntask.InsertOrDelOrUpdate_Asynctask;
+import com.example.foody.ativity.MainActivity;
 import com.example.foody.listeners.Check_task_listener;
 import com.example.foody.listeners.Listener_for_BackFragment;
 import com.example.foody.models.Bill_Details;
@@ -131,11 +132,13 @@ public class FeedbackFragment extends Fragment {
                 if (!methods.isNetworkConnected()) {
                     Toast.makeText(getActivity(), "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
                 }
+                MainActivity.Navi_disable();
                 progressBar_feedback_frag.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onEnd(boolean isSucces, boolean insert_Success) {
+                MainActivity.Navi_enable();
                 if(isSucces){
                     if(!bill_details.isInsert() && bill_details.getRate() > 0){
                         check_change = true;

@@ -173,10 +173,12 @@ public class SignUpFragment extends Fragment {
                             if (!methods.isNetworkConnected()) {
                                 Toast.makeText(getActivity(), "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
                             }
+                            MainActivity.Navi_disable();
                         }
 
                         @Override
                         public void onEnd(boolean isSucces, boolean insert_Success) {
+                            MainActivity.Navi_enable();
                             if(isSucces){
                                 Toast.makeText(getActivity(), "Sign Up Success", Toast.LENGTH_SHORT).show();
                                 SignInFragment signInFragment = new SignInFragment(listener_back,
@@ -223,12 +225,16 @@ public class SignUpFragment extends Fragment {
         Check_task_listener check_task_listener = new Check_task_listener() {
             @Override
             public void onPre() {
-
+                if (!methods.isNetworkConnected()) {
+                    Toast.makeText(getActivity(), "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
+                }
+                MainActivity.Navi_disable();
             }
 
             @Override
             //can_insert = true insert đưuọc
             public void onEnd(boolean isSucces, boolean can_insert) {
+                MainActivity.Navi_enable();
                 if(isSucces){
                     if(can_insert){
                         insert_Cus_after_check(cus, methods);

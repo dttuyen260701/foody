@@ -16,6 +16,7 @@ import com.example.foody.R;
 import com.example.foody.adapters.BillAdapter;
 import com.example.foody.asyntask.Load_Bill_Asynctask;
 import com.example.foody.asyntask.Load_Bill_Detail_Asynctask;
+import com.example.foody.ativity.MainActivity;
 import com.example.foody.listeners.Listener_for_BackFragment;
 import com.example.foody.listeners.Load_Bill_Detail_Listener;
 import com.example.foody.listeners.Load_Bill_Listener;
@@ -145,13 +146,15 @@ public class BillFragment extends Fragment {
                 if (!methods.isNetworkConnected()) {
                     Toast.makeText(getActivity(), "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
                 }
+                MainActivity.Navi_disable();
                 progressBar_Bill_Frag.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onEnd(boolean isSucces, ArrayList<Bill_Details> bill_details_List) {
+                MainActivity.Navi_enable();
+                progressBar_Bill_Frag.setVisibility(View.GONE);
                 if(isSucces){
-                    progressBar_Bill_Frag.setVisibility(View.GONE);
                     boolean is_done_bill = false;
                     for(Bill bill : list_Bill)
                         if(bill.getiD_Bill() == ID_Bill)
