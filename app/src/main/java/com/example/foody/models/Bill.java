@@ -84,12 +84,13 @@ public class Bill {
 
     @Override
     public String toString() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         return "Bill{" +
                 "iD_Bill=" + iD_Bill +
                 ", iD_Cus=" + iD_Cus +
                 ", total=" + total +
-                ", time=" + time +
-                ", address='" + address + '\'' +
+                ", time=" + dateFormat.format(time) +
+                ", address='" + address  +
                 ", distance=" + shipping_fee +
                 ", done=" + done +
                 '}';

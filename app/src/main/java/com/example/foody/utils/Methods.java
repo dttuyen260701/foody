@@ -65,7 +65,8 @@ public class Methods {
                 tempObj.addProperty("Time", bundle.getString("Time"));
                 tempObj.addProperty("Address", bundle.getString("Address"));
                 tempObj.addProperty("Shipping_fee", String.valueOf(bundle.getFloat("Shipping_fee")));
-                tempObj.addProperty("done", bundle.getBoolean("done"));
+                String done_bill = (bundle.getBoolean("done")) ? "1" : "0";
+                tempObj.addProperty("done", done_bill);
                 break;
             case "method_update_bill":
             case "method_get_bill_detail_data"://gửi ID bill

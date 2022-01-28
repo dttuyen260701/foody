@@ -20,6 +20,7 @@ public class InsertOrDelOrUpdate_Asynctask extends AsyncTask<Void, String, Boole
         this.listener = listener;
         this.requestBody = requestBody;
         this.URL_API = uRL_API;
+        insert_Sussec = false;
     }
 
     @Override
