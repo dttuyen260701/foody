@@ -44,7 +44,6 @@
             $bill = json_decode($data1, true);
 
             $query = "INSERT INTO `bill` (`ID_Bill`, `ID_Cus`, `Total`, `Time`, `Address`, `Shipping_fee`, `done`) VALUES ('".$bill['ID_Bill']."', '".$bill['ID_Cus']."', '".(($bill['Total'] != NULL) ? $bill['Total'] : 0)."', '".$bill['Time']."', '".$bill['Address']."', '".$bill['Shipping_fee']."', '".$bill['done']."')";
-
             $query_rs = mysqli_query($connect, $query);
             
             if($query_rs)

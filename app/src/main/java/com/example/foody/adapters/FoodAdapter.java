@@ -2,6 +2,7 @@ package com.example.foody.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -125,9 +126,24 @@ public class FoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         CircleIndicator3 indicator_First_food_row;
         SlideViewPage2Adapter adapter_slide;
         ArrayList<Bitmap> list_image;
+        private Handler handler;
+        private Runnable runnable;
 
         public First_Row_FoodViewHolder(@NonNull View itemView, ArrayList<Bitmap> list_image) {
             super(itemView);
+            handler = new Handler();
+            runnable = new Runnable() {
+                @Override
+                public void run() {
+                    if(slide_show_First_food_row.getCurrentItem() == list_image.size() - 1){
+                        slide_show_First_food_row.setCurrentItem(0);
+                    } else {
+                        slide_show_First_food_row.setCurrentItem(
+                                slide_show_First_food_row.getCurrentItem() + 1);
+                    }
+                }
+            };
+
             progressBar_first_food_row = (ProgressBar)
                     itemView.findViewById(R.id.progressBar_first_food_row);
             slide_show_First_food_row = (ViewPager2)
@@ -140,6 +156,15 @@ public class FoodAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             adapter_slide = new SlideViewPage2Adapter(this.list_image);
             slide_show_First_food_row.setAdapter(adapter_slide);
             indicator_First_food_row.setViewPager(slide_show_First_food_row);
+
+            slide_show_First_food_row.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                @Override
+                public void onPageSelected(int position) {
+                    super.onPageSelected(position);
+                    slide_show_First_food_row.removeCallbacks(runnable);
+                    slide_show_First_food_row.postDelayed(runnable, 3000);
+                }
+            });
         }
 
         private void load_Img(){

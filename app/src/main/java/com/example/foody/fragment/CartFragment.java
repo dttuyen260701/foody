@@ -24,6 +24,7 @@ import com.example.foody.listeners.CartAdapter_Listenner;
 import com.example.foody.listeners.Get_Next_IDBill_Listener;
 import com.example.foody.listeners.Check_task_listener;
 import com.example.foody.listeners.Listener_for_BackFragment;
+import com.example.foody.listeners.Listener_for_PickAddress;
 import com.example.foody.models.Bill;
 import com.example.foody.models.Bill_Details;
 import com.example.foody.utils.Methods;
@@ -70,14 +71,14 @@ public class CartFragment extends Fragment {
     //true la cho Cart, false la cho bill
     private boolean for_BillorCart;
     private boolean is_done_dill;
-    private final Listener_for_BackFragment listener;
+    private final Listener_for_BackFragment listener_for_backFragment;
     private ArrayList<Bill_Details> list_Bill_details_temp;
     private BillDetailAdapter adapter;
 
     public CartFragment(Bill bill_holder,ArrayList<Bill_Details> list_Bill_details_temp,
                         boolean for_BillorCart1, boolean is_done_dill, Listener_for_BackFragment listener) {
         this.bill_holder = (for_BillorCart1) ? new Bill() : bill_holder;
-        this.listener = listener;
+        this.listener_for_backFragment = listener;
         this.list_Bill_details_temp = list_Bill_details_temp;
         this.for_BillorCart = for_BillorCart1;
         this.is_done_dill = is_done_dill;
@@ -165,7 +166,7 @@ public class CartFragment extends Fragment {
             img_Back_Cart_Frag.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.orderBill_Or_BackFragment();
+                    listener_for_backFragment.orderBill_Or_BackFragment();
                 }
             });
             txtClear_Cart_Frag.setVisibility(View.GONE);
@@ -212,7 +213,7 @@ public class CartFragment extends Fragment {
                     if(address_cus.equals(txtADDRESS_PICK)){
                         check_address = false;
                     } else {
-                        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
                         Date date =new Date();
                         try {
                             date = formatter.parse(formatter.format(new Date().getTime()));
@@ -231,16 +232,28 @@ public class CartFragment extends Fragment {
                     break;
                 }
             case btn_PICK_ADDRESS:
-                address_cus = "12 Thang 9 Street";
-                txtAddress_Cart_Frag.setText(address_cus);
-                distance = 5;
-                shipping_fee = distance*Constant_Values.Shipping_Fee_Per_1Km;
-                shipping_fee = ((float) Math.round(shipping_fee*100)/100);
-                total_in_address = total + shipping_fee;
-                total_in_address = ((float) Math.round(total_in_address*100)/100);
-                txtDistance_Cart_Frag.setText(distance + " Km");
-                txtShippingfee_Cart_Frag.setText("$" + shipping_fee );
-                txt_Total_Cart_Frag.setText("$" + total_in_address);
+                MapFragment_Parent mapFragment = new MapFragment_Parent(new Listener_for_BackFragment() {
+                    @Override
+                    public void orderBill_Or_BackFragment() {
+                        getFragmentManager().popBackStack();
+                    }
+                }, new Listener_for_PickAddress() {
+                    @Override
+                    public void onClick_pick(String address, float distance_1) {
+                        address_cus = address;
+                        txtAddress_Cart_Frag.setText(address_cus);
+                        distance = ((float) Math.round(distance_1*100)/100);
+                        shipping_fee = distance*Constant_Values.Shipping_Fee_Per_1Km;
+                        shipping_fee = ((float) Math.round(shipping_fee*100)/100);
+                        total_in_address = total + shipping_fee;
+                        total_in_address = ((float) Math.round(total_in_address*100)/100);
+                        txtDistance_Cart_Frag.setText(distance + " Km");
+                        txtShippingfee_Cart_Frag.setText("$" + shipping_fee );
+                        txt_Total_Cart_Frag.setText("$" + total_in_address);
+                        getFragmentManager().popBackStack();
+                    }
+                });
+                back_to_BillFragment(mapFragment);
                 break;
             case btn_RECEIVED:
                 update_Bill_to_done(bill_holder.getiD_Bill());
@@ -277,10 +290,10 @@ public class CartFragment extends Fragment {
         back_to_BillFragment(feedbackFragment);
     }
 
-    private void back_to_BillFragment(FeedbackFragment feedbackFragment){
+    private void back_to_BillFragment(Fragment fragment){
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         //add để trạng thái trước được lưu
-        transaction.add(R.id.fragment_layout, feedbackFragment);
+        transaction.add(R.id.fragment_layout, fragment);
         transaction.addToBackStack("Bill_Details");
         transaction.commit();
     }
