@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,11 +74,12 @@ public class CartFragment extends Fragment {
     private ProgressBar progressBar_Cart_frag;
 
     //true la cho Cart, false la cho bill
-    private boolean for_BillorCart;
-    private boolean is_done_dill;
-    private final Listener_for_BackFragment listener_for_backFragment;
+    private boolean for_BillorCart, is_done_dill;
+    private Listener_for_BackFragment listener_for_backFragment;
     private ArrayList<Bill_Details> list_Bill_details_temp;
     private BillDetailAdapter adapter;
+
+    private long mLastClick_Order = 0, mLastClick_PickAddress = 0;
 
     public CartFragment(Bill bill_holder,ArrayList<Bill_Details> list_Bill_details_temp,
                         boolean for_BillorCart1, boolean is_done_dill, Listener_for_BackFragment listener) {
@@ -199,6 +201,10 @@ public class CartFragment extends Fragment {
         btnOrder_Cart_Frag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (SystemClock.elapsedRealtime() - mLastClick_Order < 1000){
+                    return;
+                }
+                mLastClick_Order = SystemClock.elapsedRealtime();
                 on_click(btnOrder_Cart_Frag.getText().toString());
             }
         });
@@ -206,9 +212,15 @@ public class CartFragment extends Fragment {
         btnPick_address_Cart_Frag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (SystemClock.elapsedRealtime() - mLastClick_PickAddress < 1000){
+                    return;
+                }
+                mLastClick_PickAddress = SystemClock.elapsedRealtime();
                 on_click(btnPick_address_Cart_Frag.getText().toString());
             }
         });
+
+
     }
 
     private void on_click(String name){
@@ -216,7 +228,7 @@ public class CartFragment extends Fragment {
             case btn_ORDER:
                 if(Constant_Values.getIdCus() != -1) {
                     boolean check_address = true;//kiểm tra có address chưa
-                    if(address_cus.equals(txtADDRESS_PICK)){
+                    if(address_cus.equals(txtADDRESS_PICK) || distance == 0f){
                         check_address = false;
                     } else {
                         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -241,7 +253,13 @@ public class CartFragment extends Fragment {
                 MapFragment_Parent mapFragment = new MapFragment_Parent(new Listener_for_BackFragment() {
                     @Override
                     public void orderBill_Or_BackFragment() {
-                        getFragmentManager().popBackStack();
+                        if(getActivity() != null){
+                            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                            Fragment fragment = getActivity().getSupportFragmentManager().findFragmentByTag("map");
+                            if(fragment != null)
+                                transaction.remove(fragment);
+                            transaction.commit();
+                        }
                     }
                 }, new Listener_for_PickAddress() {
                     @Override
@@ -256,10 +274,13 @@ public class CartFragment extends Fragment {
                         txtDistance_Cart_Frag.setText(distance + " Km");
                         txtShippingfee_Cart_Frag.setText("$" + shipping_fee );
                         txt_Total_Cart_Frag.setText("$" + total_in_address);
-                        getFragmentManager().popBackStack();
+                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                        Fragment fragment = getActivity().getSupportFragmentManager().findFragmentByTag("map");
+                        transaction.remove(fragment);
+                        transaction.commit();
                     }
                 });
-                back_toCartFragment(mapFragment);
+                back_toCartFragment(mapFragment, "map");
                 break;
             case btn_RECEIVED:
                 update_Bill_to_done(bill_holder.getiD_Bill());
@@ -291,16 +312,22 @@ public class CartFragment extends Fragment {
                 new Listener_for_BackFragment() {
                     @Override
                     public void orderBill_Or_BackFragment() {
-                        getFragmentManager().popBackStack();
+                        if(getActivity() != null){
+                            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                            Fragment fragment = getActivity().getSupportFragmentManager().findFragmentByTag("feedback");
+                            if(fragment != null)
+                                transaction.remove(fragment);
+                            transaction.commit();
+                        }
                     }
                 });
-        back_toCartFragment(feedbackFragment);
+        back_toCartFragment(feedbackFragment, "feedback");
     }
 
-    private void back_toCartFragment(Fragment fragment){
+    private void back_toCartFragment(Fragment fragment, String tag){
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         //add để trạng thái trước được lưu
-        transaction.add(R.id.fragment_layout, fragment);
+        transaction.add(R.id.fragment_layout, fragment, tag);
         transaction.addToBackStack("Bill_Details");
         transaction.commit();
     }

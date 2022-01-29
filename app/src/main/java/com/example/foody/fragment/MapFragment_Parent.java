@@ -80,13 +80,6 @@ public class MapFragment_Parent extends Fragment {
             }
         });
 
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                btnSave_Location.setEnabled(true);
-//            }
-//        }, 2000);
-
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         //add để trạng thái trước được lưu
         transaction.add(R.id.layout_MapFragment, mapFragment);

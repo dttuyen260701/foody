@@ -25,9 +25,6 @@ public class MainActivity extends AppCompatActivity {
 
     private ConstraintLayout main_layout;
     private Methods methods;
-    private ArrayList<Foods> list_Foods;
-    private ArrayList<Favorite> list_Favorite;
-    private ArrayList<Bill> list_Bill;
     private static BottomNavigationView bottom_Navigation;
     private Fragment fragment_Food, fragment_Cart, fragment_Bill, fragment_Accounts;
     boolean doubleBackToExitPressedOnce = false;
@@ -50,9 +47,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         methods = new Methods(this);
-        list_Foods = new ArrayList<>();
-        list_Favorite = new ArrayList<>();
-        list_Bill = new ArrayList<>();
         AnhXa();
         setUp();
     }
@@ -72,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        //CartFragment.setList_Bill_details(list_Bill_Detail);
         fragment_Bill = new BillFragment();
         fragment_Accounts = new AccountsFragment();
         chang_Menu(fragment_Food);

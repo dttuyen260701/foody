@@ -101,7 +101,6 @@ public class FeedbackFragment extends Fragment {
                         update_RateAndReview(list_bill_details_feedback.get(i), i);
                     }
                 }
-                listener_for_backFragment.orderBill_Or_BackFragment();
             }
         });
 
@@ -136,7 +135,6 @@ public class FeedbackFragment extends Fragment {
                     Toast.makeText(getActivity(), "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
                 }
                 MainActivity.Navi_disable();
-                btn_Send_Feeling_Frag.setEnabled(false);
                 progressBar_feedback_frag.setVisibility(View.VISIBLE);
             }
 
@@ -149,10 +147,10 @@ public class FeedbackFragment extends Fragment {
                     }
                     update_Rate_Food(bill_details.getiD_Food());
                     if(position == list_bill_details_feedback.size() - 1){
-                        btn_Send_Feeling_Frag.setEnabled(true);
                         progressBar_feedback_frag.setVisibility(View.GONE);
                         if(check_change)
                             Toast.makeText(context, "Thanks for you feedback!", Toast.LENGTH_SHORT).show();
+                        listener_for_backFragment.orderBill_Or_BackFragment();
                     }
                     if(!bill_details.isInsert() && bill_details.getRate() > 0){
                         bill_details.setInsert(true);
