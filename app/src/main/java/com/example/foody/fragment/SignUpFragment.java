@@ -82,7 +82,9 @@ public class SignUpFragment extends Fragment {
                 WebviewFragment ToU = new WebviewFragment(new Listener_for_BackFragment() {
                     @Override
                     public void orderBill_Or_BackFragment() {
-                        getFragmentManager().popBackStack();
+                        if(getActivity() != null){
+                            getActivity().getSupportFragmentManager().popBackStack();
+                        }
                     }
                 }, true);
                 back_to_RegisterFragment(ToU);
@@ -134,7 +136,7 @@ public class SignUpFragment extends Fragment {
                     txtPass_register.getText().toString().length() == 0 ||
                     txtPass2_register.getText().toString().length() == 0 ||
                     txtPhone_Register.getText().toString().length() == 0) {
-                    Toast.makeText(getActivity(), "Please enter enough information.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Please enter enough information.", Toast.LENGTH_SHORT).show();
                 } else {
                     if(check){
                         if(check_matchPass){
@@ -143,7 +145,7 @@ public class SignUpFragment extends Fragment {
                                     txtPass_register.getText().toString(), "", txtPhone_Register.getText().toString());
                             insert_Cus(customer);
                         } else {
-                            Toast.makeText(getActivity(), "Password does not match", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Password does not match", Toast.LENGTH_SHORT).show();
                         }
                     }
                     else
@@ -154,10 +156,12 @@ public class SignUpFragment extends Fragment {
     }
 
     private void back_to_RegisterFragment(Fragment fragment){
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_layout, fragment);
-        transaction.addToBackStack("Register");
-        transaction.commit();
+        if(getActivity() != null){
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_layout, fragment);
+            transaction.addToBackStack("Register");
+            transaction.commit();
+        }
     }
 
     //sau khi check mới insert
@@ -174,7 +178,7 @@ public class SignUpFragment extends Fragment {
                         @Override
                         public void onPre() {
                             if (!methods.isNetworkConnected()) {
-                                Toast.makeText(getActivity(), "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
                             }
                             MainActivity.Navi_disable();
                         }
@@ -183,7 +187,7 @@ public class SignUpFragment extends Fragment {
                         public void onEnd(boolean isSucces, boolean insert_Success) {
                             MainActivity.Navi_enable();
                             if(isSucces){
-                                Toast.makeText(getActivity(), "Sign Up Success", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "Sign Up Success", Toast.LENGTH_SHORT).show();
                                 SignInFragment signInFragment = new SignInFragment(listener_back,
                                         new Listener_for_BackFragment() {
                                             @Override
@@ -193,12 +197,14 @@ public class SignUpFragment extends Fragment {
                                                 MainActivity.selecFoodMenu();
                                             }
                                         }, txtID_register.getText().toString(), txtPass_register.getText().toString(), context);
-                                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                                transaction.replace(R.id.fragment_layout, signInFragment);
-                                transaction.commit();
+                                if(getActivity() != null){
+                                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                                    transaction.replace(R.id.fragment_layout, signInFragment);
+                                    transaction.commit();
+                                }
                             }
                             else
-                                Toast.makeText(getActivity(), "Lỗi Server", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "Lỗi Server", Toast.LENGTH_SHORT).show();
                         }
                     };
                     Bundle bundle = new Bundle();
@@ -213,7 +219,7 @@ public class SignUpFragment extends Fragment {
                     asyntask.execute();
                 }
                 else
-                    Toast.makeText(getActivity(), "Lỗi Server", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Lỗi Server", Toast.LENGTH_SHORT).show();
             }
         };
         Bundle bundle = new Bundle();
@@ -229,7 +235,7 @@ public class SignUpFragment extends Fragment {
             @Override
             public void onPre() {
                 if (!methods.isNetworkConnected()) {
-                    Toast.makeText(getActivity(), "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
                 }
                 MainActivity.Navi_disable();
             }
@@ -242,11 +248,11 @@ public class SignUpFragment extends Fragment {
                     if(can_insert){
                         insert_Cus_after_check(cus, methods);
                     } else {
-                        Toast.makeText(getActivity(), "Existed Gmail", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Existed Gmail", Toast.LENGTH_SHORT).show();
                     }
                 }
                 else
-                    Toast.makeText(getActivity(), "Lỗi Server", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Lỗi Server", Toast.LENGTH_SHORT).show();
             }
         };
         Bundle bundle = new Bundle();

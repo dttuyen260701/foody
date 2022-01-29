@@ -6,6 +6,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.*;
 
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -27,15 +28,21 @@ public class MainActivity extends AppCompatActivity {
     private Methods methods;
     private static BottomNavigationView bottom_Navigation;
     private Fragment fragment_Food, fragment_Cart, fragment_Bill, fragment_Accounts;
-    boolean doubleBackToExitPressedOnce = false;
+    private boolean doubleBackToExitPressedOnce = false;
+    private long m_Backclick = 0;
 
     @Override
     public void onBackPressed() {
+        if(SystemClock.elapsedRealtime() - m_Backclick > 1000){
+            doubleBackToExitPressedOnce = false;
+        }
         int backStack_Count = getSupportFragmentManager().getBackStackEntryCount();
-        if(backStack_Count == 0 && !doubleBackToExitPressedOnce){
+        if(backStack_Count == 0 && !doubleBackToExitPressedOnce ){
             doubleBackToExitPressedOnce = true;
             Toast.makeText(MainActivity.this, "Tap again to Exit", Toast.LENGTH_SHORT).show();
+            m_Backclick = SystemClock.elapsedRealtime();
         } else {
+            m_Backclick = SystemClock.elapsedRealtime();
             super.onBackPressed();
             return;
         }
