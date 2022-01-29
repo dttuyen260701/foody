@@ -109,11 +109,11 @@ public class AccountsFragment extends Fragment {
         switch (btn_name){
             case btn_SIGN_IN:
                 fragment = new SignInFragment(listener_for_backFragment,
-                        listener_login_succes_or_logout, "", "");
+                        listener_login_succes_or_logout, "", "", getContext());
                 back_to_AccountsFragment(fragment);
                 break;
             case btn_SIGN_UP:
-                fragment = new SignUpFragment(listener_for_backFragment);
+                fragment = new SignUpFragment(listener_for_backFragment, getContext());
                 back_to_AccountsFragment(fragment);
                 break;
             case btn_INFORMATION:

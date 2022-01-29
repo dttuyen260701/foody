@@ -41,12 +41,14 @@ public class FeedbackFragment extends Fragment {
     private ProgressBar progressBar_feedback_frag;
     private FeedbackAdapter adapter;
     private static Methods methods;
+    private Context context;
 
     //kiểm tra xem gọi lần đầu, nếu k phải ẩn skip hiện arrow
     private boolean fist_time, check_change;
 
     public FeedbackFragment(Context context, boolean fist_time, ArrayList<Bill_Details> list_feedback,
                             Listener_for_BackFragment listener_for_backFragment) {
+        this.context = context;
         this.fist_time = fist_time;
         this.list_bill_details_feedback = list_feedback;
         this.listener_for_backFragment = listener_for_backFragment;
@@ -99,6 +101,7 @@ public class FeedbackFragment extends Fragment {
                         update_RateAndReview(list_bill_details_feedback.get(i), i);
                     }
                 }
+                listener_for_backFragment.orderBill_Or_BackFragment();
             }
         });
 
@@ -133,6 +136,7 @@ public class FeedbackFragment extends Fragment {
                     Toast.makeText(getActivity(), "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
                 }
                 MainActivity.Navi_disable();
+                btn_Send_Feeling_Frag.setEnabled(false);
                 progressBar_feedback_frag.setVisibility(View.VISIBLE);
             }
 
@@ -145,10 +149,10 @@ public class FeedbackFragment extends Fragment {
                     }
                     update_Rate_Food(bill_details.getiD_Food());
                     if(position == list_bill_details_feedback.size() - 1){
+                        btn_Send_Feeling_Frag.setEnabled(true);
                         progressBar_feedback_frag.setVisibility(View.GONE);
                         if(check_change)
-                            Toast.makeText(getActivity(), "Thanks for you feedback!", Toast.LENGTH_SHORT).show();
-                        listener_for_backFragment.orderBill_Or_BackFragment();
+                            Toast.makeText(context, "Thanks for you feedback!", Toast.LENGTH_SHORT).show();
                     }
                     if(!bill_details.isInsert() && bill_details.getRate() > 0){
                         bill_details.setInsert(true);

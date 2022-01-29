@@ -1,5 +1,6 @@
 package com.example.foody.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -40,11 +41,13 @@ public class SignUpFragment extends Fragment {
     private CheckBox cbaccept_register;
     private Button btnRegister_register;
     private ImageView img_Back_SignUp_Frag;
+    private Context context;
 
     private boolean check_matchPass = false;
 
-    public SignUpFragment(Listener_for_BackFragment listener_back) {
+    public SignUpFragment(Listener_for_BackFragment listener_back, Context context) {
         this.listener_back = listener_back;
+        this.context = context;
     }
 
     @Override
@@ -189,7 +192,7 @@ public class SignUpFragment extends Fragment {
                                                 FoodFragment.setCheck_NewCus(true);
                                                 MainActivity.selecFoodMenu();
                                             }
-                                        }, txtID_register.getText().toString(), txtPass_register.getText().toString());
+                                        }, txtID_register.getText().toString(), txtPass_register.getText().toString(), context);
                                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                                 transaction.replace(R.id.fragment_layout, signInFragment);
                                 transaction.commit();

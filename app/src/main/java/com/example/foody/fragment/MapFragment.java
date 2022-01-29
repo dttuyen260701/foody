@@ -9,6 +9,7 @@ import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -51,6 +52,7 @@ public class MapFragment extends SupportMapFragment implements
     private boolean for_search;
     private String address_line;
     private LatLng EndP;
+    private MapFragment_Parent parent;
 
     public String getAddress_line() {
         return address_line;
@@ -60,7 +62,8 @@ public class MapFragment extends SupportMapFragment implements
         this.address_line = address_line;
     }
 
-    public MapFragment() {
+    public MapFragment(MapFragment_Parent parent) {
+        this.parent = parent;
         this.for_search = false;
         address_line = "";
     }
@@ -145,11 +148,12 @@ public class MapFragment extends SupportMapFragment implements
     public void onLocationChanged(Location location)
     {
         mLastLocation = location;
+        LatLng lng = null;
         if (mCurrLocationMarker != null) {
             mCurrLocationMarker.remove();
         } else if(!for_search) {
             //Place current location marker
-            EndP = new LatLng(location.getLatitude(), location.getLongitude());
+            lng = new LatLng(location.getLatitude(), location.getLongitude());
             Geocoder coder = new Geocoder(getContext(), Locale.getDefault());
             try {
                 ArrayList<Address> list_result = (ArrayList<Address>)
@@ -160,13 +164,15 @@ public class MapFragment extends SupportMapFragment implements
                 e.printStackTrace();
             }
             MarkerOptions markerOptions = new MarkerOptions();
-            markerOptions.position(EndP);
+            markerOptions.position(lng);
             markerOptions.title("Your Address");
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
             markerOptions.getPosition().toString();
             mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
             //move map camera
-            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(EndP, 18));
+            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lng, 18));
+            parent.setVisible();
+            EndP = lng;
         }
     }
 

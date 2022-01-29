@@ -117,7 +117,23 @@ public class FoodFragment extends Fragment {
             , new RecyclerView_Item_Listener() {
             @Override
             public void onClick(int ID_Food) {
-                load_Review_data(getByID(ID_Food));
+                ReviewsFragment reviewsFragment = new ReviewsFragment(getByID(ID_Food), new Listener_for_BackFragment() {
+                    @Override
+                    public void orderBill_Or_BackFragment() {
+                        getFragmentManager().popBackStack();
+                    }
+                }, new Listener_for_IncAndRedu() {
+                    @Override
+                    public void onRedu_Click(int ID_Food) {
+                        Redu_Click(ID_Food);
+                    }
+
+                    @Override
+                    public void onInc_Click(int ID_Food) {
+                        Inc_Click(ID_Food);
+                    }
+                }, listener_favorite);
+                back_to_FoodFragment(reviewsFragment);
             }
         }, new Listener_for_IncAndRedu() {
             @Override
@@ -267,52 +283,6 @@ public class FoodFragment extends Fragment {
         RequestBody requestBody = methods.getRequestBody("method_get_food_data", null);
         Load_Food_Asynctask asyntask = new Load_Food_Asynctask(listener, requestBody);
         asyntask.execute();
-    }
-
-    private void load_Review_data(Foods foods){
-        Load_Reviews_Listener listener_load_review = new Load_Reviews_Listener() {
-            @Override
-            public void onPre() {
-                if (!methods.isNetworkConnected()) {
-                    Toast.makeText(getActivity(), "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
-                }
-                MainActivity.Navi_disable();
-                progressBar_load.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onEnd(boolean isSussec, ArrayList<Reviews> list_result) {
-                MainActivity.Navi_enable();
-                progressBar_load.setVisibility(View.GONE);
-                if(isSussec){
-                    Collections.reverse(list_result);//đảo ngược chuỗi
-                    ReviewsFragment reviewsFragment = new ReviewsFragment(foods, list_result, new Listener_for_BackFragment() {
-                        @Override
-                        public void orderBill_Or_BackFragment() {
-                            getFragmentManager().popBackStack();
-                        }
-                    }, new Listener_for_IncAndRedu() {
-                        @Override
-                        public void onRedu_Click(int ID_Food) {
-                            Redu_Click(ID_Food);
-                        }
-
-                        @Override
-                        public void onInc_Click(int ID_Food) {
-                            Inc_Click(ID_Food);
-                        }
-                    }, listener_favorite);
-                    back_to_FoodFragment(reviewsFragment);
-                } else
-                    Toast.makeText(getActivity(), "Lỗi Server", Toast.LENGTH_SHORT).show();
-            }
-        };
-
-        Bundle bundle = new Bundle();
-        bundle.putInt("ID_Food", foods.getiD_Food());
-        RequestBody requestBody = methods.getRequestBody("method_get_reviews_data", bundle);
-        Load_Reviews_Asynctask asynctask = new Load_Reviews_Asynctask(listener_load_review, requestBody);
-        asynctask.execute();
     }
 
     private void Redu_Click(int ID_Food){

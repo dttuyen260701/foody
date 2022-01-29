@@ -34,8 +34,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        return;
+        int backStack_Count = getSupportFragmentManager().getBackStackEntryCount();
+        if(backStack_Count == 0 && !doubleBackToExitPressedOnce){
+            doubleBackToExitPressedOnce = true;
+            Toast.makeText(MainActivity.this, "Tap again to Exit", Toast.LENGTH_SHORT).show();
+        } else {
+            super.onBackPressed();
+            return;
+        }
     }
 
     @Override

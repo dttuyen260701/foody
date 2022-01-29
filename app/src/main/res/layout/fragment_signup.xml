@@ -209,7 +209,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@+id/buttonlayout_register"
-            app:layout_constraintDimensionRatio="w,3:2"
+            app:layout_constraintDimensionRatio="w,6:5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/passwordlayout_register">

@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,14 +16,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foody.R;
 import com.example.foody.adapters.ReviewAdapter;
+import com.example.foody.asyntask.Load_Reviews_Asynctask;
+import com.example.foody.ativity.MainActivity;
 import com.example.foody.listeners.Favorite_for_FoodAdapter;
 import com.example.foody.listeners.Listener_for_BackFragment;
 import com.example.foody.listeners.Listener_for_IncAndRedu;
 import com.example.foody.listeners.Load_Reviews_Listener;
 import com.example.foody.models.Foods;
 import com.example.foody.models.Reviews;
+import com.example.foody.utils.Methods;
 
 import java.util.ArrayList;
+import java.util.Collections;
+
+import okhttp3.RequestBody;
 
 public class ReviewsFragment extends Fragment {
     private ArrayList<Reviews> list_review;
@@ -42,12 +49,12 @@ public class ReviewsFragment extends Fragment {
 
     private Foods first_food_item;
 
-    public ReviewsFragment(Foods first_item, ArrayList<Reviews> list_review,
+    public ReviewsFragment(Foods first_item,
                            Listener_for_BackFragment listener_for_backFragment,
                            Listener_for_IncAndRedu listener_for_incAndRedu,
                            Favorite_for_FoodAdapter list_favorite) {
+        this.list_review = new ArrayList<>();
         this.first_food_item = first_item;
-        this.list_review = list_review;
         this.listener_for_backFragment = listener_for_backFragment;
         this.listener_for_incAndRedu = listener_for_incAndRedu;
         this.list_favorite = list_favorite;
@@ -60,7 +67,7 @@ public class ReviewsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view  = inflater.inflate(R.layout.fragment_reviews, container, false);
         SetUp(view);
-
+        load_Review_data(first_food_item);
         adapter = new ReviewAdapter(first_food_item, getContext(), list_review, list_favorite);
         recycler_Reviews.setLayoutManager(new LinearLayoutManager(getActivity()));
         recycler_Reviews.setAdapter(adapter);
@@ -120,5 +127,35 @@ public class ReviewsFragment extends Fragment {
                         first_food_item.getiD_Food()).getCount());
             }
         });
+    }
+
+    private void load_Review_data(Foods foods){
+        Methods methods = new Methods(getContext());
+        Load_Reviews_Listener listener_load_review = new Load_Reviews_Listener() {
+            @Override
+            public void onPre() {
+                if (!methods.isNetworkConnected()) {
+                    Toast.makeText(getActivity(), "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
+                }
+                progressBar_review_Frag.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onEnd(boolean isSussec, ArrayList<Reviews> list_result) {
+                progressBar_review_Frag.setVisibility(View.GONE);
+                if(isSussec){
+                    Collections.reverse(list_result);//đảo ngược chuỗi
+                    list_review.addAll(list_result);
+                    adapter.notifyDataSetChanged();
+                } else
+                    Toast.makeText(getActivity(), "Lỗi Server", Toast.LENGTH_SHORT).show();
+            }
+        };
+
+        Bundle bundle = new Bundle();
+        bundle.putInt("ID_Food", foods.getiD_Food());
+        RequestBody requestBody = methods.getRequestBody("method_get_reviews_data", bundle);
+        Load_Reviews_Asynctask asynctask = new Load_Reviews_Asynctask(listener_load_review, requestBody);
+        asynctask.execute();
     }
 }

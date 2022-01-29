@@ -34,14 +34,16 @@ public class SignInFragment extends Fragment {
     private Button btnLogin_login, btnRegister_login;
     private Listener_for_BackFragment listener_login_succes;
     private String mail, pass;
+    private Context context;
 
     public SignInFragment(Listener_for_BackFragment listener_backFrag,
                           Listener_for_BackFragment listener_login_succes,
-                          String mail, String pass) {
+                          String mail, String pass, Context context) {
         this.listener_backFrag = listener_backFrag;
         this.listener_login_succes = listener_login_succes;
         this.mail = mail;
         this.pass = pass;
+        this.context = context;
     }
 
     @Override
@@ -101,7 +103,7 @@ public class SignInFragment extends Fragment {
         btnRegister_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SignUpFragment signUpFragment = new SignUpFragment(listener_backFrag);
+                SignUpFragment signUpFragment = new SignUpFragment(listener_backFrag, context);
                 back_to_LoginFragment(signUpFragment);
             }
         });
@@ -116,12 +118,12 @@ public class SignInFragment extends Fragment {
 
     //Check Login
     private void login_Cus(String gmail, String password){
-        Methods methods = new Methods(getContext());
+        Methods methods = new Methods(context);
         Load_Customer_Listener listener1 = new Load_Customer_Listener() {
             @Override
             public void onPre() {
                 if (!methods.isNetworkConnected()) {
-                    Toast.makeText(getActivity(), "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
                 }
                 MainActivity.Navi_disable();
             }
@@ -137,17 +139,17 @@ public class SignInFragment extends Fragment {
                         Constant_Values.setCustomer(customer);
                         ID_Save = customer.getiD_Cus();
                         listener_login_succes.orderBill_Or_BackFragment();
-                        Toast.makeText(getActivity(), "Login Success", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Login Success", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(getActivity(), "Wrong mail or password!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Wrong mail or password!", Toast.LENGTH_SHORT).show();
                     }
-                    Constant_Values.save_ID_Cus = getContext().getSharedPreferences("save_ID_Cus", Context.MODE_PRIVATE);
+                    Constant_Values.save_ID_Cus = context.getSharedPreferences("save_ID_Cus", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = Constant_Values.save_ID_Cus.edit();
                     editor.putInt("ID_Cus", ID_Save);
                     editor.commit();
                 }
                 else
-                    Toast.makeText(getActivity(), "Lỗi Server", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Lỗi Server", Toast.LENGTH_SHORT).show();
             }
         };
 

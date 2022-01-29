@@ -62,8 +62,17 @@ public class BillFragment extends Fragment {
         }
         adapter = new BillAdapter(list_Bill, getActivity(), new RecyclerView_Item_Listener() {
             @Override
-            public void onClick(int ID) {
-                load_Bill_Detail_data(ID);
+            public void onClick(int ID_Bill) {
+                boolean is_done_bill = BillFragment.getBillbyID(ID_Bill).isDone();
+                CartFragment cartFragment = new CartFragment(BillFragment.getBillbyID(ID_Bill), new ArrayList<>(),
+                        false, is_done_bill,
+                        new Listener_for_BackFragment() {
+                            @Override
+                            public void orderBill_Or_BackFragment() {
+                                getFragmentManager().popBackStack();
+                            }
+                        });
+                back_to_BillFragmet(cartFragment);
             }
         });
         recycler_Bill.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -122,7 +131,7 @@ public class BillFragment extends Fragment {
         asynctask.execute();
     }
 
-    private Bill getBillbyID(int ID_Bill){
+    public static Bill getBillbyID(int ID_Bill){
         Bill bill = new Bill();{
             for (Bill i : list_Bill)
                 if(i.getiD_Bill() == ID_Bill)
@@ -136,47 +145,5 @@ public class BillFragment extends Fragment {
         transaction.replace(R.id.fragment_layout, cartFragment);
         transaction.addToBackStack("Bill");
         transaction.commit();
-    }
-
-    //có phải bill tạm thời kh
-    private void load_Bill_Detail_data(int ID_Bill){
-        Load_Bill_Detail_Listener listener = new Load_Bill_Detail_Listener() {
-            @Override
-            public void onPre() {
-                if (!methods.isNetworkConnected()) {
-                    Toast.makeText(getActivity(), "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
-                }
-                MainActivity.Navi_disable();
-                progressBar_Bill_Frag.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onEnd(boolean isSucces, ArrayList<Bill_Details> bill_details_List) {
-                MainActivity.Navi_enable();
-                progressBar_Bill_Frag.setVisibility(View.GONE);
-                if(isSucces){
-                    boolean is_done_bill = false;
-                    for(Bill bill : list_Bill)
-                        if(bill.getiD_Bill() == ID_Bill)
-                            is_done_bill = bill.isDone();
-                    CartFragment cartFragment = new CartFragment(getBillbyID(ID_Bill), bill_details_List,
-                            false, is_done_bill,
-                            new Listener_for_BackFragment() {
-                        @Override
-                        public void orderBill_Or_BackFragment() {
-                            getFragmentManager().popBackStack();
-                        }
-                    });
-                    back_to_BillFragmet(cartFragment);
-                } else
-                    Toast.makeText(getActivity(), "Lỗi Server", Toast.LENGTH_SHORT).show();
-            }
-        };
-
-        Bundle bundle = new Bundle();
-        bundle.putInt("ID_Bill", ID_Bill);
-        RequestBody requestBody = methods.getRequestBody("method_get_bill_detail_data", bundle);
-        Load_Bill_Detail_Asynctask asynctask = new Load_Bill_Detail_Asynctask(listener, requestBody);
-        asynctask.execute();
     }
 }

@@ -1,6 +1,7 @@
 package com.example.foody.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,14 +21,19 @@ import com.example.foody.listeners.Listener_for_PickAddress;
 public class MapFragment_Parent extends Fragment {
     private ImageView img_Back_Map_Frag;
     private ConstraintLayout layout_MapFragment;
-    private Button btnSave_Location;
+    private static Button btnSave_Location;
     private Listener_for_BackFragment listener_for_backFragment;
     private SearchView searchView_Map_Frag;
     private Listener_for_PickAddress listener_for_pickAddress;
 
-    public MapFragment_Parent(Listener_for_BackFragment listener_for_backFragment, Listener_for_PickAddress listener_for_pickAddress) {
+    public MapFragment_Parent(Listener_for_BackFragment listener_for_backFragment,
+                              Listener_for_PickAddress listener_for_pickAddress) {
         this.listener_for_backFragment = listener_for_backFragment;
         this.listener_for_pickAddress = listener_for_pickAddress;
+    }
+
+    public void setVisible() {
+        btnSave_Location.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -39,7 +45,7 @@ public class MapFragment_Parent extends Fragment {
     }
 
     private void SetUp(View view){
-        MapFragment mapFragment = new MapFragment();
+        MapFragment mapFragment = new MapFragment(this);
 
         img_Back_Map_Frag = (ImageView) view.findViewById(R.id.img_Back_Map_Frag);
         img_Back_Map_Frag.setOnClickListener(new View.OnClickListener() {
@@ -50,6 +56,7 @@ public class MapFragment_Parent extends Fragment {
         });
         layout_MapFragment = (ConstraintLayout) view.findViewById(R.id.layout_MapFragment);
         btnSave_Location = (Button) view.findViewById(R.id.btnSave_Location);
+        btnSave_Location.setVisibility(View.GONE);
 
         searchView_Map_Frag = (SearchView) view.findViewById(R.id.searchView_Map_Frag);
         searchView_Map_Frag.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -72,6 +79,13 @@ public class MapFragment_Parent extends Fragment {
                         (float) mapFragment.CalculationByDistance());
             }
         });
+
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                btnSave_Location.setEnabled(true);
+//            }
+//        }, 2000);
 
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         //add để trạng thái trước được lưu

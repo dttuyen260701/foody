@@ -1,5 +1,6 @@
 package com.example.foody.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -20,12 +21,14 @@ import com.example.foody.R;
 import com.example.foody.adapters.BillDetailAdapter;
 import com.example.foody.asyntask.Get_Next_IDBill_Asyntask;
 import com.example.foody.asyntask.InsertOrDelOrUpdate_Asynctask;
+import com.example.foody.asyntask.Load_Bill_Detail_Asynctask;
 import com.example.foody.ativity.MainActivity;
 import com.example.foody.listeners.CartAdapter_Listenner;
 import com.example.foody.listeners.Get_Next_IDBill_Listener;
 import com.example.foody.listeners.Check_task_listener;
 import com.example.foody.listeners.Listener_for_BackFragment;
 import com.example.foody.listeners.Listener_for_PickAddress;
+import com.example.foody.listeners.Load_Bill_Detail_Listener;
 import com.example.foody.models.Bill;
 import com.example.foody.models.Bill_Details;
 import com.example.foody.utils.Methods;
@@ -83,8 +86,7 @@ public class CartFragment extends Fragment {
         this.list_Bill_details_temp = list_Bill_details_temp;
         this.for_BillorCart = for_BillorCart1;
         this.is_done_dill = is_done_dill;
-        if(this.list_Bill_details_temp == null)
-            this.list_Bill_details_temp = new ArrayList<>();
+        this.list_Bill_details_temp = new ArrayList<>();
         if(list_Bill_details == null)
             list_Bill_details = new ArrayList<>();
         if(methods == null)
@@ -100,6 +102,9 @@ public class CartFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
         SetUp(view);
+        if(!for_BillorCart){
+            load_Bill_Detail_data(bill_holder.getiD_Bill());
+        }
         ArrayList<Bill_Details> list_Bill_details_forAdapter =
                 (for_BillorCart) ? list_Bill_details : list_Bill_details_temp;
         adapter = new BillDetailAdapter(list_Bill_details_forAdapter, view.getContext(), for_BillorCart,
@@ -254,10 +259,11 @@ public class CartFragment extends Fragment {
                         getFragmentManager().popBackStack();
                     }
                 });
-                back_to_BillFragment(mapFragment);
+                back_toCartFragment(mapFragment);
                 break;
             case btn_RECEIVED:
                 update_Bill_to_done(bill_holder.getiD_Bill());
+                call_Feedback_Frag(true);
                 break;
             case btn_TOO_LONG:
                 DialogTooLongFragment dialogTooLongFragment = new DialogTooLongFragment();
@@ -288,10 +294,10 @@ public class CartFragment extends Fragment {
                         getFragmentManager().popBackStack();
                     }
                 });
-        back_to_BillFragment(feedbackFragment);
+        back_toCartFragment(feedbackFragment);
     }
 
-    private void back_to_BillFragment(Fragment fragment){
+    private void back_toCartFragment(Fragment fragment){
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         //add để trạng thái trước được lưu
         transaction.add(R.id.fragment_layout, fragment);
@@ -327,7 +333,6 @@ public class CartFragment extends Fragment {
     }
 
     private void Empty_Cart_View(){
-        recycler_Cart.setBackgroundResource(R.drawable.no_job_today);
         total = 0f;
         txt_Total_Cart_Frag.setText("$" + total);
         btnOrder_Cart_Frag.setEnabled(false);
@@ -352,12 +357,18 @@ public class CartFragment extends Fragment {
                 if (!methods.isNetworkConnected()) {
                     Toast.makeText(getActivity(), "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
                 }
+                txtClear_Cart_Frag.setVisibility(View.GONE);
+                btnOrder_Cart_Frag.setEnabled(false);
                 MainActivity.Navi_disable();
+                progressBar_Cart_frag.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onEnd(boolean isSucces, boolean insert_Success) {
+                btnOrder_Cart_Frag.setEnabled(true);
                 MainActivity.Navi_enable();
+                progressBar_Cart_frag.setVisibility(View.GONE);
+                txtClear_Cart_Frag.setVisibility(View.VISIBLE);
                 if(isSucces){
                     for(int i = 0; i < list_Bill_details.size(); ++i){
                         insert_Bill_Detail(list_Bill_details.get(i), i);
@@ -390,14 +401,21 @@ public class CartFragment extends Fragment {
                     Toast.makeText(getActivity(), "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
                 }
                 MainActivity.Navi_disable();
+                btnPick_address_Cart_Frag.setEnabled(false);
+                btnOrder_Cart_Frag.setEnabled(false);
                 progressBar_Cart_frag.setVisibility(View.VISIBLE);
+                txtClear_Cart_Frag.setVisibility(View.GONE);
             }
 
             @Override
             public void onEnd(boolean isSucces, boolean insert_Success) {
                 MainActivity.Navi_enable();
                 if (isSucces) {
+                    txtClear_Cart_Frag.setVisibility(View.GONE);
                     if(position == list_Bill_details.size()-1){
+                        txtClear_Cart_Frag.setVisibility(View.VISIBLE);
+                        btnPick_address_Cart_Frag.setEnabled(true);
+                        btnOrder_Cart_Frag.setEnabled(true);
                         BillFragment.setCheck_NewBill(true);//load lại bill
                         Empty_Cart_View();
                         adapter.clear_Cart();
@@ -437,9 +455,8 @@ public class CartFragment extends Fragment {
                 if(isSucces){
                     btnOrder_Cart_Frag.setText(btn_FEEDBACK);
                     btnPick_address_Cart_Frag.setText(btn_RE_ORDER);
+                    BillFragment.setDoneBillbyID(bill_holder.getiD_Bill());
                     //BillFragment.setCheck_NewBill(true);
-                    BillFragment.setDoneBillbyID(ID_Bill);
-                    call_Feedback_Frag(true);
                 } else
                     Toast.makeText(getActivity(), "Lỗi Server", Toast.LENGTH_SHORT).show();
             }
@@ -450,6 +467,36 @@ public class CartFragment extends Fragment {
         RequestBody requestBody = methods.getRequestBody("method_update_bill", bundle);
         InsertOrDelOrUpdate_Asynctask asynctask = new InsertOrDelOrUpdate_Asynctask(listener_for_Update,
                 requestBody, Constant_Values.URL_BILL_API);
+        asynctask.execute();
+    }
+
+    //có phải bill tạm thời kh
+    private void load_Bill_Detail_data(int ID_Bill){
+        Load_Bill_Detail_Listener listener = new Load_Bill_Detail_Listener() {
+            @Override
+            public void onPre() {
+                if (!methods.isNetworkConnected()) {
+                    Toast.makeText(getActivity(), "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
+                }
+                progressBar_Cart_frag.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onEnd(boolean isSucces, ArrayList<Bill_Details> bill_details_List) {
+                progressBar_Cart_frag.setVisibility(View.GONE);
+                if(isSucces){
+                    list_Bill_details_temp.addAll(bill_details_List);
+                    btnOrder_Cart_Frag.setEnabled(true);
+                    adapter.notifyDataSetChanged();
+                } else
+                    Toast.makeText(getActivity(), "Lỗi Server", Toast.LENGTH_SHORT).show();
+            }
+        };
+
+        Bundle bundle = new Bundle();
+        bundle.putInt("ID_Bill", ID_Bill);
+        RequestBody requestBody = methods.getRequestBody("method_get_bill_detail_data", bundle);
+        Load_Bill_Detail_Asynctask asynctask = new Load_Bill_Detail_Asynctask(listener, requestBody);
         asynctask.execute();
     }
 }
