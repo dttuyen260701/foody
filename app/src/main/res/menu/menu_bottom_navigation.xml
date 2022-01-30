@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/bottom_food"
+        android:title="@string/food_menu"
+        android:icon="@drawable/food_menu"/>
+
+    <item android:id="@+id/bottom_Cart"
+        android:title="@string/cart_menu"
+        android:icon="@drawable/cart"/>
+
+    <item android:id="@+id/bottom_bill"
+        android:title="@string/bill_menu"
+        android:icon="@drawable/bill"/>
+
+    <item android:id="@+id/bottom_account"
+        android:title="@string/account_menu"
+        android:icon="@drawable/accounts"/>
+</menu>
