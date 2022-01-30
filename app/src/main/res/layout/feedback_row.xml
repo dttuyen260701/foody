@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_border_feedback_row"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/border_color"
+        app:layout_constraintBottom_toTopOf="@+id/layout_feedback_row2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_feedback_row2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:padding="1dp"
+        android:weightSum="13"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="h,5:2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_border_feedback_row">
+
+        <LinearLayout
+            android:id="@+id/layout_foodname_feedback_row"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:orientation="horizontal"
+            android:weightSum="9">
+
+            <ImageView
+                android:id="@+id/imgFood_feedback_row"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/food_menu" />
+
+            <TextView
+                android:id="@+id/txtFoodName_feedback_row"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="8"
+                android:gravity="center|start"
+                android:paddingStart="20dp"
+                android:text="Name Food"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+        <RatingBar
+            android:id="@+id/ratingBar_feedback_row"
+            style="@android:style/Widget.DeviceDefault.Light.RatingBar.Indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_weight="3"
+            android:contentDescription="rating"
+            android:max="5"
+            android:progressTint="#BFAD05"
+            android:rating="3.5"
+            android:secondaryProgressTint="#685D03"
+            android:stepSize="0.5" />
+<!--        android:isIndicator để người dùng rating mặc định là false-->
+
+        <EditText
+            android:id="@+id/txtfeedback_row"
+            style="@style/Widget.AppCompat.AutoCompleteTextView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="7"
+            android:background="@null"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="Your Feedback"
+            android:inputType="textMultiLine"
+            android:isIndicator="false"
+            android:padding="3dp"
+            android:textSize="14sp"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

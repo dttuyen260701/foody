@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_account"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/border_color">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar_Accounts_logined_Frag"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/layout_account_logined2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_weight="1">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_tool_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar_Accounts_logined_Fragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/app_themes"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txt_Tittle_Account_logined_Fragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/account_menu"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_account_logined2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appbar_Accounts_logined_Frag"
+        app:layout_constraintVertical_weight="13">
+
+        <TextView
+            android:id="@+id/txtAccount_Frag"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/border_color"
+            android:gravity="center|start"
+            android:paddingStart="7dp"
+            android:text="@string/account_menu"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_Setting_Account_Logined_Frag"
+            app:layout_constraintDimensionRatio="h,14:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <Button
+            android:id="@+id/btn_Setting_Account_Logined_Frag"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/custom_button_account_frag"
+            android:gravity="center|start"
+            android:paddingStart="7dp"
+            android:text="Sign In"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toTopOf="@+id/btn_changePass_Account_Login_Frag"
+            app:layout_constraintDimensionRatio="h,12:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtAccount_Frag"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <Button
+            android:id="@+id/btn_changePass_Account_Login_Frag"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/custom_button_account_frag"
+            android:gravity="center|start"
+            android:paddingStart="7dp"
+            android:text="Sign Up"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toTopOf="@+id/btn_Contact_Account_Login_Frag"
+            app:layout_constraintDimensionRatio="h,12:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_Setting_Account_Logined_Frag"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <Button
+            android:id="@+id/btn_Contact_Account_Login_Frag"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/custom_button_account_frag"
+            android:gravity="center|start"
+            android:paddingStart="7dp"
+            android:text="Contact us"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toTopOf="@+id/btn_TermofU_Account_Login_Frag"
+            app:layout_constraintDimensionRatio="h,12:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_changePass_Account_Login_Frag"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <Button
+            android:id="@+id/btn_TermofU_Account_Login_Frag"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/custom_button_account_frag"
+            android:gravity="center|start"
+            android:paddingStart="7dp"
+            android:text="Terms of use and privacy policy"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="h,12:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_Contact_Account_Login_Frag"
+            tools:ignore="TouchTargetSizeCheck" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

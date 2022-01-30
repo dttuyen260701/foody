@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_Review_Row"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_border_Review_row"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/border_color"
+        app:layout_constraintBottom_toTopOf="@+id/layout_Review_row"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_Review_row"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:padding="1dp"
+        android:weightSum="6"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="h,3:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_border_Review_row">
+
+        <TextView
+            android:id="@+id/txtNameUser_Review_row"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:paddingStart="3dp"
+            android:paddingRight="3dp"
+            android:text="abc@gmail.com"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <RatingBar
+            android:id="@+id/ratingBar_Review_row"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:paddingStart="3dp"
+            android:progressTint="#AE9D01"
+            android:rating="2.1"
+            android:stepSize="0.1"
+            android:secondaryProgressTint="@android:color/transparent" />
+<!--        android:secondaryProgressTint="@android:color/transparent"-->
+<!--        dùng để ẩn shadow-->
+
+        <TextView
+            android:id="@+id/txtTime_Riview_row"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:paddingStart="3dp"
+            android:text="20-12-2022" />
+
+        <TextView
+            android:id="@+id/txtReview_Review_row"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:paddingStart="3dp"
+            android:paddingLeft="2dp"
+            android:text="BAC"
+            android:textColor="@color/black" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
