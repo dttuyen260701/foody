@@ -1,5 +1,6 @@
 package com.example.foody.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,8 +31,10 @@ public class InformationFragment extends Fragment {
     private Button btn_Change_Pass, btnUpdate_Infor_Frag;
     private ImageView img_Back_Infor_Frag;
     private Listener_for_BackFragment listener_for_backFragment;
+    private Context context;
 
-    public InformationFragment(Listener_for_BackFragment listener_for_backFragment) {
+    public InformationFragment(Context context, Listener_for_BackFragment listener_for_backFragment) {
+        this.context = context;
         this.listener_for_backFragment = listener_for_backFragment;
     }
 
@@ -112,7 +115,7 @@ public class InformationFragment extends Fragment {
             @Override
             public void onPre() {
                 if (!methods.isNetworkConnected()) {
-                    Toast.makeText(getActivity(), "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
                 }
                 MainActivity.Navi_disable();
             }
@@ -121,12 +124,12 @@ public class InformationFragment extends Fragment {
             public void onEnd(boolean isSucces, boolean insert_Success) {
                 MainActivity.Navi_enable();
                 if(isSucces){
-                    Toast.makeText(getActivity(), "Update Success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Update Success", Toast.LENGTH_SHORT).show();
                     Constant_Values.setCustomer(cus);
                     listener_for_backFragment.orderBill_Or_BackFragment();
                 }
                 else
-                    Toast.makeText(getActivity(), "Lỗi Server", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Lỗi Server", Toast.LENGTH_SHORT).show();
             }
         };
 

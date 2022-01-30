@@ -117,7 +117,7 @@ public class AccountsFragment extends Fragment {
                 back_to_AccountsFragment(fragment);
                 break;
             case btn_INFORMATION:
-                fragment = new InformationFragment(listener_for_backFragment);
+                fragment = new InformationFragment(getContext(), listener_for_backFragment);
                 back_to_AccountsFragment(fragment);
                 break;
             case btn_LOG_OUT:

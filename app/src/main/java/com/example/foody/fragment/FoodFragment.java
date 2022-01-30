@@ -117,7 +117,8 @@ public class FoodFragment extends Fragment {
             , new RecyclerView_Item_Listener() {
             @Override
             public void onClick(int ID_Food) {
-                ReviewsFragment reviewsFragment = new ReviewsFragment(getByID(ID_Food), new Listener_for_BackFragment() {
+                ReviewsFragment reviewsFragment = new ReviewsFragment(getContext(), getByID(ID_Food)
+                        , new Listener_for_BackFragment() {
                     @Override
                     public void orderBill_Or_BackFragment() {
                         getFragmentManager().popBackStack();
@@ -169,10 +170,6 @@ public class FoodFragment extends Fragment {
         swipRefesh_Food_Frag.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                list_Foods.clear();
-                adapter.notifyDataSetChanged();
-                //khóa double load
-                swipRefesh_Food_Frag.setEnabled(false);
                 load_Food_Data();
                 swipRefesh_Food_Frag.setRefreshing(false);
             }
@@ -257,11 +254,13 @@ public class FoodFragment extends Fragment {
                 }
                 load_Favorite_data();
                 progressBar_load.setVisibility(View.VISIBLE);
+                swipRefesh_Food_Frag.setEnabled(false);
             }
 
             @Override
             public void onEnd(boolean isSussed, ArrayList<Foods> list_result) {
                 progressBar_load.setVisibility(View.GONE);
+                swipRefesh_Food_Frag.setEnabled(true);
                 if(isSussed){
                     list_Foods_All.addAll(list_result);
                     for(Foods i : list_result)
@@ -272,7 +271,6 @@ public class FoodFragment extends Fragment {
                             if (i.getiD_Food() == k.getiD_Food())
                                 i.set_Favorite(true);
                     }
-                    swipRefesh_Food_Frag.setEnabled(true);
                     adapter.notifyDataSetChanged();
                 }
                 else

@@ -92,7 +92,7 @@ public class SignInFragment extends Fragment {
                 String gmail = txtEmail_login.getText().toString();
                 String pass = txtPass_login.getText().toString();
                 if(gmail.equals("") || pass.equals("")){
-                    Toast.makeText(getActivity(),
+                    Toast.makeText(context,
                             "Please enter enough information.", Toast.LENGTH_SHORT).show();
                 } else {
                     login_Cus(gmail, pass);

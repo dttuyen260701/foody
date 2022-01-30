@@ -132,7 +132,7 @@ public class FeedbackFragment extends Fragment {
             @Override
             public void onPre() {
                 if (!methods.isNetworkConnected()) {
-                    Toast.makeText(getActivity(), "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
                 }
                 MainActivity.Navi_disable();
                 progressBar_feedback_frag.setVisibility(View.VISIBLE);
@@ -156,7 +156,7 @@ public class FeedbackFragment extends Fragment {
                         bill_details.setInsert(true);
                     }
                 } else
-                    Toast.makeText(getActivity(), "Lỗi Server", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Lỗi Server", Toast.LENGTH_SHORT).show();
             }
         };
 
@@ -178,7 +178,7 @@ public class FeedbackFragment extends Fragment {
             @Override
             public void onPre() {
                 if (!methods.isNetworkConnected()) {
-                    Toast.makeText(getActivity(), "Error Update Rate Food", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Error Update Rate Food", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -186,7 +186,7 @@ public class FeedbackFragment extends Fragment {
             public void onEnd(boolean isSucces, boolean insert_Success) {
                 if(isSucces){
                 } else
-                    Toast.makeText(getActivity(), "Lỗi Server", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Lỗi Server", Toast.LENGTH_SHORT).show();
             }
         };
 

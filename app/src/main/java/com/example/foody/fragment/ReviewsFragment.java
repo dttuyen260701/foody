@@ -1,5 +1,6 @@
 package com.example.foody.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,14 +46,17 @@ public class ReviewsFragment extends Fragment {
     private Listener_for_IncAndRedu listener_for_incAndRedu;
     private Favorite_for_FoodAdapter list_favorite;
 
+    private Context context;
+
     private ReviewAdapter adapter;
 
     private Foods first_food_item;
 
-    public ReviewsFragment(Foods first_item,
+    public ReviewsFragment(Context context, Foods first_item,
                            Listener_for_BackFragment listener_for_backFragment,
                            Listener_for_IncAndRedu listener_for_incAndRedu,
                            Favorite_for_FoodAdapter list_favorite) {
+        this.context = context;
         this.list_review = new ArrayList<>();
         this.first_food_item = first_item;
         this.listener_for_backFragment = listener_for_backFragment;
@@ -130,12 +134,12 @@ public class ReviewsFragment extends Fragment {
     }
 
     private void load_Review_data(Foods foods){
-        Methods methods = new Methods(getContext());
+        Methods methods = new Methods(context);
         Load_Reviews_Listener listener_load_review = new Load_Reviews_Listener() {
             @Override
             public void onPre() {
                 if (!methods.isNetworkConnected()) {
-                    Toast.makeText(getActivity(), "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
                 }
                 progressBar_review_Frag.setVisibility(View.VISIBLE);
             }
@@ -148,7 +152,7 @@ public class ReviewsFragment extends Fragment {
                     list_review.addAll(list_result);
                     adapter.notifyDataSetChanged();
                 } else
-                    Toast.makeText(getActivity(), "Lỗi Server", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Lỗi Server", Toast.LENGTH_SHORT).show();
             }
         };
 

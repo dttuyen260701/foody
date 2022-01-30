@@ -121,7 +121,7 @@
             android:orientation="horizontal"
             android:weightSum="8"
             app:layout_constraintBottom_toTopOf="@+id/btnUpdate_Infor_Frag"
-            app:layout_constraintDimensionRatio="w,8:1"
+            app:layout_constraintDimensionRatio="w,7:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtPhone_Infor_Frag">
@@ -129,9 +129,7 @@
             <EditText
                 android:id="@+id/txtPass_Infor_Frag"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
-                android:layout_marginEnd="25dp"
+                android:layout_height="match_parent"
                 android:layout_weight="6"
                 android:ems="10"
                 android:enabled="false"

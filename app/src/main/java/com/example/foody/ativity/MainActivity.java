@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        if(CartFragment.isDoingTask())
+            return;
         if(SystemClock.elapsedRealtime() - m_Backclick > 2000){
             doubleBackToExitPressedOnce = false;
         }
@@ -101,6 +103,11 @@ public class MainActivity extends AppCompatActivity {
     };
 
     private void chang_Menu(Fragment fragment){
+        if(getSupportFragmentManager().getBackStackEntryCount() > 0){
+            for(int i = 0; i < getSupportFragmentManager().getBackStackEntryCount(); ++i){
+                getSupportFragmentManager().popBackStack();
+            }
+        }
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_layout, fragment);
         transaction.commit();
