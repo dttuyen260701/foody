@@ -9,13 +9,6 @@
     $query_rs = '';
     //object -> json_string : json_encode();
     switch($postOBJ['method_name']){
-        case 'method_get_next_IDBll':
-           $query = "SELECT MAX(ID_Bill) FROM bill";
-            $query_rs = mysqli_query($connect, $query);
-            $result1 = mysqli_fetch_assoc($query_rs);
-            $result['Next_ID'] = $result1['MAX(ID_Bill)'] + 1;
-            echo json_encode($result);
-            break;  
         case 'method_get_bill_data':
             $ID_Cus = $postOBJ['ID_Cus'];
 
@@ -41,15 +34,20 @@
         case 'method_insert_bill':
             //Insert thi gui doi tuong customer
             $data1 = ($_POST['bill']);
+            $query_MaxID = "SELECT MAX(ID_Bill) FROM bill";
+            $query_rs_MaxID = mysqli_query($connect, $query_MaxID);
+            $result1 = mysqli_fetch_assoc($query_rs_MaxID);
+            $result['Next_ID'] = $result1['MAX(ID_Bill)'] + 1;
+
             $bill = json_decode($data1, true);
 
-            $query = "INSERT INTO `bill` (`ID_Bill`, `ID_Cus`, `Total`, `Time`, `Address`, `Shipping_fee`, `done`) VALUES ('".$bill['ID_Bill']."', '".$bill['ID_Cus']."', '".(($bill['Total'] != NULL) ? $bill['Total'] : 0)."', '".$bill['Time']."', '".$bill['Address']."', '".$bill['Shipping_fee']."', '".$bill['done']."')";
+            $query = "INSERT INTO `bill` (`ID_Bill`, `ID_Cus`, `Total`, `Time`, `Address`, `Shipping_fee`, `done`) VALUES ('".$result['Next_ID']."', '".$bill['ID_Cus']."', '".(($bill['Total'] != NULL) ? $bill['Total'] : 0)."', '".$bill['Time']."', '".$bill['Address']."', '".$bill['Shipping_fee']."', '".$bill['done']."')";
             $query_rs = mysqli_query($connect, $query);
             
             if($query_rs)
-                $result['value'] = true;
+                $result['Next_ID'] = $result1['MAX(ID_Bill)'] + 1;
             else
-                $result['value'] = false;
+                $result['Next_ID'] = -1;
             echo json_encode($result);    
             break;
         case 'method_update_bill':

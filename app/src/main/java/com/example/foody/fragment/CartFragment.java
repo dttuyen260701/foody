@@ -1,6 +1,5 @@
 package com.example.foody.fragment;
 
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -20,7 +19,7 @@ import android.widget.Toast;
 
 import com.example.foody.R;
 import com.example.foody.adapters.BillDetailAdapter;
-import com.example.foody.asyntask.Get_Next_IDBill_Asyntask;
+import com.example.foody.asyntask.InsertBill_GetNextID_Asynctask;
 import com.example.foody.asyntask.InsertOrDelOrUpdate_Asynctask;
 import com.example.foody.asyntask.Load_Bill_Detail_Asynctask;
 import com.example.foody.ativity.MainActivity;
@@ -56,7 +55,6 @@ public class CartFragment extends Fragment {
 
     //list Cart static trong 1 chuong trinh
     private static ArrayList<Bill_Details> list_Bill_details;
-    private static int ID_Bill_New = -1;
     // sẽ lấy bằng vị trí 2 điểm
     private float total = 0f, distance = 0f, shipping_fee = 0f, total_in_address = 0f;
     private Bill bill_holder;
@@ -95,9 +93,6 @@ public class CartFragment extends Fragment {
             list_Bill_details = new ArrayList<>();
         if(methods == null)
             methods = new Methods(getActivity());
-        if(ID_Bill_New == -1){
-            next_ID();
-        }
     }
 
     @Override
@@ -240,10 +235,9 @@ public class CartFragment extends Fragment {
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
-                        Bill bill_delivery = new Bill(getID_Bill_New(), Constant_Values.getIdCus(), total_in_address,
+                        Bill bill_delivery = new Bill(-1, Constant_Values.getIdCus(), total_in_address,
                                 date, address_cus, shipping_fee, false);
                         insert_Bill(bill_delivery);
-                        next_ID();
                     }
                     if(check_address)
                         break;
@@ -295,7 +289,7 @@ public class CartFragment extends Fragment {
             case btn_RE_ORDER:
                 list_Bill_details.clear();
                 for(Bill_Details i : list_Bill_details_temp){
-                    i.setiD_Bill(ID_Bill_New);
+                    i.setiD_Bill(-1);
                     i.setRate(0f);
                     i.setReviews("");
                     list_Bill_details.add(i);
@@ -338,10 +332,6 @@ public class CartFragment extends Fragment {
         return DoingTask;
     }
 
-    public static int getID_Bill_New() {
-        return ID_Bill_New;
-    }
-
     public static Bill_Details search_BillDetail_ByIDFood(int ID_Food){
         Bill_Details bill_details = new Bill_Details();
         for(Bill_Details i : list_Bill_details)
@@ -367,21 +357,6 @@ public class CartFragment extends Fragment {
         btnOrder_Cart_Frag.setEnabled(false);
     }
 
-    private static void next_ID(){
-        Get_Next_IDBill_Listener listener = new Get_Next_IDBill_Listener() {
-            @Override
-            public void onEnd(boolean isSuccess, int next_ID) {
-                if(isSuccess)
-                    ID_Bill_New = next_ID;
-                else
-                    ID_Bill_New += 1;
-            }
-        };
-        RequestBody requestBody =  methods.getRequestBody("method_get_next_IDBll", null);
-        Get_Next_IDBill_Asyntask asyntask = new Get_Next_IDBill_Asyntask(listener, requestBody);
-        asyntask.execute();
-    }
-
     private void Doing_Task(){
         MainActivity.Navi_disable();
         btnPick_address_Cart_Frag.setEnabled(false);
@@ -401,7 +376,7 @@ public class CartFragment extends Fragment {
     }
 
     private void insert_Bill(Bill bill){
-        Check_task_listener listener_insert = new Check_task_listener() {
+        Get_Next_IDBill_Listener listener_insert = new Get_Next_IDBill_Listener() {
             @Override
             public void onPre() {
                 if (!methods.isNetworkConnected()) {
@@ -411,10 +386,11 @@ public class CartFragment extends Fragment {
             }
 
             @Override
-            public void onEnd(boolean isSucces, boolean insert_Success) {
+            public void onEnd(boolean isSucces, int next_ID) {
                 End_Task();
                 if(isSucces){
                     for(int i = 0; i < list_Bill_details.size(); ++i){
+                        list_Bill_details.get(i).setiD_Bill(next_ID);
                         insert_Bill_Detail(list_Bill_details.get(i), i);
                     }
                     BillFragment.setCheck_NewBill(true);
@@ -433,8 +409,7 @@ public class CartFragment extends Fragment {
         bundle.putFloat("Shipping_fee", bill.getShipping_fee());
         bundle.putBoolean("done", bill.isDone());
         RequestBody requestBody = methods.getRequestBody("method_insert_bill", bundle);
-        InsertOrDelOrUpdate_Asynctask asynctask = new InsertOrDelOrUpdate_Asynctask(listener_insert, requestBody,
-                Constant_Values.URL_BILL_API);
+        InsertBill_GetNextID_Asynctask asynctask = new InsertBill_GetNextID_Asynctask(listener_insert, requestBody);
         asynctask.execute();
     }
 
@@ -450,9 +425,9 @@ public class CartFragment extends Fragment {
 
             @Override
             public void onEnd(boolean isSucces, boolean insert_Success) {
-                if(position == list_Bill_details.size()-1){
-                    End_Task();
-                    if (isSucces) {
+                if (isSucces) {
+                    if(position == list_Bill_details.size()-1){
+                        End_Task();
                         Empty_Cart_View();
                         adapter.clear_Cart();
                     }

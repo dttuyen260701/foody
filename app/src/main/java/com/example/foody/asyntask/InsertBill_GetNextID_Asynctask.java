@@ -13,12 +13,12 @@ import org.json.JSONObject;
 
 import okhttp3.RequestBody;
 
-public class Get_Next_IDBill_Asyntask extends AsyncTask<Void, String, Boolean> {
+public class InsertBill_GetNextID_Asynctask extends AsyncTask<Void, String, Boolean> {
     private int next_ID;
     private Get_Next_IDBill_Listener listener;
     private RequestBody requestBody;
 
-    public Get_Next_IDBill_Asyntask(Get_Next_IDBill_Listener listener, RequestBody requestBody) {
+    public InsertBill_GetNextID_Asynctask(Get_Next_IDBill_Listener listener, RequestBody requestBody) {
         this.listener = listener;
         this.requestBody = requestBody;
     }
@@ -26,6 +26,7 @@ public class Get_Next_IDBill_Asyntask extends AsyncTask<Void, String, Boolean> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        listener.onPre();
     }
 
     @Override
