@@ -37,6 +37,12 @@ public class AboutUsFragment extends Fragment {
 
     private void SetUp(View view){
         img_Back_AboutUs_Frag = (ImageView) view.findViewById(R.id.img_Back_AboutUs_Frag);
+        img_Back_AboutUs_Frag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener_for_backFragment.orderBill_Or_BackFragment();
+            }
+        });
 
         layout_map_About_Frag = (ConstraintLayout) view.findViewById(R.id.layout_map_About_Frag);
 
@@ -48,7 +54,6 @@ public class AboutUsFragment extends Fragment {
         MapFragment mapFragment = new MapFragment(null, Constant_Values.Addres_Res);
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.layout_map_About_Frag, mapFragment);
-        transaction.addToBackStack("About");
         transaction.commit();
 
         txt_Location_About_Frag.setText("Our Address: " + Constant_Values.Addres_Res);
