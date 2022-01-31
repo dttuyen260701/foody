@@ -2,16 +2,14 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layout_account"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/border_color">
+    android:layout_height="match_parent">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar_Accounts_logined_Frag"
+        android:id="@+id/appbar_AboutUs_Frag"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/layout_account_logined2"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,12 +17,12 @@
         app:layout_constraintVertical_weight="1">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_tool_bar"
+            android:id="@+id/layout_tool_bar_About"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar_Accounts_logined_Fragment"
+                android:id="@+id/toolbar_AboutUs_Fragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/app_themes"
@@ -33,11 +31,22 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <ImageView
+                android:id="@+id/img_Back_AboutUs_Frag"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:contentDescription="Back to Account list"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="h,1:1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/left_arrow" />
+
             <TextView
-                android:id="@+id/txt_Tittle_Account_logined_Fragment"
+                android:id="@+id/txt_Tittle_AboutUs_Fragment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/account_menu"
+                android:text="About Us"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -49,100 +58,99 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_account_logined2"
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appbar_Accounts_logined_Frag"
+        app:layout_constraintTop_toBottomOf="@+id/appbar_AboutUs_Frag"
         app:layout_constraintVertical_weight="13">
 
         <TextView
-            android:id="@+id/txtAccount_Frag"
-            android:layout_width="match_parent"
+            android:id="@+id/txt_Location_About_Frag"
+            android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@color/border_color"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
             android:gravity="center|start"
             android:paddingStart="7dp"
-            android:text="@string/account_menu"
-            android:textAllCaps="true"
+            android:text="Address"
             android:textColor="@color/black"
-            android:textSize="11sp"
-            app:layout_constraintBottom_toTopOf="@+id/btn_Setting_Account_Logined_Frag"
-            app:layout_constraintDimensionRatio="h,14:1"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/layout_map_About_Frag"
+            app:layout_constraintDimensionRatio="w,8:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintVertical_chainStyle="packed" />
+            app:layout_constraintVertical_bias="0.2"
+            app:layout_constraintVertical_chainStyle="spread" />
 
-        <Button
-            android:id="@+id/btn_Setting_Account_Logined_Frag"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_map_About_Frag"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@drawable/custom_button_account_frag"
-            android:gravity="center|start"
-            android:paddingStart="7dp"
-            android:text="Sign In"
-            android:textAllCaps="false"
-            app:layout_constraintBottom_toTopOf="@+id/btn_changePass_Account_Login_Frag"
-            app:layout_constraintDimensionRatio="h,12:1"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            app:layout_constraintBottom_toTopOf="@+id/txt_Shipping_fee_Per_about_Frag"
+            app:layout_constraintDimensionRatio="h,1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtAccount_Frag"
-            tools:ignore="TouchTargetSizeCheck" />
+            app:layout_constraintTop_toBottomOf="@+id/txt_Location_About_Frag">
 
-        <Button
-            android:id="@+id/btn_changePass_Account_Login_Frag"
-            android:layout_width="match_parent"
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/txt_Shipping_fee_Per_about_Frag"
+            android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@drawable/custom_button_account_frag"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
             android:gravity="center|start"
             android:paddingStart="7dp"
-            android:text="Sign Up"
-            android:textAllCaps="false"
-            app:layout_constraintBottom_toTopOf="@+id/btn_AboutUs_Account_Login_Frag"
-            app:layout_constraintDimensionRatio="h,12:1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_Setting_Account_Logined_Frag"
-            tools:ignore="TouchTargetSizeCheck" />
-
-        <Button
-            android:id="@+id/btn_AboutUs_Account_Login_Frag"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="@drawable/custom_button_account_frag"
-            android:gravity="center|start"
-            android:paddingStart="7dp"
-            android:text="About Us"
-            android:textAllCaps="false"
-            app:layout_constraintBottom_toTopOf="@+id/btn_TermofU_Account_Login_Frag"
-            app:layout_constraintDimensionRatio="h,12:1"
+            android:text="Shipping fee"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/txtPhone_About_Frag"
+            app:layout_constraintDimensionRatio="w,8:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_changePass_Account_Login_Frag"
-            tools:ignore="TouchTargetSizeCheck" />
+            app:layout_constraintTop_toBottomOf="@+id/layout_map_About_Frag" />
 
-        <Button
-            android:id="@+id/btn_TermofU_Account_Login_Frag"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/txtPhone_About_Frag"
+            android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@drawable/custom_button_account_frag"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
             android:gravity="center|start"
             android:paddingStart="7dp"
-            android:text="Terms of use and privacy policy"
-            android:textAllCaps="false"
+            android:text="Phone Number"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/txtTerm_OU_About_Frag"
+            app:layout_constraintDimensionRatio="w,8:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_Shipping_fee_Per_about_Frag" />
+
+        <TextView
+            android:id="@+id/txtTerm_OU_About_Frag"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:gravity="center"
+            android:text="Term of Use"
+            android:textColor="@color/black"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="h,12:1"
+            app:layout_constraintDimensionRatio="w,8:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_AboutUs_Account_Login_Frag"
-            tools:ignore="TouchTargetSizeCheck" />
+            app:layout_constraintTop_toBottomOf="@+id/txtPhone_About_Frag" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

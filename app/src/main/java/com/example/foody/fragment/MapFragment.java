@@ -171,7 +171,8 @@ public class MapFragment extends SupportMapFragment implements
             mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
             //move map camera
             mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lng, 18));
-            parent.setVisible();
+            if(parent != null)
+                parent.setVisible();
             EndP = lng;
         }
     }

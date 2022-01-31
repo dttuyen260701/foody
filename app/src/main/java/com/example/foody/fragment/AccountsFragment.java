@@ -6,16 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.foody.R;
 import com.example.foody.ativity.MainActivity;
 import com.example.foody.listeners.Listener_for_BackFragment;
-import com.example.foody.models.Customer;
 import com.example.foody.utils.Constant_Values;
 
 public class AccountsFragment extends Fragment {
@@ -25,13 +22,13 @@ public class AccountsFragment extends Fragment {
     private static final String btn_SIGN_UP = "Sign Up";
 
     Button btn_SignIn_Account_Frag, btn_SignUp_Account_Frag,
-            btn_Contact_Account_Frag, btn_TermofU_Account_Frag;
+            btn_AboutUs_Account_Login_Frag, btn_TermofU_Account_Frag;
     TextView txtAccount_Frag;
 
     private Listener_for_BackFragment listener_for_backFragment = new Listener_for_BackFragment() {
         @Override
         public void orderBill_Or_BackFragment() {
-            getFragmentManager().popBackStack();
+            getActivity().getSupportFragmentManager().popBackStack();
         }
     };
 
@@ -56,7 +53,7 @@ public class AccountsFragment extends Fragment {
     private void SetUp(View view){
         btn_SignIn_Account_Frag = (Button) view.findViewById(R.id.btn_Setting_Account_Logined_Frag);
         btn_SignUp_Account_Frag = (Button) view.findViewById(R.id.btn_changePass_Account_Login_Frag);
-        btn_Contact_Account_Frag = (Button) view.findViewById(R.id.btn_Contact_Account_Login_Frag);
+        btn_AboutUs_Account_Login_Frag = (Button) view.findViewById(R.id.btn_AboutUs_Account_Login_Frag);
         btn_TermofU_Account_Frag = (Button) view.findViewById(R.id.btn_TermofU_Account_Login_Frag);
 
         txtAccount_Frag = (TextView) view.findViewById(R.id.txtAccount_Frag);
@@ -87,11 +84,11 @@ public class AccountsFragment extends Fragment {
             }
         });
 
-        btn_Contact_Account_Frag.setOnClickListener(new View.OnClickListener() {
+        btn_AboutUs_Account_Login_Frag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogContactFragment dialogContactFragment = new DialogContactFragment();
-                dialogContactFragment.show(getFragmentManager(), "dialog_contact");
+                AboutUsFragment aboutUsFragment = new AboutUsFragment(listener_for_backFragment);
+                back_to_AccountsFragment(aboutUsFragment);
             }
         });
 
