@@ -45,10 +45,9 @@ public class AboutUsFragment extends Fragment {
         txtPhone_About_Frag = (TextView) view.findViewById(R.id.txtPhone_About_Frag);
         txtTerm_OU_About_Frag = (TextView) view.findViewById(R.id.txtTerm_OU_About_Frag);
 
-        MapFragment mapFragment = new MapFragment(null);
-        mapFragment.searchAddress(Constant_Values.Addres_Res);
+        MapFragment mapFragment = new MapFragment(null, Constant_Values.Addres_Res);
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.layout_MapFragment, mapFragment);
+        transaction.add(R.id.layout_map_About_Frag, mapFragment);
         transaction.addToBackStack("About");
         transaction.commit();
 

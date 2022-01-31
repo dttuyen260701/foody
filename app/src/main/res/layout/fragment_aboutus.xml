@@ -136,18 +136,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_Shipping_fee_Per_about_Frag" />
 
-        <TextView
+        <Button
             android:id="@+id/txtTerm_OU_About_Frag"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
+            android:background="@drawable/custom_button_cart_frag"
             android:gravity="center"
             android:text="Term of Use"
             android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="w,8:1"
+            app:layout_constraintDimensionRatio="w,5:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtPhone_About_Frag" />

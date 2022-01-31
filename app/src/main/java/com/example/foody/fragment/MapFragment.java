@@ -53,6 +53,7 @@ public class MapFragment extends SupportMapFragment implements
     private String address_line;
     private LatLng EndP;
     private MapFragment_Parent parent;
+    private String query_find;
 
     public String getAddress_line() {
         return address_line;
@@ -62,7 +63,8 @@ public class MapFragment extends SupportMapFragment implements
         this.address_line = address_line;
     }
 
-    public MapFragment(MapFragment_Parent parent) {
+    public MapFragment(MapFragment_Parent parent, String query_find) {
+        this.query_find = query_find;
         this.parent = parent;
         this.for_search = false;
         address_line = "";
@@ -149,31 +151,35 @@ public class MapFragment extends SupportMapFragment implements
     {
         mLastLocation = location;
         LatLng lng = null;
-        if (mCurrLocationMarker != null) {
-            mCurrLocationMarker.remove();
-        } else if(!for_search) {
-            //Place current location marker
-            lng = new LatLng(location.getLatitude(), location.getLongitude());
-            Geocoder coder = new Geocoder(getContext(), Locale.getDefault());
-            try {
-                ArrayList<Address> list_result = (ArrayList<Address>)
-                        coder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                Address address = list_result.get(0);
-                address_line = address.getAddressLine(0);
-            } catch (IOException e) {
-                e.printStackTrace();
+        if(query_find != ""){
+            searchAddress(query_find);
+        } else {
+            if (mCurrLocationMarker != null) {
+                mCurrLocationMarker.remove();
+            } else if(!for_search) {
+                //Place current location marker
+                lng = new LatLng(location.getLatitude(), location.getLongitude());
+                Geocoder coder = new Geocoder(getContext(), Locale.getDefault());
+                try {
+                    ArrayList<Address> list_result = (ArrayList<Address>)
+                            coder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                    Address address = list_result.get(0);
+                    address_line = address.getAddressLine(0);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(lng);
+                markerOptions.title("Your Address");
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+                markerOptions.getPosition().toString();
+                mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
+                //move map camera
+                mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lng, 18));
+                if(parent != null)
+                    parent.setVisible();
+                EndP = lng;
             }
-            MarkerOptions markerOptions = new MarkerOptions();
-            markerOptions.position(lng);
-            markerOptions.title("Your Address");
-            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
-            markerOptions.getPosition().toString();
-            mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
-            //move map camera
-            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lng, 18));
-            if(parent != null)
-                parent.setVisible();
-            EndP = lng;
         }
     }
 

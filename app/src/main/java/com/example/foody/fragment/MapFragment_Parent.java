@@ -45,7 +45,7 @@ public class MapFragment_Parent extends Fragment {
     }
 
     private void SetUp(View view){
-        MapFragment mapFragment = new MapFragment(this);
+        MapFragment mapFragment = new MapFragment(this, "");
 
         img_Back_Map_Frag = (ImageView) view.findViewById(R.id.img_Back_Map_Frag);
         img_Back_Map_Frag.setOnClickListener(new View.OnClickListener() {
