@@ -126,11 +126,13 @@ public class SignInFragment extends Fragment {
                     Toast.makeText(context, "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
                 }
                 MainActivity.Navi_disable();
+                Constant_Values.setDoing_task(true);
             }
 
             @Override
             public void onEnd(boolean isSussed, Customer customer) {
                 MainActivity.Navi_enable();
+                Constant_Values.setDoing_task(false);
                 if(isSussed){
                     int ID_Save = -1;
                     if(gmail.equals(customer.getGmail())

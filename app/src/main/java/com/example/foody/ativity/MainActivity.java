@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(CartFragment.isDoingTask())
+        if(Constant_Values.isDoing_task())
             return;
         if(SystemClock.elapsedRealtime() - m_Backclick > 2000){
             doubleBackToExitPressedOnce = false;

@@ -8,6 +8,16 @@ public class Constant_Values {
 
     private static int ID_CUS = -1;// mặc định là -1
 
+    private static boolean Doing_task = false;
+
+    public static boolean isDoing_task() {
+        return Doing_task;
+    }
+
+    public static void setDoing_task(boolean doing_task) {
+        Doing_task = doing_task;
+    }
+
     public static int getIdCus() {
         return ID_CUS;
     }

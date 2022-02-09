@@ -118,11 +118,13 @@ public class InformationFragment extends Fragment {
                     Toast.makeText(context, "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
                 }
                 MainActivity.Navi_disable();
+                Constant_Values.setDoing_task(true);
             }
 
             @Override
             public void onEnd(boolean isSucces, boolean insert_Success) {
                 MainActivity.Navi_enable();
+                Constant_Values.setDoing_task(false);
                 if(isSucces){
                     Toast.makeText(context, "Update Success", Toast.LENGTH_SHORT).show();
                     Constant_Values.setCustomer(cus);

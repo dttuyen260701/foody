@@ -135,18 +135,20 @@ public class FeedbackFragment extends Fragment {
                     Toast.makeText(context, "Vui lòng kết nối internet", Toast.LENGTH_SHORT).show();
                 }
                 MainActivity.Navi_disable();
+                Constant_Values.setDoing_task(true);
                 progressBar_feedback_frag.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onEnd(boolean isSucces, boolean insert_Success) {
-                MainActivity.Navi_enable();
                 if(isSucces){
                     if(!bill_details.isInsert() && bill_details.getRate() > 0){
                         check_change = true;
                     }
                     update_Rate_Food(bill_details.getiD_Food());
                     if(position == list_bill_details_feedback.size() - 1){
+                        MainActivity.Navi_enable();
+                        Constant_Values.setDoing_task(false);
                         progressBar_feedback_frag.setVisibility(View.GONE);
                         if(check_change)
                             Toast.makeText(context, "Thanks for you feedback!", Toast.LENGTH_SHORT).show();

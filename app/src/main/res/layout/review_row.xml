@@ -50,11 +50,10 @@
             android:layout_weight="1"
             android:isIndicator="true"
             android:numStars="5"
-            android:paddingStart="3dp"
             android:progressTint="#AE9D01"
             android:rating="2.1"
-            android:stepSize="0.1"
-            android:secondaryProgressTint="@android:color/transparent" />
+            android:secondaryProgressTint="@android:color/transparent"
+            android:stepSize="0.1" />
 <!--        android:secondaryProgressTint="@android:color/transparent"-->
 <!--        dùng để ẩn shadow-->
 

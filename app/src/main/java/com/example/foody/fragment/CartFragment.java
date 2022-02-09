@@ -77,8 +77,6 @@ public class CartFragment extends Fragment {
     private ArrayList<Bill_Details> list_Bill_details_temp;
     private BillDetailAdapter adapter;
 
-    private static boolean DoingTask = false;
-
     private long mLastClick_Order = 0, mLastClick_PickAddress = 0;
 
     public CartFragment(Bill bill_holder,ArrayList<Bill_Details> list_Bill_details_temp,
@@ -328,10 +326,6 @@ public class CartFragment extends Fragment {
         transaction.commit();
     }
 
-    public static boolean isDoingTask() {
-        return DoingTask;
-    }
-
     public static Bill_Details search_BillDetail_ByIDFood(int ID_Food){
         Bill_Details bill_details = new Bill_Details();
         for(Bill_Details i : list_Bill_details)
@@ -363,7 +357,7 @@ public class CartFragment extends Fragment {
         btnOrder_Cart_Frag.setEnabled(false);
         progressBar_Cart_frag.setVisibility(View.VISIBLE);
         txtClear_Cart_Frag.setVisibility(View.GONE);
-        DoingTask = true;
+        Constant_Values.setDoing_task(true);
     }
 
     private void End_Task(){
@@ -372,7 +366,7 @@ public class CartFragment extends Fragment {
         btnOrder_Cart_Frag.setEnabled(true);
         progressBar_Cart_frag.setVisibility(View.GONE);
         txtClear_Cart_Frag.setVisibility(View.VISIBLE);
-        DoingTask = false;
+        Constant_Values.setDoing_task(false);
     }
 
     private void insert_Bill(Bill bill){
