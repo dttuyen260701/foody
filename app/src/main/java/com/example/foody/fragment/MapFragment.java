@@ -34,6 +34,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class MapFragment extends SupportMapFragment implements
@@ -189,7 +190,7 @@ public class MapFragment extends SupportMapFragment implements
 
         try {
             // May throw an IOException
-            list_address = (ArrayList<Address>) coder.getFromLocationName(query_address, 5);
+            list_address = (ArrayList<Address>) coder.getFromLocationName(query_address, 1);
             if (list_address == null) {
                 Toast.makeText(getActivity(), "Don't result address", Toast.LENGTH_SHORT).show();
             }
@@ -209,6 +210,26 @@ public class MapFragment extends SupportMapFragment implements
 
         } catch (IOException ex) {
             ex.printStackTrace();
+        }
+    }
+
+    public void search_result(String query_address, ArrayList<String> list_result){
+        Geocoder coder = new Geocoder(getContext(), Locale.getDefault());
+        List<Address> list_address = new ArrayList<>();
+
+        try {
+            // May throw an IOException
+            list_address = coder.getFromLocationName(query_address, 5);
+            if (list_address == null) {
+                Toast.makeText(getActivity(), "Don't result address", Toast.LENGTH_SHORT).show();
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        Toast.makeText(getActivity(), "Size: " + list_address.size(), Toast.LENGTH_SHORT).show();
+        for(int i = 0; i < list_address.size(); ++i){
+            Address address = list_address.get(i);
+            list_result.add(address.getAddressLine(0));
         }
     }
 
