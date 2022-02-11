@@ -222,23 +222,28 @@ public class CartFragment extends Fragment {
         switch (name){
             case btn_ORDER:
                 if(Constant_Values.getIdCus() != -1) {
-                    boolean check_address = true;//kiểm tra có address chưa
-                    if(address_cus.equals(txtADDRESS_PICK) || distance == 0f){
-                        check_address = false;
-                    } else {
-                        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-                        Date date =new Date();
-                        try {
-                            date = formatter.parse(formatter.format(new Date().getTime()));
-                        } catch (ParseException e) {
-                            e.printStackTrace();
+                    if(BillFragment.checkDone_AllBill()){
+                        boolean check_address = true;//kiểm tra có address chưa
+                        if(address_cus.equals(txtADDRESS_PICK) || distance == 0f){
+                            check_address = false;
+                        } else {
+                            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                            Date date =new Date();
+                            try {
+                                date = formatter.parse(formatter.format(new Date().getTime()));
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            Bill bill_delivery = new Bill(-1, Constant_Values.getIdCus(), total_in_address,
+                                    date, address_cus, shipping_fee, false);
+                            insert_Bill(bill_delivery);
                         }
-                        Bill bill_delivery = new Bill(-1, Constant_Values.getIdCus(), total_in_address,
-                                date, address_cus, shipping_fee, false);
-                        insert_Bill(bill_delivery);
-                    }
-                    if(check_address)
+                        if(check_address)
+                            break;
+                    } else {
+                        Toast.makeText(getActivity(), "Please done all bill to order new bill", Toast.LENGTH_SHORT).show();
                         break;
+                    }
                 } else {
                     Toast.makeText(getActivity(), "Please login to order food", Toast.LENGTH_SHORT).show();
                     break;

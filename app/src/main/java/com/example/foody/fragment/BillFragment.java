@@ -102,6 +102,13 @@ public class BillFragment extends Fragment {
                     i.setDone(true);
     }
 
+    public static boolean checkDone_AllBill(){
+        for(Bill i : list_Bill)
+            if(!i.isDone())
+                return false;
+        return true;
+    }
+
     public static void setCheck_NewBill(boolean check_NewBill) {
         BillFragment.check_NewBill = check_NewBill;
     }
