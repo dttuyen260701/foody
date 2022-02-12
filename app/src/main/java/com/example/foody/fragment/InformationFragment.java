@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -32,6 +33,7 @@ public class InformationFragment extends Fragment {
     private ImageView img_Back_Infor_Frag;
     private Listener_for_BackFragment listener_for_backFragment;
     private Context context;
+    private ProgressBar progressBar_Infor_Frag;
 
     public InformationFragment(Context context, Listener_for_BackFragment listener_for_backFragment) {
         this.context = context;
@@ -52,6 +54,7 @@ public class InformationFragment extends Fragment {
         txtName_Infor_Frag = (EditText) view.findViewById(R.id.txtName_Infor_Frag);
         txtPhone_Infor_Frag = (EditText) view.findViewById(R.id.txtPhone_Infor_Frag);
         txtPass_Infor_Frag = (EditText) view.findViewById(R.id.txtPass_Infor_Frag);
+        progressBar_Infor_Frag = (ProgressBar) view.findViewById(R.id.progressBar_Infor_Frag);
 
         btn_Change_Pass = (Button) view.findViewById(R.id.btn_Change_Pass);
         btnUpdate_Infor_Frag = (Button) view.findViewById(R.id.btnUpdate_Infor_Frag);
@@ -119,10 +122,12 @@ public class InformationFragment extends Fragment {
                 }
                 MainActivity.Navi_disable();
                 Constant_Values.setDoing_task(true);
+                progressBar_Infor_Frag.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onEnd(boolean isSucces, boolean insert_Success) {
+                progressBar_Infor_Frag.setVisibility(View.GONE);
                 MainActivity.Navi_enable();
                 Constant_Values.setDoing_task(false);
                 if(isSucces){

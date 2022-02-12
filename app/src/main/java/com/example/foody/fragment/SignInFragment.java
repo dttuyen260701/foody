@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +36,7 @@ public class SignInFragment extends Fragment {
     private Listener_for_BackFragment listener_login_succes;
     private String mail, pass;
     private Context context;
+    private ProgressBar progressBar_SignIn_Frag;
 
     public SignInFragment(Listener_for_BackFragment listener_backFrag,
                           Listener_for_BackFragment listener_login_succes,
@@ -62,6 +64,7 @@ public class SignInFragment extends Fragment {
         txtforgetpass_login = (TextView) view.findViewById(R.id.txtforgetpass_login);
         btnLogin_login = (Button) view.findViewById(R.id.btnLogin_login);
         btnRegister_login = (Button) view.findViewById(R.id.btnRegister_login);
+        progressBar_SignIn_Frag = (ProgressBar) view.findViewById(R.id.progressBar_SignIn_Frag);
 
         txtEmail_login.setText(mail);
         txtPass_login.setText(pass);
@@ -127,10 +130,12 @@ public class SignInFragment extends Fragment {
                 }
                 MainActivity.Navi_disable();
                 Constant_Values.setDoing_task(true);
+                progressBar_SignIn_Frag.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onEnd(boolean isSussed, Customer customer) {
+                progressBar_SignIn_Frag.setVisibility(View.GONE);
                 MainActivity.Navi_enable();
                 Constant_Values.setDoing_task(false);
                 if(isSussed){

@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +43,7 @@ public class SignUpFragment extends Fragment {
     private Button btnRegister_register;
     private ImageView img_Back_SignUp_Frag;
     private Context context;
+    private ProgressBar progress_SignUp_Frag;
 
     private boolean check_matchPass = false;
 
@@ -67,6 +69,8 @@ public class SignUpFragment extends Fragment {
                 listener_back.orderBill_Or_BackFragment();
             }
         });
+
+        progress_SignUp_Frag = (ProgressBar) view.findViewById(R.id.progress_SignUp_Frag);
 
         txtID_register = (EditText) view.findViewById(R.id.txtID_register);
         txtPhone_Register = (EditText) view.findViewById(R.id.txtPhone_Register);
@@ -132,11 +136,8 @@ public class SignUpFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 boolean check = cbaccept_register.isChecked();
-                if(txtID_register.getText().toString().length() == 0 ||
-                    txtPass_register.getText().toString().length() == 0 ||
-                    txtPass2_register.getText().toString().length() == 0 ||
-                    txtPhone_Register.getText().toString().length() == 0) {
-                    Toast.makeText(context, "Please enter enough information.", Toast.LENGTH_SHORT).show();
+                if(!Check()) {
+                    Toast.makeText(context, "Wrong Information", Toast.LENGTH_SHORT).show();
                 } else {
                     if(check){
                         if(check_matchPass){
@@ -153,6 +154,19 @@ public class SignUpFragment extends Fragment {
                 }
             }
         });
+    }
+
+    private boolean Check(){
+        String gmail_u = txtID_register.getText().toString();
+        if(!gmail_u.contains("@gmail.com") || gmail_u.length() == 0)
+            return false;
+        String pass = txtPass_register.getText().toString();
+        if(pass.length() == 0)
+            return false;
+        String phone = txtPhone_Register.getText().toString();
+        if(phone.length() != 10)
+            return false;
+        return true;
     }
 
     private void back_to_RegisterFragment(Fragment fragment){
@@ -182,10 +196,12 @@ public class SignUpFragment extends Fragment {
                             }
                             MainActivity.Navi_disable();
                             Constant_Values.setDoing_task(true);
+                            progress_SignUp_Frag.setVisibility(View.VISIBLE);
                         }
 
                         @Override
                         public void onEnd(boolean isSucces, boolean insert_Success) {
+                            progress_SignUp_Frag.setVisibility(View.GONE);
                             MainActivity.Navi_enable();
                             Constant_Values.setDoing_task(false);
                             if(isSucces){
@@ -241,11 +257,13 @@ public class SignUpFragment extends Fragment {
                 }
                 MainActivity.Navi_disable();
                 Constant_Values.setDoing_task(true);
+                progress_SignUp_Frag.setVisibility(View.VISIBLE);
             }
 
             @Override
             //can_insert = true insert đưuọc
             public void onEnd(boolean isSucces, boolean can_insert) {
+                progress_SignUp_Frag.setVisibility(View.GONE);
                 MainActivity.Navi_enable();
                 Constant_Values.setDoing_task(false);
                 if(isSucces){

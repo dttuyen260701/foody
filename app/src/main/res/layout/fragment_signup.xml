@@ -134,6 +134,7 @@
             android:ems="10"
             android:hint="Phone Number"
             android:inputType="phone"
+            android:maxLength="10"
             android:textColorHint="#686565"
             android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/txtPass_register"
@@ -280,4 +281,15 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ProgressBar
+        android:id="@+id/progress_SignUp_Frag"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/layout_SignUp00"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/layout_SignUp00" />
 </androidx.constraintlayout.widget.ConstraintLayout>
