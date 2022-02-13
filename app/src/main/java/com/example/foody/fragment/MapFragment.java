@@ -226,7 +226,7 @@ public class MapFragment extends SupportMapFragment implements
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        Toast.makeText(getActivity(), "Size: " + list_address.size(), Toast.LENGTH_SHORT).show();
+
         for(int i = 0; i < list_address.size(); ++i){
             Address address = list_address.get(i);
             list_result.add(address.getAddressLine(0));
