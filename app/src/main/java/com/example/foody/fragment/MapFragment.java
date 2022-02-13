@@ -175,6 +175,7 @@ public class MapFragment extends SupportMapFragment implements
                 markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
                 markerOptions.getPosition().toString();
                 mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
+
                 //move map camera
                 mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lng, 18));
                 if(parent != null)
