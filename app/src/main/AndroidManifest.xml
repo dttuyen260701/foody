@@ -19,10 +19,12 @@
         <activity
             android:name=".ativity.MainActivity"
             android:windowSoftInputMode="adjustPan"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ativity.SplashScreenActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
